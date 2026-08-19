@@ -239,3 +239,27 @@ def test_fetch_raw_carries_the_untouched_payload(source):
 
     assert listing.payload["carid"] == "GBR551693296921"
     assert paging.to_car(listing).model == "Tavascan"
+
+
+def test_a_page_past_the_end_omits_the_cars_key_entirely():
+    # Live behaviour: beyond the last page the response drops "cars" rather than
+    # returning it empty.
+    def handler(request):
+        if request.headers["X-Page"] == "1":
+            return httpx.Response(
+                200,
+                json={
+                    "results": {
+                        "result": {"cars": [{"car": fixture_cars()[0]}]},
+                    }
+                },
+            )
+        return httpx.Response(200, json={"results": {"result": {}}})
+
+    paging = CupraSource(
+        client=httpx.Client(transport=httpx.MockTransport(handler)), request_delay=0
+    )
+
+    listings = list(paging.fetch_raw())
+
+    assert [listing.source_id for listing in listings] == ["GBR551693296921"]

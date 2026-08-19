@@ -128,8 +128,8 @@ class CupraSource:
     def fetch_raw(self) -> Iterator[RawListing]:
         """Walk X-Page until a page comes back empty.
 
-        The API answers 200 with an empty `cars` array past the last page, so the
-        empty page — not the status code — is the terminator.
+        Past the last page the API answers 200 but omits the `cars` key, so an
+        empty (or absent) car list — not the status code — is the terminator.
         """
         page = 1
         while True:
@@ -147,7 +147,8 @@ class CupraSource:
             ).json()
             if self.expected_total is None:
                 self.expected_total = _electric_facet_count(payload)
-            cars = payload["results"]["result"]["cars"]
+            # Past the last page the API drops "cars" rather than emptying it.
+            cars = payload["results"]["result"].get("cars") or []
             if not cars:
                 return
             for entry in cars:
