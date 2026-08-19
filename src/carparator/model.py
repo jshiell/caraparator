@@ -17,7 +17,7 @@ class FuelType(StrEnum):
 class Car(BaseModel):
     """One listing, normalised across sources. Money is always integer pence."""
 
-    model_config = ConfigDict(frozen=True)
+    model_config = ConfigDict(frozen=True, protected_namespaces=())
 
     source: str
     source_id: str
@@ -50,6 +50,12 @@ class Car(BaseModel):
     dealer_lat: float | None = None
     dealer_lon: float | None = None
     image_url: str | None = None
+    body_style: str | None = None
+    ac_charge_kw: float | None = None
+    dc_charge_kw: float | None = None
+    vin: str | None = None
+    previous_owners: int | None = None
+    model_year: int | None = None
 
 
 class RawListing(BaseModel):

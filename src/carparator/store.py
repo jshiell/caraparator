@@ -42,6 +42,12 @@ CREATE TABLE IF NOT EXISTS cars (
     dealer_lat          REAL,
     dealer_lon          REAL,
     image_url           TEXT,
+    body_style          TEXT,
+    ac_charge_kw        REAL,
+    dc_charge_kw        REAL,
+    vin                 TEXT,
+    previous_owners     INTEGER,
+    model_year          INTEGER,
 
     first_seen        TEXT    NOT NULL,
     last_seen         TEXT    NOT NULL,
