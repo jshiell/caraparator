@@ -3,9 +3,23 @@
 from __future__ import annotations
 
 import json
-from typing import Any
+import logging
+import re
+import time
+from typing import Any, Iterator
+
+import httpx
 
 from carparator.model import Car, FuelType, RawListing
+from carparator.sources import REQUEST_DELAY_SECONDS, build_client, get_with_retry
+
+SEARCH_URL = "https://usedcars.volkswagen.co.uk/en/vehicle_search/all-brands/all-models"
+MAX_PAGES = 200
+MAX_CONSECUTIVE_FAILED_PAGES = 3
+
+_RESULT_COUNT = re.compile(r"'numberOfResults'\s*:\s*'(\d+)'")
+
+logger = logging.getLogger(__name__)
 
 _FUEL_TYPES = {
     "electric": FuelType.ELECTRIC,
@@ -93,6 +107,56 @@ class VolkswagenSource:
 
     name = "volkswagen"
 
+    def __init__(
+        self,
+        client: httpx.Client | None = None,
+        request_delay: float = REQUEST_DELAY_SECONDS,
+    ):
+        self._client = client or build_client()
+        self._request_delay = request_delay
+        self.expected_total: int | None = None
+        self.failed_pages: list[int] = []
+
+    def fetch_raw(self) -> Iterator[RawListing]:
+        """Walk /pageN until a page legitimately holds no vehicles.
+
+        Past the last page the site answers 200 with zero vehicles and nonsense
+        metadata, so the status code is never the terminator. A page whose embedded
+        JSON cannot be found is a parse failure, not the end: it is logged and
+        skipped so a single bad page does not silently truncate the run.
+        """
+        consecutive_failures = 0
+        for page in range(1, MAX_PAGES + 1):
+            if page > 1 and self._request_delay:
+                time.sleep(self._request_delay)
+            html = get_with_retry(
+                self._client,
+                f"{SEARCH_URL}/page{page}?view=list&FUEL_TYPE_LST=ELECTRIC",
+            ).text
+            if self.expected_total is None:
+                self.expected_total = _result_count(html)
+
+            if _ANCHOR not in html:
+                self.failed_pages.append(page)
+                consecutive_failures += 1
+                logger.warning(
+                    "volkswagen page %d held no vehicle payload (%d bytes)",
+                    page,
+                    len(html),
+                )
+                if consecutive_failures >= MAX_CONSECUTIVE_FAILED_PAGES:
+                    return
+                continue
+
+            consecutive_failures = 0
+            vehicles = extract_vw_vehicles(html)
+            if not vehicles:
+                return
+            for vehicle in vehicles:
+                yield RawListing(
+                    source=self.name, source_id=str(vehicle["ID"]), payload=vehicle
+                )
+
     def to_car(self, raw: RawListing) -> Car | None:
         car = self.map_car(raw.payload)
         if car.fuel_type is not FuelType.ELECTRIC:
@@ -147,3 +211,9 @@ class VolkswagenSource:
             previous_owners=_integer(vehicle, "PREVIOUS_OWNER_STR"),
             model_year=_integer(vehicle, "YEAR_OF_MODEL_INT"),
         )
+
+
+def _result_count(html: str) -> int | None:
+    """The SRP states its own total in the inline analytics payload."""
+    match = _RESULT_COUNT.search(html)
+    return int(match.group(1)) if match else None

@@ -178,3 +178,94 @@ def test_every_vehicle_on_the_page_maps_without_error(source, vehicles):
 
     assert all(car is not None for car in cars)
     assert len({car.source_id for car in cars}) == 20
+
+
+import httpx
+
+
+def vw_transport(pages, recorder):
+    """Serve one canned page per /pageN path segment, recording the requests."""
+
+    def handler(request):
+        recorder.append(request)
+        number = int(request.url.path.rsplit("page", 1)[1])
+        body = pages[number - 1] if number <= len(pages) else EMPTY_PAGE
+        return httpx.Response(200, text=body)
+
+    return httpx.MockTransport(handler)
+
+
+def page_of(vehicles, total=1019):
+    blob = json.dumps(vehicles)
+    return (
+        f"<html><body><script>'numberOfResults': '{total}'\n"
+        f"let vehicles = JSON.parse('{blob}')\n</script></body></html>"
+    )
+
+
+EMPTY_PAGE = page_of([])
+
+
+def source_over(pages, recorder=None):
+    recorder = recorder if recorder is not None else []
+    client = httpx.Client(transport=vw_transport(pages, recorder))
+    return VolkswagenSource(client=client, request_delay=0), recorder
+
+
+def test_fetch_raw_walks_pages_until_one_comes_back_empty(vehicles):
+    paging, requests = source_over(
+        [page_of(vehicles[:2]), page_of(vehicles[2:4]), page_of(vehicles[4:6])]
+    )
+
+    listings = list(paging.fetch_raw())
+
+    assert [listing.source_id for listing in listings] == [
+        v["ID"] for v in vehicles[:6]
+    ]
+    assert [r.url.path.rsplit("/", 1)[1] for r in requests] == [
+        "page1",
+        "page2",
+        "page3",
+        "page4",
+    ]
+
+
+def test_the_page_number_is_a_path_segment_and_the_filter_is_uppercase(vehicles):
+    paging, requests = source_over([page_of(vehicles[:1])])
+
+    list(paging.fetch_raw())
+
+    assert requests[0].url.path.endswith("/all-brands/all-models/page1")
+    assert requests[0].url.params["FUEL_TYPE_LST"] == "ELECTRIC"
+    assert requests[0].url.params["view"] == "list"
+    assert "page" not in requests[0].url.params
+
+
+def test_fetch_raw_reads_the_result_count_as_the_expected_total(vehicles):
+    paging, _ = source_over([page_of(vehicles[:1], total=1019)])
+
+    list(paging.fetch_raw())
+
+    assert paging.expected_total == 1019
+
+
+def test_a_page_that_returns_no_vehicles_terminates_regardless_of_status(vehicles):
+    # /page99 answers 200 with zero vehicles and nonsense metadata.
+    paging, requests = source_over([])
+
+    assert list(paging.fetch_raw()) == []
+    assert len(requests) == 1
+
+
+def test_a_page_that_fails_to_parse_does_not_abort_the_remaining_pages(vehicles):
+    paging, _ = source_over(
+        [page_of(vehicles[:1]), "<html>totally unexpected</html>", page_of(vehicles[1:2])]
+    )
+
+    listings = list(paging.fetch_raw())
+
+    assert [listing.source_id for listing in listings] == [
+        vehicles[0]["ID"],
+        vehicles[1]["ID"],
+    ]
+    assert paging.failed_pages == [2]
