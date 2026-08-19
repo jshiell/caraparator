@@ -49,26 +49,30 @@ def _ingest_one(
     result = IngestResult(source=source.name, run_id=run_id, expected_total=None)
 
     try:
-        for raw in source.fetch_raw():
-            if limit is not None and result.listings_seen >= limit:
-                break
-            result.listings_seen += 1
-            store.store_raw(
-                raw.source, raw.source_id, json.dumps(raw.payload), fetched_at=now
-            )
-            try:
-                car = source.to_car(raw)
-            except Exception:
-                # One unmappable record must not cost us the rest of the run; the
-                # raw payload is already stored, so it can be remapped later.
-                logger.exception("%s: could not map %s", source.name, raw.source_id)
-                result.mapping_errors += 1
-                continue
-            if car is None:
-                result.skipped_non_electric += 1
-                continue
-            store.upsert_car(car, observed_at=now, run_id=run_id)
-            result.listings_stored += 1
+        with store.transaction():
+            for raw in source.fetch_raw():
+                if limit is not None and result.listings_seen >= limit:
+                    break
+                result.listings_seen += 1
+                store.store_raw(
+                    raw.source, raw.source_id, json.dumps(raw.payload), fetched_at=now
+                )
+                try:
+                    car = source.to_car(raw)
+                except Exception:
+                    # One unmappable record must not cost us the rest of the run;
+                    # the raw payload is already stored, so it can be remapped
+                    # later.
+                    logger.exception(
+                        "%s: could not map %s", source.name, raw.source_id
+                    )
+                    result.mapping_errors += 1
+                    continue
+                if car is None:
+                    result.skipped_non_electric += 1
+                    continue
+                store.upsert_car(car, observed_at=now, run_id=run_id)
+                result.listings_stored += 1
     except Exception as error:
         logger.exception("%s: run failed", source.name)
         result.status = FAILED

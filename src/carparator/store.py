@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import sqlite3
+from contextlib import contextmanager
 from pathlib import Path
+from typing import Iterator
 
 from carparator.model import Car
 
@@ -97,11 +99,34 @@ class SqliteStore:
         self.connection = sqlite3.connect(path)
         self.connection.execute("PRAGMA journal_mode=WAL")
         self.connection.execute("PRAGMA foreign_keys=ON")
+        self._in_transaction = False
 
     def init_schema(self) -> None:
         with self.connection:
             self.connection.executescript(_DDL)
             self.connection.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
+
+    @contextmanager
+    def transaction(self) -> Iterator[None]:
+        """Scope a batch of writes (e.g. one source's listings) to one commit.
+
+        Commits once the block exits, whether cleanly or via an exception, so
+        that a mid-run failure still leaves the listings seen so far durable.
+        """
+        self._in_transaction = True
+        try:
+            yield
+        finally:
+            self._in_transaction = False
+            self.connection.commit()
+
+    def _write(self, fn) -> None:
+        """Run fn's writes as part of an open transaction, else commit alone."""
+        if self._in_transaction:
+            fn()
+        else:
+            with self.connection:
+                fn()
 
     def upsert_car(self, car: Car, *, observed_at: str, run_id: int | None) -> None:
         """Insert or refresh a listing, preserving first_seen."""
@@ -110,7 +135,8 @@ class SqliteStore:
         columns = list(values)
         placeholders = ", ".join(f":{name}" for name in columns)
         updates = ", ".join(f"{name} = excluded.{name}" for name in columns)
-        with self.connection:
+
+        def _do() -> None:
             self.connection.execute(
                 f"INSERT INTO cars ({', '.join(columns)},"
                 " first_seen, last_seen, last_seen_run_id)"
@@ -122,16 +148,21 @@ class SqliteStore:
             )
             self._record_price(car, observed_at)
 
+        self._write(_do)
+
     def store_raw(
         self, source: str, source_id: str, payload: str, *, fetched_at: str
     ) -> None:
         """Keep the untouched payload so the mapper can change without re-scraping."""
-        with self.connection:
+
+        def _do() -> None:
             self.connection.execute(
                 "INSERT OR REPLACE INTO raw_listings"
                 " (source, source_id, fetched_at, payload) VALUES (?, ?, ?, ?)",
                 (source, source_id, fetched_at, payload),
             )
+
+        self._write(_do)
 
     def _record_price(self, car: Car, observed_at: str) -> None:
         """Write history on the first sighting, and thereafter only on a change."""

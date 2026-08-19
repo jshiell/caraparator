@@ -167,3 +167,17 @@ def test_a_second_run_updates_rather_than_duplicates(store):
 
     assert car_count(store, "cupra") == 2
     assert len(runs(store)) == 2
+
+
+def test_a_multi_listing_source_commits_the_listing_work_once(store):
+    statements = []
+    store.connection.set_trace_callback(statements.append)
+
+    ingest([FakeSource("cupra", ["a", "b", "c", "d", "e"])], store)
+
+    store.connection.set_trace_callback(None)
+    commit_count = statements.count("COMMIT")
+    # start_run + one commit for the whole listing loop + finish_run: not one
+    # per listing.
+    assert commit_count == 3
+    assert car_count(store, "cupra") == 5
