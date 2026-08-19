@@ -1,6 +1,7 @@
 """The generic listing model every source maps into."""
 
 from enum import StrEnum
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict
 
@@ -30,3 +31,32 @@ class Car(BaseModel):
     price_pence: int
     dealer_name: str
     fuel_type: FuelType
+
+    trim: str | None = None
+    description: str | None = None
+    range_miles: float | None = None
+    power_kw: int | None = None
+    power_ps: int | None = None
+    engine_cc: int | None = None
+    drivetrain: str | None = None
+    transmission: str | None = None
+    colour: str | None = None
+    seats: int | None = None
+    first_registered: str | None = None
+    monthly_price_pence: int | None = None
+    dealer_city: str | None = None
+    dealer_postcode: str | None = None
+    dealer_phone: str | None = None
+    dealer_lat: float | None = None
+    dealer_lon: float | None = None
+    image_url: str | None = None
+
+
+class RawListing(BaseModel):
+    """One listing exactly as the source delivered it, before mapping."""
+
+    model_config = ConfigDict(frozen=True)
+
+    source: str
+    source_id: str
+    payload: Any
