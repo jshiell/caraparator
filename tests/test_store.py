@@ -167,3 +167,21 @@ def test_price_returning_to_an_earlier_value_is_recorded_as_a_change(store):
     store.upsert_car(a_car(), observed_at="2026-08-21T10:00:00Z", run_id=3)
 
     assert history(store)[-1] == ("2026-08-21T10:00:00Z", 4998500)
+
+
+def test_store_raw_persists_the_untouched_payload(store):
+    store.store_raw("cupra", "GBR1", '{"carid": "GBR1"}', fetched_at="2026-08-19T10:00:00Z")
+
+    assert store.connection.execute(
+        "SELECT payload, fetched_at FROM raw_listings"
+    ).fetchall() == [('{"carid": "GBR1"}', "2026-08-19T10:00:00Z")]
+
+
+def test_store_raw_overwrites_on_a_later_run(store):
+    store.store_raw("cupra", "GBR1", "old", fetched_at="2026-08-19T10:00:00Z")
+
+    store.store_raw("cupra", "GBR1", "new", fetched_at="2026-08-20T10:00:00Z")
+
+    assert store.connection.execute(
+        "SELECT payload, fetched_at FROM raw_listings"
+    ).fetchall() == [("new", "2026-08-20T10:00:00Z")]

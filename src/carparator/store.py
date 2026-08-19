@@ -96,6 +96,17 @@ class SqliteStore:
             )
             self._record_price(car, observed_at)
 
+    def store_raw(
+        self, source: str, source_id: str, payload: str, *, fetched_at: str
+    ) -> None:
+        """Keep the untouched payload so the mapper can change without re-scraping."""
+        with self.connection:
+            self.connection.execute(
+                "INSERT OR REPLACE INTO raw_listings"
+                " (source, source_id, fetched_at, payload) VALUES (?, ?, ?, ?)",
+                (source, source_id, fetched_at, payload),
+            )
+
     def _record_price(self, car: Car, observed_at: str) -> None:
         """Write history on the first sighting, and thereafter only on a change."""
         latest = self.connection.execute(
