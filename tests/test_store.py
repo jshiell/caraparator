@@ -121,3 +121,49 @@ def test_first_observation_always_records_a_price_history_row(store):
     store.upsert_car(a_car(), observed_at="2026-08-19T10:00:00Z", run_id=1)
 
     assert history(store) == [("2026-08-19T10:00:00Z", 4998500)]
+
+
+def test_re_upsert_updates_the_same_row_and_preserves_first_seen(store):
+    store.upsert_car(a_car(), observed_at="2026-08-19T10:00:00Z", run_id=1)
+
+    store.upsert_car(
+        a_car(mileage_miles=2500), observed_at="2026-08-20T10:00:00Z", run_id=2
+    )
+
+    (row,) = stored_cars(store)
+    assert row["first_seen"] == "2026-08-19T10:00:00Z"
+    assert row["last_seen"] == "2026-08-20T10:00:00Z"
+    assert row["last_seen_run_id"] == 2
+    assert row["mileage_miles"] == 2500
+
+
+def test_unchanged_price_adds_no_history_row(store):
+    store.upsert_car(a_car(), observed_at="2026-08-19T10:00:00Z", run_id=1)
+
+    store.upsert_car(a_car(), observed_at="2026-08-20T10:00:00Z", run_id=2)
+
+    assert history(store) == [("2026-08-19T10:00:00Z", 4998500)]
+
+
+def test_price_change_adds_a_history_row(store):
+    store.upsert_car(a_car(), observed_at="2026-08-19T10:00:00Z", run_id=1)
+
+    store.upsert_car(
+        a_car(price_pence=4750000), observed_at="2026-08-20T10:00:00Z", run_id=2
+    )
+
+    assert history(store) == [
+        ("2026-08-19T10:00:00Z", 4998500),
+        ("2026-08-20T10:00:00Z", 4750000),
+    ]
+
+
+def test_price_returning_to_an_earlier_value_is_recorded_as_a_change(store):
+    store.upsert_car(a_car(), observed_at="2026-08-19T10:00:00Z", run_id=1)
+    store.upsert_car(
+        a_car(price_pence=4750000), observed_at="2026-08-20T10:00:00Z", run_id=2
+    )
+
+    store.upsert_car(a_car(), observed_at="2026-08-21T10:00:00Z", run_id=3)
+
+    assert history(store)[-1] == ("2026-08-21T10:00:00Z", 4998500)
