@@ -159,3 +159,83 @@ def test_image_url_is_the_first_dealer_photo(source):
     car = source.to_car(raw(0))
 
     assert car.image_url.startswith("https://")
+
+
+import httpx
+
+
+def paged_transport(pages, recorder):
+    """Serve one canned page per X-Page, recording the requests made."""
+
+    def handler(request):
+        recorder.append(request)
+        page = int(request.headers["X-Page"])
+        cars = pages[page - 1] if page <= len(pages) else []
+        return httpx.Response(
+            200,
+            json={
+                "criteria": {
+                    "search": {
+                        "criterias": [
+                            {"criteria": {"key": "t_color"}, "selectedItems": []},
+                            {
+                                "criteria": {"key": "t_petr"},
+                                "selectedItems": [{"key": "E", "number": 248}],
+                            },
+                        ]
+                    }
+                },
+                "results": {"result": {"cars": [{"car": car} for car in cars]}},
+            },
+        )
+
+    return httpx.MockTransport(handler)
+
+
+def source_over(pages, recorder=None):
+    recorder = recorder if recorder is not None else []
+    client = httpx.Client(transport=paged_transport(pages, recorder))
+    return CupraSource(client=client, request_delay=0), recorder
+
+
+def test_fetch_raw_pages_until_an_empty_page(source):
+    cars = fixture_cars()
+    paging, requests = source_over([cars[:2], cars[2:4], cars[4:]])
+
+    listings = list(paging.fetch_raw())
+
+    assert [listing.source_id for listing in listings] == [c["carid"] for c in cars]
+    assert [r.headers["X-Page"] for r in requests] == ["1", "2", "3", "4"]
+
+
+def test_fetch_raw_reports_the_facet_count_as_the_expected_total(source):
+    paging, _ = source_over([fixture_cars()[:1]])
+
+    list(paging.fetch_raw())
+
+    assert paging.expected_total == 248
+
+
+def test_fetch_raw_requests_electric_only_as_a_matrix_parameter(source):
+    paging, requests = source_over([fixture_cars()[:1]])
+
+    list(paging.fetch_raw())
+
+    assert requests[0].url.path.endswith("/search/car;t_petr=E")
+    assert requests[0].headers["X-Pattern"] == "cuprawebfe"
+    assert requests[0].headers["Accept-Language"] == "en-GB"
+
+
+def test_an_immediately_empty_first_page_yields_nothing(source):
+    paging, _ = source_over([])
+
+    assert list(paging.fetch_raw()) == []
+
+
+def test_fetch_raw_carries_the_untouched_payload(source):
+    paging, _ = source_over([fixture_cars()[:1]])
+
+    listing = next(iter(paging.fetch_raw()))
+
+    assert listing.payload["carid"] == "GBR551693296921"
+    assert paging.to_car(listing).model == "Tavascan"

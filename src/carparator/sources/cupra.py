@@ -3,10 +3,19 @@
 from __future__ import annotations
 
 import re
+import time
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Iterator
+
+import httpx
 
 from carparator.model import Car, FuelType, RawListing
+from carparator.sources import REQUEST_DELAY_SECONDS, build_client, get_with_retry
+
+# ";t_petr=E" is a matrix path parameter — the "?t_petr=E" query form is silently
+# ignored and returns unfiltered results.
+SEARCH_URL = "https://vtpapi.seat.com/restapi/v1/cuukgwb/search/car;t_petr=E"
+PAGE_SIZE = 100
 
 _FUEL_TYPES = {
     "electric": FuelType.ELECTRIC,
@@ -107,6 +116,45 @@ class CupraSource:
 
     name = "cupra"
 
+    def __init__(
+        self,
+        client: httpx.Client | None = None,
+        request_delay: float = REQUEST_DELAY_SECONDS,
+    ):
+        self._client = client or build_client()
+        self._request_delay = request_delay
+        self.expected_total: int | None = None
+
+    def fetch_raw(self) -> Iterator[RawListing]:
+        """Walk X-Page until a page comes back empty.
+
+        The API answers 200 with an empty `cars` array past the last page, so the
+        empty page — not the status code — is the terminator.
+        """
+        page = 1
+        while True:
+            if page > 1 and self._request_delay:
+                time.sleep(self._request_delay)
+            payload = get_with_retry(
+                self._client,
+                SEARCH_URL,
+                headers={
+                    "X-Pattern": "cuprawebfe",
+                    "Accept-Language": "en-GB",
+                    "X-Page": str(page),
+                    "X-Page-Items": str(PAGE_SIZE),
+                },
+            ).json()
+            if self.expected_total is None:
+                self.expected_total = _electric_facet_count(payload)
+            cars = payload["results"]["result"]["cars"]
+            if not cars:
+                return
+            for entry in cars:
+                car = entry["car"]
+                yield RawListing(source=self.name, source_id=car["carid"], payload=car)
+            page += 1
+
     def to_car(self, raw: RawListing) -> Car | None:
         car = self.map_car(raw.payload)
         if car.fuel_type is not FuelType.ELECTRIC:
@@ -169,3 +217,14 @@ class CupraSource:
 def _as_int(text: str | None) -> int | None:
     value = _number(text)
     return None if value is None else int(value)
+
+
+def _electric_facet_count(payload: dict[str, Any]) -> int | None:
+    """The t_petr facet reports how many electric cars the run should find."""
+    for criteria in payload.get("criteria", {}).get("search", {}).get("criterias", []):
+        if criteria.get("criteria", {}).get("key") != "t_petr":
+            continue
+        for selected in criteria.get("selectedItems", []):
+            if selected.get("key") == "E":
+                return selected.get("number")
+    return None
