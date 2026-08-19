@@ -5,6 +5,8 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
+from carparator.model import Car
+
 SCHEMA_VERSION = 1
 
 _DDL = """
@@ -74,6 +76,41 @@ class SqliteStore:
         with self.connection:
             self.connection.executescript(_DDL)
             self.connection.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
+
+    def upsert_car(self, car: Car, *, observed_at: str, run_id: int | None) -> None:
+        """Insert or refresh a listing, preserving first_seen."""
+        values = car.model_dump()
+        values["fuel_type"] = car.fuel_type.value
+        columns = list(values)
+        placeholders = ", ".join(f":{name}" for name in columns)
+        updates = ", ".join(f"{name} = excluded.{name}" for name in columns)
+        with self.connection:
+            self.connection.execute(
+                f"INSERT INTO cars ({', '.join(columns)},"
+                " first_seen, last_seen, last_seen_run_id)"
+                f" VALUES ({placeholders}, :observed_at, :observed_at, :run_id)"
+                " ON CONFLICT (source, source_id) DO UPDATE SET"
+                f" {updates}, last_seen = excluded.last_seen,"
+                " last_seen_run_id = excluded.last_seen_run_id",
+                {**values, "observed_at": observed_at, "run_id": run_id},
+            )
+            self._record_price(car, observed_at)
+
+    def _record_price(self, car: Car, observed_at: str) -> None:
+        """Write history on the first sighting, and thereafter only on a change."""
+        latest = self.connection.execute(
+            "SELECT price_pence FROM price_history"
+            " WHERE source = ? AND source_id = ?"
+            " ORDER BY observed_at DESC LIMIT 1",
+            (car.source, car.source_id),
+        ).fetchone()
+        if latest is not None and latest[0] == car.price_pence:
+            return
+        self.connection.execute(
+            "INSERT OR REPLACE INTO price_history"
+            " (source, source_id, observed_at, price_pence) VALUES (?, ?, ?, ?)",
+            (car.source, car.source_id, observed_at, car.price_pence),
+        )
 
     def close(self) -> None:
         self.connection.close()
