@@ -16,6 +16,7 @@ from carparator.sources import REQUEST_DELAY_SECONDS, build_client, get_with_ret
 SEARCH_URL = "https://usedcars.volkswagen.co.uk/en/vehicle_search/all-brands/all-models"
 MAX_PAGES = 200
 MAX_CONSECUTIVE_FAILED_PAGES = 3
+MAX_RETAINED_FAILED_PAGE_BODIES = 3
 
 _RESULT_COUNT = re.compile(r"'numberOfResults'\s*:\s*'(\d+)'")
 
@@ -116,6 +117,7 @@ class VolkswagenSource:
         self._request_delay = request_delay
         self.expected_total: int | None = None
         self.failed_pages: list[int] = []
+        self.failed_page_bodies: list[str] = []
 
     def fetch_raw(self) -> Iterator[RawListing]:
         """Walk /pageN until a page legitimately holds no vehicles.
@@ -138,6 +140,8 @@ class VolkswagenSource:
 
             if _ANCHOR not in html:
                 self.failed_pages.append(page)
+                if len(self.failed_page_bodies) < MAX_RETAINED_FAILED_PAGE_BODIES:
+                    self.failed_page_bodies.append(html)
                 consecutive_failures += 1
                 logger.warning(
                     "volkswagen page %d held no vehicle payload (%d bytes)",

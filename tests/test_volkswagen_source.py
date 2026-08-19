@@ -301,3 +301,36 @@ def test_a_page_that_fails_to_parse_does_not_abort_the_remaining_pages(vehicles)
         vehicles[1]["ID"],
     ]
     assert paging.failed_pages == [2]
+
+
+def test_a_page_that_fails_to_parse_retains_its_raw_html(vehicles):
+    paging, _ = source_over(
+        [page_of(vehicles[:1]), "<html>totally unexpected</html>", page_of(vehicles[1:2])]
+    )
+
+    list(paging.fetch_raw())
+
+    assert paging.failed_page_bodies == ["<html>totally unexpected</html>"]
+
+
+def test_retained_failed_page_bodies_are_capped_regardless_of_total_failures(vehicles):
+    paging, _ = source_over(
+        [
+            "<html>bad1</html>",
+            page_of(vehicles[:1]),
+            "<html>bad2</html>",
+            page_of(vehicles[1:2]),
+            "<html>bad3</html>",
+            page_of(vehicles[2:3]),
+            "<html>bad4</html>",
+        ]
+    )
+
+    list(paging.fetch_raw())
+
+    assert paging.failed_pages == [1, 3, 5, 7]
+    assert paging.failed_page_bodies == [
+        "<html>bad1</html>",
+        "<html>bad2</html>",
+        "<html>bad3</html>",
+    ]
