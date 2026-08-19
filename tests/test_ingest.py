@@ -1,5 +1,6 @@
 import logging
 import sqlite3
+from contextlib import contextmanager
 
 import pytest
 
@@ -151,6 +152,68 @@ def test_one_source_failing_does_not_abort_the_other(store):
         "cupra": "failed",
         "volkswagen": "complete",
     }
+
+
+def test_a_finish_run_failure_for_one_source_does_not_abort_the_next(store, monkeypatch):
+    original_finish_run = store.finish_run
+    calls = []
+
+    def flaky_finish_run(run_id, **kwargs):
+        calls.append(run_id)
+        if len(calls) == 1:
+            raise sqlite3.OperationalError("disk I/O error")
+        return original_finish_run(run_id, **kwargs)
+
+    monkeypatch.setattr(store, "finish_run", flaky_finish_run)
+
+    results = ingest(
+        [
+            FakeSource("cupra", ["a", "b"]),
+            FakeSource("volkswagen", ["x", "y"]),
+        ],
+        store,
+    )
+
+    assert [result.source for result in results] == ["cupra", "volkswagen"]
+    assert results[0].status == "failed"
+    assert "disk I/O error" in results[0].error
+    assert results[1].status == "complete"
+    assert car_count(store, "cupra") == 2
+    assert car_count(store, "volkswagen") == 2
+
+
+def test_a_commit_failure_unwinding_a_fetch_failure_keeps_the_original_cause(
+    store, monkeypatch
+):
+    source = FakeSource("cupra", ["a", "b", "c"], fail_after=1)
+
+    @contextmanager
+    def flaky_transaction():
+        store._in_transaction = True
+        try:
+            yield
+        finally:
+            store._in_transaction = False
+            raise sqlite3.OperationalError("disk I/O error")
+
+    monkeypatch.setattr(store, "transaction", flaky_transaction)
+
+    ingest([source], store)
+
+    (run,) = runs(store)
+    assert run["status"] == "failed"
+    assert "endpoint went away" in run["error"]
+    assert "disk I/O error" in run["error"]
+
+
+def test_partial_listings_from_a_failed_source_are_actually_committed(store):
+    ingest([FakeSource("cupra", ["a", "b", "c"], fail_after=2)], store)
+
+    with sqlite3.connect(store.path) as second_connection:
+        count = second_connection.execute(
+            "SELECT COUNT(*) FROM cars WHERE source = 'cupra'"
+        ).fetchone()[0]
+    assert count == 2
 
 
 def test_raw_payloads_are_kept_for_every_listing_seen(store):

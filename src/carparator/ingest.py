@@ -78,24 +78,32 @@ def _ingest_one(
     except Exception as error:
         logger.exception("%s: run failed", source.name)
         result.status = FAILED
-        result.error = f"{type(error).__name__}: {error}"
+        result.error = _describe_error(error)
 
     result.expected_total = getattr(source, "expected_total", None)
     _retain_failed_pages(source, store, result)
     if result.status != FAILED:
         result.status = COMPLETE if _is_complete(result, limit) else PARTIAL
 
-    store.finish_run(
-        run_id,
-        finished_at=_timestamp(),
-        expected_total=result.expected_total,
-        listings_seen=result.listings_seen,
-        listings_stored=result.listings_stored,
-        skipped_non_electric=result.skipped_non_electric,
-        mapping_errors=result.mapping_errors,
-        status=result.status,
-        error=result.error,
-    )
+    try:
+        store.finish_run(
+            run_id,
+            finished_at=_timestamp(),
+            expected_total=result.expected_total,
+            listings_seen=result.listings_seen,
+            listings_stored=result.listings_stored,
+            skipped_non_electric=result.skipped_non_electric,
+            mapping_errors=result.mapping_errors,
+            status=result.status,
+            error=result.error,
+        )
+    except Exception as error:
+        # The store itself is what's broken here, so there's no further store
+        # call worth making. Keep the failure inside this source: the caller
+        # still gets an accurate IngestResult, and the next source can run.
+        logger.exception("%s: failed to record run outcome", source.name)
+        result.status = FAILED
+        result.error = _describe_error(error, cause=result.error)
     return result
 
 
@@ -129,6 +137,23 @@ def _is_complete(result: IngestResult, limit: int | None) -> bool:
     if result.expected_total is None:
         return True
     return result.listings_seen >= result.expected_total
+
+
+def _describe_error(error: BaseException, *, cause: str | None = None) -> str:
+    """Render an error for storage without losing an earlier root cause.
+
+    A later store-layer failure (e.g. a commit raising while unwinding a
+    fetch failure, or finish_run itself failing) must not silently replace
+    the reason the run actually failed.
+    """
+    message = f"{type(error).__name__}: {error}"
+    if cause is None:
+        context = error.__context__
+        if context is not None and context is not error:
+            cause = f"{type(context).__name__}: {context}"
+    if cause and cause not in message:
+        message = f"{message} (cause: {cause})"
+    return message
 
 
 def _timestamp() -> str:
