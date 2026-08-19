@@ -1,0 +1,6503 @@
+{
+ "criteria": {
+  "key": "criteria",
+  "search": {
+   "criterias": [
+    {
+     "criteria": {
+      "key": "t_color"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "09",
+       "number": 14
+      },
+      {
+       "key": "05",
+       "number": 21
+      },
+      {
+       "key": "01",
+       "number": 43
+      },
+      {
+       "key": "11",
+       "number": 5
+      },
+      {
+       "key": "02",
+       "number": 13
+      },
+      {
+       "key": "08",
+       "number": 74
+      },
+      {
+       "key": "03",
+       "number": 7
+      },
+      {
+       "key": "07",
+       "number": 29
+      },
+      {
+       "key": "04",
+       "number": 42
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_drive"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "2",
+       "number": 36
+      },
+      {
+       "key": "0",
+       "number": 1
+      },
+      {
+       "key": "1",
+       "number": 211
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_ez_fr"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "2005",
+       "number": 248
+      },
+      {
+       "key": "2006",
+       "number": 248
+      },
+      {
+       "key": "2007",
+       "number": 248
+      },
+      {
+       "key": "2008",
+       "number": 248
+      },
+      {
+       "key": "2009",
+       "number": 248
+      },
+      {
+       "key": "2010",
+       "number": 248
+      },
+      {
+       "key": "2011",
+       "number": 248
+      },
+      {
+       "key": "2012",
+       "number": 248
+      },
+      {
+       "key": "2013",
+       "number": 248
+      },
+      {
+       "key": "2014",
+       "number": 248
+      },
+      {
+       "key": "2015",
+       "number": 248
+      },
+      {
+       "key": "2016",
+       "number": 248
+      },
+      {
+       "key": "2017",
+       "number": 248
+      },
+      {
+       "key": "2018",
+       "number": 248
+      },
+      {
+       "key": "2019",
+       "number": 248
+      },
+      {
+       "key": "2020",
+       "number": 248
+      },
+      {
+       "key": "2021",
+       "number": 248
+      },
+      {
+       "key": "2022",
+       "number": 248
+      },
+      {
+       "key": "2023",
+       "number": 224
+      },
+      {
+       "key": "2024",
+       "number": 183
+      },
+      {
+       "key": "2025",
+       "number": 148
+      },
+      {
+       "key": "2026",
+       "number": 67
+      },
+      {
+       "key": "-1",
+       "number": 248
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_ez_to"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "2022",
+       "number": 24
+      },
+      {
+       "key": "2023",
+       "number": 65
+      },
+      {
+       "key": "2024",
+       "number": 100
+      },
+      {
+       "key": "2025",
+       "number": 181
+      },
+      {
+       "key": "-1",
+       "number": 248
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_gear"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "A",
+       "number": 248
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_gwfc"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "0",
+       "number": 246
+      },
+      {
+       "key": "1",
+       "number": 2
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_km_fr"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "0",
+       "number": 248
+      },
+      {
+       "key": "5000",
+       "number": 168
+      },
+      {
+       "key": "10000",
+       "number": 106
+      },
+      {
+       "key": "15000",
+       "number": 78
+      },
+      {
+       "key": "20000",
+       "number": 59
+      },
+      {
+       "key": "25000",
+       "number": 49
+      },
+      {
+       "key": "30000",
+       "number": 36
+      },
+      {
+       "key": "40000",
+       "number": 12
+      },
+      {
+       "key": "50000",
+       "number": 8
+      },
+      {
+       "key": "80000",
+       "number": 1
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_km_to"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "5000",
+       "number": 83
+      },
+      {
+       "key": "10000",
+       "number": 144
+      },
+      {
+       "key": "15000",
+       "number": 170
+      },
+      {
+       "key": "20000",
+       "number": 189
+      },
+      {
+       "key": "25000",
+       "number": 199
+      },
+      {
+       "key": "30000",
+       "number": 212
+      },
+      {
+       "key": "40000",
+       "number": 236
+      },
+      {
+       "key": "50000",
+       "number": 240
+      },
+      {
+       "key": "80000",
+       "number": 247
+      },
+      {
+       "key": "100000",
+       "number": 248
+      },
+      {
+       "key": "125000",
+       "number": 248
+      },
+      {
+       "key": "150000",
+       "number": 248
+      },
+      {
+       "key": "200000",
+       "number": 248
+      },
+      {
+       "key": "200001",
+       "number": 248
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_kw_fr"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "0",
+       "number": 248
+      },
+      {
+       "key": "48",
+       "number": 248
+      },
+      {
+       "key": "70",
+       "number": 248
+      },
+      {
+       "key": "85",
+       "number": 248
+      },
+      {
+       "key": "110",
+       "number": 248
+      },
+      {
+       "key": "140",
+       "number": 248
+      },
+      {
+       "key": "221",
+       "number": 58
+      },
+      {
+       "key": "222",
+       "number": 58
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_kw_to"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "140",
+       "number": 1
+      },
+      {
+       "key": "221",
+       "number": 190
+      },
+      {
+       "key": "222",
+       "number": 248
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_model"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "EXBQ",
+       "number": 165
+      },
+      {
+       "key": "EXAG",
+       "number": 1
+      },
+      {
+       "key": "EXAE",
+       "number": 82
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_partner"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "GBR55594",
+       "number": 2
+      },
+      {
+       "key": "GBR55010",
+       "number": 1
+      },
+      {
+       "key": "GBR55011",
+       "number": 8
+      },
+      {
+       "key": "GBR55185",
+       "number": 1
+      },
+      {
+       "key": "GBR55723",
+       "number": 4
+      },
+      {
+       "key": "GBR55693",
+       "number": 3
+      },
+      {
+       "key": "GBR55571",
+       "number": 8
+      },
+      {
+       "key": "GBR55738",
+       "number": 5
+      },
+      {
+       "key": "GBR55134",
+       "number": 2
+      },
+      {
+       "key": "GBR55115",
+       "number": 6
+      },
+      {
+       "key": "GBR55603",
+       "number": 5
+      },
+      {
+       "key": "GBR55527",
+       "number": 2
+      },
+      {
+       "key": "GBR55579",
+       "number": 1
+      },
+      {
+       "key": "GBR55553",
+       "number": 2
+      },
+      {
+       "key": "GBR55188",
+       "number": 3
+      },
+      {
+       "key": "GBR55156",
+       "number": 1
+      },
+      {
+       "key": "GBR55144",
+       "number": 5
+      },
+      {
+       "key": "GBR55506",
+       "number": 1
+      },
+      {
+       "key": "GBR55174",
+       "number": 10
+      },
+      {
+       "key": "GBR55537",
+       "number": 7
+      },
+      {
+       "key": "GBR55717",
+       "number": 3
+      },
+      {
+       "key": "GBR55714",
+       "number": 6
+      },
+      {
+       "key": "GBR55139",
+       "number": 7
+      },
+      {
+       "key": "GBR55096",
+       "number": 4
+      },
+      {
+       "key": "GBR55526",
+       "number": 7
+      },
+      {
+       "key": "GBR55064",
+       "number": 4
+      },
+      {
+       "key": "GBR55551",
+       "number": 2
+      },
+      {
+       "key": "GBR55572",
+       "number": 1
+      },
+      {
+       "key": "GBR55063",
+       "number": 11
+      },
+      {
+       "key": "GBR55169",
+       "number": 15
+      },
+      {
+       "key": "GBR55065",
+       "number": 3
+      },
+      {
+       "key": "GBR55141",
+       "number": 11
+      },
+      {
+       "key": "GBR55617",
+       "number": 13
+      },
+      {
+       "key": "GBR55727",
+       "number": 2
+      },
+      {
+       "key": "GBR55018",
+       "number": 4
+      },
+      {
+       "key": "GBR55130",
+       "number": 9
+      },
+      {
+       "key": "GBR55073",
+       "number": 4
+      },
+      {
+       "key": "GBR55595",
+       "number": 4
+      },
+      {
+       "key": "GBR55147",
+       "number": 4
+      },
+      {
+       "key": "GBR55166",
+       "number": 4
+      },
+      {
+       "key": "GBR55142",
+       "number": 5
+      },
+      {
+       "key": "GBR55060",
+       "number": 7
+      },
+      {
+       "key": "GBR55061",
+       "number": 4
+      },
+      {
+       "key": "GBR55124",
+       "number": 1
+      },
+      {
+       "key": "GBR55100",
+       "number": 1
+      },
+      {
+       "key": "GBR55725",
+       "number": 4
+      },
+      {
+       "key": "GBR55033",
+       "number": 3
+      },
+      {
+       "key": "GBR55152",
+       "number": 4
+      },
+      {
+       "key": "GBR55552",
+       "number": 9
+      },
+      {
+       "key": "GBR55116",
+       "number": 8
+      },
+      {
+       "key": "GBR55722",
+       "number": 7
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_pe_fr"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "0",
+       "number": 248
+      },
+      {
+       "key": "5000",
+       "number": 248
+      },
+      {
+       "key": "10000",
+       "number": 248
+      },
+      {
+       "key": "15000",
+       "number": 246
+      },
+      {
+       "key": "20000",
+       "number": 188
+      },
+      {
+       "key": "25000",
+       "number": 139
+      },
+      {
+       "key": "30000",
+       "number": 96
+      },
+      {
+       "key": "35000",
+       "number": 40
+      },
+      {
+       "key": "40000",
+       "number": 8
+      },
+      {
+       "key": "45000",
+       "number": 5
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_pe_to"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "15000",
+       "number": 2
+      },
+      {
+       "key": "20000",
+       "number": 60
+      },
+      {
+       "key": "25000",
+       "number": 109
+      },
+      {
+       "key": "30000",
+       "number": 152
+      },
+      {
+       "key": "35000",
+       "number": 209
+      },
+      {
+       "key": "40000",
+       "number": 240
+      },
+      {
+       "key": "45000",
+       "number": 243
+      },
+      {
+       "key": "50000",
+       "number": 248
+      },
+      {
+       "key": "55000",
+       "number": 248
+      },
+      {
+       "key": "60000",
+       "number": 248
+      },
+      {
+       "key": "65000",
+       "number": 248
+      },
+      {
+       "key": "70000",
+       "number": 248
+      },
+      {
+       "key": "75000",
+       "number": 248
+      },
+      {
+       "key": "80000",
+       "number": 248
+      },
+      {
+       "key": "80001",
+       "number": 248
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_petr"
+     },
+     "selectedItems": [
+      {
+       "key": "E",
+       "number": 248
+      }
+     ],
+     "possibleItems": [
+      {
+       "key": "E",
+       "number": 248
+      },
+      {
+       "key": "B",
+       "number": 758
+      },
+      {
+       "key": "H",
+       "number": 158
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_smod"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "EXAEAD",
+       "number": 46
+      },
+      {
+       "key": "EXBQZZ",
+       "number": 47
+      },
+      {
+       "key": "EXBQAE",
+       "number": 58
+      },
+      {
+       "key": "EXBQKW",
+       "number": 38
+      },
+      {
+       "key": "EXAEAA",
+       "number": 36
+      },
+      {
+       "key": "EXBQAA",
+       "number": 22
+      },
+      {
+       "key": "EXAGAA",
+       "number": 1
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "t_surfacetype"
+     },
+     "selectedItems": [],
+     "possibleItems": [
+      {
+       "key": "matt",
+       "number": 5
+      },
+      {
+       "key": "metallic",
+       "number": 243
+      }
+     ]
+    },
+    {
+     "criteria": {
+      "key": "financeRate"
+     },
+     "possibleRange": {
+      "min": 170.12,
+      "max": 951.82
+     }
+    },
+    {
+     "criteria": {
+      "key": "initialReg"
+     },
+     "possibleRange": {
+      "min": "2022-05-25",
+      "max": "2026-08-11"
+     }
+    },
+    {
+     "criteria": {
+      "key": "mileage"
+     },
+     "possibleRange": {
+      "min": 10,
+      "max": 84138
+     }
+    },
+    {
+     "criteria": {
+      "key": "powerKw"
+     },
+     "possibleRange": {
+      "min": 140,
+      "max": 250
+     }
+    },
+    {
+     "criteria": {
+      "key": "priceRetail"
+     },
+     "possibleRange": {
+      "min": 14793.0,
+      "max": 49985.0
+     }
+    }
+   ]
+  }
+ },
+ "results": {
+  "result": {
+   "cars": [
+    {
+     "key": "R0JSNTUxNjkzMjk2OTIx=",
+     "href": "https://vtpapi.seat.com/restapi/v1/cuukgwb/datastore/cars/R0JSNTUxNjkzMjk2OTIx=",
+     "car": {
+      "key": "R0JSNTUxNjkzMjk2OTIx=",
+      "carid": "GBR551693296921",
+      "images": [
+       {
+        "key": "dealerImages",
+        "imageGroup": {
+         "key": "dealerImages",
+         "images": [
+          {
+           "key": "0",
+           "image": {
+            "key": "0",
+            "href": "https://vtpimages.audi.com/carimg2/7503/4641827503.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          }
+         ],
+         "type": "photo",
+         "contenttype": "image/jpeg",
+         "width": 640,
+         "height": 480
+        }
+       },
+       {
+        "key": "renderImagesSeat",
+        "imageGroup": {
+         "key": "renderImagesSeat",
+         "images": [
+          {
+           "key": "vtpextcolor",
+           "image": {
+            "key": "vtpextcolor",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGJYwMBfkpTMCWSlMnJm5iemp-kC-uFB6Tn5SYo5ucUliSWayvpGBkSk_Iy-KIDtQDyMPg6N739cvSsu_fjG6KqxSwfNjl479GwZmoFwVEAcygAAfX2lRTkFiUWKuXnlmSkmGoIYBkUCY1ccx0jUIALHznru_AAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpintcolor",
+           "image": {
+            "key": "vtpintcolor",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGNYxMBfkpTMCWSlMnJm5iemp-kC-uGRaflFual5JfpFucUliSWayvpGBkamud5AhP6MAuhw7UDcjDwOnZHyC1R-3uvfZjuc8m8VOh7RVXGZgBspVAXEgAwjw8ZUW5RQkFiXm6pVnppRkCGoYEAmEWX0cI12DAGYwQg_JAAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpwheel",
+           "image": {
+            "key": "vtpwheel",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGNYxMBfkpTMCWSlMnJm5iemp-kC-uGRaflFual5JfpFucUliSWayvpGBkamud5AhP6MAuhw7UDcjD0Pn7qvij8w2LrBJ_JXZ12pT5hHEmsrADJSbBsUMDHx8pUU5BYlFibl65ZkpJRmCGgZEAmFWH8dI1yAAWr6ziskAAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avpint_dashboard_wf",
+           "image": {
+            "key": "avpint_dashboard_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42S3WvNcRzHP-e13-N3vwdnx2lC8pjd7OFsZ9vZhdbGCrmYpaFNp995mB17cDo72xRCHgqZckEoRELhxg3DSGtckJRbxY1SZKUQF3P2H3j3uXi_6lOfd5_ed7-JPloQetrv_qj8bVjbPiKyLy_CcynLD-8OiUgGOzcU7M7WltgtceXSkWxQrA7G8rXp0XwhqC0GY8FIOhiura-rb_TFLO1ImYh5WERLzIN43mhhMB8UgqGa8Vym2B-uqvtPLa6KJ2LxbCzVnE01p_uyDdnmRENjUzzVFGvsi6Uy8XSiZINEPFVRunNZyoLBQYmUsuWGi8lMMNKf2hsUMsnxPjEHCrF0NlMn2nxMMVcPppP5QhKjBm8V8hjtA9pP9BXo1VgrsU-jtqJyqGN4T9Fb0Deh78Dox7iNcR_zL5aHncffRfge4XdIEfUM9QavHe0i5mfMh5TPIB14rfjbkY3IOZwa3EpCa1F1OBGcNdgTeN14f6iYxvlKeBbVhrqF34L_i-hyrL_Yh3CO43ZgvcHeg3ceHaJpvHOoNOoS6ipOK85Z_FPIA-wWnH5cG-8A3hz-ZsLXMU5gvMDqwepFTeC8wi3DbUA7gnEG-w6qGd0kGsecQpU-8BD_AQveIgptFr0TcwnaE7TXGAfxkvhLkZvII7SjGGcx3mFNYb3H-oL6TvkWnDzuMryX-F3415BW5CT6Qowb2FHKG3DmcKN4A8gytGmMCxgzqAKuRWQd9k5UiNCkGPvqU6VB20_oAqFerA7UItQnnEmMK_Mtizht3Z3Jtq71Gzd1d2z4B_X73RvbAgAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avpint_lateral_wf",
+           "image": {
+            "key": "avpint_lateral_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42Sy0uUcRSGzzx-15_fpdEGoyS6Uht10kadRYjWgEYLi7AiY_j8ZkatUYZxTKGiogtUpOCiqKCiiAqqjRu7GURUiyKCtkFtgqAoCCpyUeN_0OFsHnjhfTicO19FHy0Kuzvu_Kj5bVjbPyAyXhBhVioKw_0REclgDw4F_dmGMrtlrqkdyQalumB_oSEcLRSDhlKwPxgJg-GGxnhjwheznJEKEfOIiNY6D-J5o8V8ISgGQ_Vjg5nSQHRt_D9n8dpELmxMhmG8NdGUTSTjub5kc3JdSzLXHOZaM5kw0xc0xxPxxPqqcs8lqQjyeYmW3QaHS-l8UMoWg3x6LCfmvuK6MJuJizYvKeaqfJguFNMY9XgrkYdo79F-oi9Hr8NagX0GtRU1iDqO9xg9id6FvhNjAOMWxj3MOSwPu4C_h-hdom-REuoJ6jVeB9oFzE-YM1Q-R1J4bfg7kE5kCqcet4bIGlQcpxpnNfYEXg_eH6qe4Xwh-h3VjrqJn8T_RWwZ1hz2YZwTuCms19h78c6hQyzEm0KFqIuoKzhtOJP4p5Fp7CTOAK6NdxDvL_5motcwTmI8xdqN1YuawHmJW4HbhHYU4yz2bVQLuklsPeYsqnyBGfxpFrxBFNp39G7MJWiP0F5hHMJL49ciN5D7aMcwJjHeYs1ivcP6jPpG5RacAu5SvBf42_CvIm3IKfSFGNexY1Q24fzFjeHtQ5aiPcM4j_EcVcS1qN6AvQsVIfJAjPHGvvKiHSBynkgvVgq1CPUR5wHG5fkfq3bae7rT7ds2dnb1pDb9A2XDiqbZAgAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_015_wf",
+           "image": {
+            "key": "avptt_015_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42S3YtMcRzGv_PZc37nnN-eOcdY0wrJa1ywe3Z3xpoLbbusEMWmRVbT2XnbZTCNWRRCXgqhXHgt5CUUbvbGu5JwYWnjVnGjFFEKccHsf-DpuXkunp6np-fmFzEHysLajpvf638pe-V7RLaXRHgjNaVNhYiIZHH6N4aFXGNV10_Ykgsrs8OtpcbMQKkcNlbCreGWTLipsTloTvoRVShu7g2LVtUWsaWjEJtVWGjcPX2l7cqr8tSOHcvOD0uNiLVHxJgrI_C8gXKxFJbDjQ3b-rOVvtjM4D8xbmZibj4MUsneIGzJJRJBMpmdE2by2abeZCLTmm_KBYlUPplKtI6u5pyTmrBYFLfavFJJB03J9La8WBvKTZlcNhBjpL1Y04qZdKmcRjXgTUXuY7zD-IE5GXM29hScI-gV6H70fryHmCnMxZirUX2o66jbWH-wPZwS_jpit4gNIxX0Y_QQXgfGGayPWHeofYZ04rXhr0IWISdwG4jWE5mBDnDrcKfjHMPrxvvN6Ke4n4l9Q7ejr-Gn8H8Sn4T9B2c37gGindhDOOvxTmJCPIN3Ap1Bn0VfwG3DPY5_GBnESeH2EXXwduL9xV9C7BLqIOoJ9lrsHvQx3BdEa4i2YOxFHcW5gW7FtIgnsB6hqwvcwR9k1GtEY3zDXI41HuMBxkvULrw0_gTkKnIXYx_qOGoY-xH2W-xP6K_ULsUtEZ2I9xy_C_8i0oYcwhyDuowTp7YF9y_RON4GZCLGU9Qp1DN0mahN3TycNegIkXuitjf3Vomxg8gpIj3Yneix6A-491DnR-5V57Z3L0-3d81ftLi7c8E_zMl2P-4CAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_180_wf",
+           "image": {
+            "key": "avptt_180_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42S3YtMcRzGv_PZc37nnN-eOcdY0wrJa1ywOzM7Y3cutO2yQhTSoqXp7JkxuwymMYtCyEshlAuvhbyEwo0b1ltJuPDSxq3iRimiFOKC2f_A03PzXDw9T0_PjS9iDlSEns4b3xt_KXv5e0S2lUV4I3XljcWIiORx-jcExUJzTTeO21wIqjODLeXmcKBcCZqrwZZgcxhsbE4lUhk_ooqlTb1ByarZIrZ0FmMzivOMu6cut19-VZncuX3xuSGpE7F2ixhtMgzPG6iUykEl2NC0tT9f7YtNT_wnxkzPZxKpRBBmW4LW3t4wm0km07MKYSYI0qlkIZMqpJNr21oz-fTIWs5ZqQtKJXFrzavVXLItkdu6Vqz1lWRYyCfEGG4v1pRSmCtXcqgmvMnIPYx3GD8wJ2LOxJ6Ecxi9FN2P3of3ADOLuQBzJaoPdQ11C-sPtodTxl9D7CaxIaSKfoR-ideJcRrrI9Yd6p8iXXjt-CuQ-chx3CaijUSmoRO4DbhTcY7ideP9ZuQT3M_EvqE70Ffxs_g_iU_A_oOzC3c_0S7slzjr8E5gQjzEO44O0WfQ53HbcY_hH0Ju42Rx-4g6eDvw_uIvJHYRdQD1GLsHezX6KO5zonVEWzD2oI7gXEe3YlrE01gP0bUF7uDfZsRrRGN8w1yCNRbjPsYL1E68HP445ApyF2Mv6hhqCPsh9lvsT-iv1C_CLRMdj_cMfxn-BaQdOYg5CnUJJ059C-5fonG89ch4jCeok6in6ApRm4bZOKvQESKDoralemvE2E7kJJHV2F3o0egPuIOoc8P3anA7upfkOpbNmb-gu2vuP9ODmP3uAgAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_330_wf",
+           "image": {
+            "key": "avptt_330_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42S3YtMcRzGv_PZc37nnN-eOcdY0wrJa_aC3XlZdudC2y4rRCEtQtOZs7OzawfTmEUh5KUQyoXXQl5C4caNdyUtF17auFXcKEWUQlys2f_A03PzXDw9T0_Pza9iDpSFtR03f9T_VvbKD4hsL4nwVmpKmwoREenG6dsYFPJNVV0_YUs-qMwKtpaawoFSOWiqBFuDLWGwqSmVSM32I6pQ3JwLilbVFrGloxCbWVhg3Dt9pe3K6_LUjh1Lzw9JjYi1R8RolRF43kC5WArKwcbGbX3dld5YQ-I_Ma6hOZFobk1muvO5dDI1J59JBz3JVJBpDZPpTCLXkmsJZ4dh2JMZXc05JzVBsShutXmlkk2nE9ltPWL1l5Nhvjshxkh7saYVw2ypnEU14k1FHmC8x_iJORlzFvYUnCPo5eg-9H68R5gZzEWYq1G9qOuo21h_sT2cEv56YreIDSEV9BP0K7wOjDNYn7DuUjuIdOK14a9CFiIncBuJ1hOZgU7g1uFOxzmG14X3h9HPcL8Q-45uR1_Dz-D_Ij4J-y_ObtwDRDuxX-FswDuJCfEQ7wQ6RJ9FX8Btwz2Ofxi5g5PB7SXq4O3EG8ZfTOwS6iDqKfZa7HXoY7gviNYQTWPsRR3FuYFuwbSIN2M9RlcXuIt_h1FvEI3xHXMZ1niMhxgvUbvwsvgTkKvIPYx9qOOoIezH2O-wP6O_UbsEt0R0It5z_BX4F5E25BDmGNRlnDi1adxhonG8fmQixjPUKdQgukzUpm4uzhp0hMh9UdtTuSoxdhA5RWQddid6LPoj7n3U-ZF71bntXcuy7SvmLVzU1Tn_HwHHGEHuAgAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpef",
+           "image": {
+            "key": "vtpef",
+            "href": "https://vtp-europe-multi-skodaseat.elvis-eu-prd.webapps.audi.io/fallbackimages/seat_vtp_fallback_1436_804_448.png",
+            "type": "fallback",
+            "contenttype": "image/png"
+           }
+          }
+         ],
+         "type": "render",
+         "contenttype": "image/png"
+        }
+       }
+      ],
+      "items": [
+       {
+        "key": "available_from",
+        "name": {
+         "key": "TS_OFF_VERF"
+        },
+        "value": "2026-09-29T22:00:00Z"
+       },
+       {
+        "key": "capCode",
+        "value": "CUTA00VZ25EE A4"
+       },
+       {
+        "key": "cartitle",
+        "name": {
+         "key": "TS_DWA_SEA_TXT_MM"
+        },
+        "mbv": {
+         "code": "KR1CED"
+        },
+        "value": "CUPRA Tavascan"
+       },
+       {
+        "key": "color",
+        "values": [
+         {
+          "key": "exterior",
+          "values": [
+           {
+            "key": "generic",
+            "value": "Blue"
+           },
+           {
+            "key": "marketing",
+            "values": [
+             {
+              "key": "out",
+              "name": {
+               "key": "TS_t_color"
+              },
+              "value": "Tavascan Blue"
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "key": "interior",
+          "values": [
+           {
+            "key": "generic",
+            "value": "Other"
+           },
+           {
+            "key": "marketing",
+            "values": [
+             {
+              "key": "seat",
+              "name": {
+               "key": "TS_DET_SITZ"
+              },
+              "value": "Character \"Hero\""
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "key": "dateoffer",
+        "value": "2026-07-08T21:56:16Z"
+       },
+       {
+        "key": "dateproduction",
+        "value": "2025-07-28T00:00:00Z"
+       },
+       {
+        "key": "drive",
+        "name": {
+         "key": "TS_H_KEY_DRIVE"
+        },
+        "value": "All-wheel drive"
+       },
+       {
+        "key": "gear",
+        "name": {
+         "key": "TS_t_gear_VW"
+        },
+        "value": "Automatic"
+       },
+       {
+        "key": "initialreg",
+        "name": {
+         "key": "TS_t_ez"
+        },
+        "value": "2026-07-01T00:00:00Z"
+       },
+       {
+        "key": "knr",
+        "name": {
+         "key": "TS_TXT_KOMM"
+        },
+        "value": "3296921"
+       },
+       {
+        "key": "localCarTitle",
+        "value": "CUPRA Tavascan 250kW VZ2 77kWh AWD 5dr Auto *Premium Metallic*"
+       },
+       {
+        "key": "manuf",
+        "name": {
+         "key": "TS_t_manuf"
+        },
+        "value": "CUPRA"
+       },
+       {
+        "key": "mileage",
+        "unit": "MI",
+        "label": "Mileage",
+        "value": "2,222",
+        "raw_value": 2222.0
+       },
+       {
+        "key": "model",
+        "name": {
+         "key": "TS_t_model"
+        },
+        "value": "Tavascan"
+       },
+       {
+        "key": "motor",
+        "values": [
+         {
+          "key": "fuel",
+          "name": {
+           "key": "TS_COM_TXN94"
+          },
+          "value": "Electric"
+         },
+         {
+          "key": "power.kw",
+          "name": {
+           "key": "TS_t_kw"
+          },
+          "unit": "kW",
+          "value": "250"
+         },
+         {
+          "key": "power.ps",
+          "name": {
+           "key": "TS_t_kw"
+          },
+          "unit": "PS",
+          "value": "340"
+         }
+        ]
+       },
+       {
+        "key": "numberplate",
+        "value": "VA26MVW"
+       },
+       {
+        "key": "prices",
+        "values": [
+         {
+          "key": "sale",
+          "unit": "GBP",
+          "value": "49,985.00",
+          "raw_value": 49985.0
+         }
+        ]
+       },
+       {
+        "key": "smod",
+        "name": {
+         "key": "TS_t_smod"
+        },
+        "value": "VZ"
+       },
+       {
+        "key": "preuse",
+        "code": "9",
+        "value": "Other"
+       }
+      ],
+      "hypermediadealer": {
+       "key": "GBR55169",
+       "href": "https://vtpapi.seat.com/restapi/v1/cuukgwb/datastore/dealer/GBR55169",
+       "dealer": {
+        "key": "GBR55169",
+        "gvoStatus": "",
+        "items": [
+         {
+          "key": "city",
+          "value": "Worcester"
+         },
+         {
+          "key": "name",
+          "value": "Listers SEAT Worcester"
+         },
+         {
+          "key": "phone",
+          "value": "01905 794000"
+         },
+         {
+          "key": "position",
+          "values": [
+           {
+            "key": "latitude",
+            "value": "52.221649"
+           },
+           {
+            "key": "longitude",
+            "value": "-2.228826"
+           }
+          ]
+         },
+         {
+          "key": "region",
+          "value": "WR3 7DG"
+         },
+         {
+          "key": "street",
+          "value": "Ombersley Rd, 391"
+         },
+         {
+          "key": "website",
+          "value": "www.seat.co.uk/dealer/listers-seat-worcester.html"
+         },
+         {
+          "key": "zip",
+          "value": "WR3 7DG"
+         }
+        ]
+       }
+      },
+      "hypermediatechdata": [
+       {
+        "key": "NEDC",
+        "techDataType": {
+         "key": "NEDC"
+        }
+       },
+       {
+        "key": "WLTP",
+        "techDataType": {
+         "key": "WLTP",
+         "name": "WLTP",
+         "groups": [
+          {
+           "key": "consumption",
+           "techDataGroup": {
+            "key": "consumption",
+            "name": "Fuel consumption combined according to WLTP",
+            "data": [
+             {
+              "key": "fuel",
+              "techData": {
+               "key": "fuel",
+               "values": [
+                {
+                 "key": "PURE_ELECTRICAL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "ELECTRICAL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "3.4",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "HIGH",
+                   "name": "High",
+                   "value": "3.7",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "MEDIUM",
+                   "name": "Medium",
+                   "value": "4.1",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "LOW",
+                   "name": "Low",
+                   "value": "4.2",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "EXTRA_HIGH",
+                   "name": "Extra High",
+                   "value": "2.7",
+                   "unit": "miles/kWh"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "emission",
+           "techDataGroup": {
+            "key": "emission",
+            "name": "CO\u2082 emissions combined according to WLTP",
+            "data": [
+             {
+              "key": "co2",
+              "techData": {
+               "key": "co2",
+               "values": [
+                {
+                 "key": "PURE_ELECTRICAL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "ELECTRICAL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "0.0",
+                   "unit": "g/km"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "range",
+           "techDataGroup": {
+            "key": "range",
+            "data": [
+             {
+              "key": "range",
+              "techData": {
+               "key": "range",
+               "values": [
+                {
+                 "key": "PURE_ELECTRICAL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "ELECTRICAL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "298.0",
+                   "unit": "miles"
+                  },
+                  {
+                   "key": "CITY",
+                   "name": "City",
+                   "value": "362.0",
+                   "unit": "miles"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "wltp_data",
+           "techDataGroup": {
+            "key": "wltp_data",
+            "data": [
+             {
+              "key": "data",
+              "techData": {
+               "key": "data",
+               "values": [
+                {
+                 "key": "wltp_data_WLTP_DATA",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "wltp_data"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "WLTP_DATA"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "DRAG_COEFFICIENT",
+                   "value": "0.264"
+                  },
+                  {
+                   "key": "HIGH_TYPING",
+                   "value": "0.0"
+                  },
+                  {
+                   "key": "DRAG_COEFFICIENT_H",
+                   "value": "0.308"
+                  },
+                  {
+                   "key": "MASS_VEHICLE_REAR",
+                   "value": "1142.524",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "FUEL_TYPES|0",
+                   "value": "ELECTRICAL"
+                  },
+                  {
+                   "key": "EU_LEER_MIN",
+                   "value": "2267.0",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "MASS_ACTUAL",
+                   "value": "2335.968",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "EU_LEER_MAX",
+                   "value": "2359.0",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "VEHICLE_CLASS",
+                   "value": "CLASS_3B"
+                  },
+                  {
+                   "key": "ENGINE_TYPE",
+                   "value": "PEV"
+                  },
+                  {
+                   "key": "MASS_VEHICLE_FRONT",
+                   "value": "1118.444",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "MASS_VEHICLE",
+                   "value": "2260.968",
+                   "unit": "kg"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          }
+         ]
+        }
+       }
+      ]
+     }
+    },
+    {
+     "key": "R0JSNTUxNzQzMzI2MjYw=",
+     "href": "https://vtpapi.seat.com/restapi/v1/cuukgwb/datastore/cars/R0JSNTUxNzQzMzI2MjYw=",
+     "car": {
+      "key": "R0JSNTUxNzQzMzI2MjYw=",
+      "carid": "GBR551743326260",
+      "images": [
+       {
+        "key": "dealerImages",
+        "imageGroup": {
+         "key": "dealerImages",
+         "images": [
+          {
+           "key": "0",
+           "image": {
+            "key": "0",
+            "href": "https://vtpimages.audi.com/carimg2/9193/4696869193.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "1",
+           "image": {
+            "key": "1",
+            "href": "https://vtpimages.audi.com/carimg2/1208/4708401208.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "2",
+           "image": {
+            "key": "2",
+            "href": "https://vtpimages.audi.com/carimg2/8716/4708428716.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "3",
+           "image": {
+            "key": "3",
+            "href": "https://vtpimages.audi.com/carimg2/1308/4708401308.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "4",
+           "image": {
+            "key": "4",
+            "href": "https://vtpimages.audi.com/carimg2/8619/4708428619.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "5",
+           "image": {
+            "key": "5",
+            "href": "https://vtpimages.audi.com/carimg2/8714/4708428714.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "6",
+           "image": {
+            "key": "6",
+            "href": "https://vtpimages.audi.com/carimg2/8615/4708428615.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "7",
+           "image": {
+            "key": "7",
+            "href": "https://vtpimages.audi.com/carimg2/8812/4708428812.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "8",
+           "image": {
+            "key": "8",
+            "href": "https://vtpimages.audi.com/carimg2/8811/4708398811.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "9",
+           "image": {
+            "key": "9",
+            "href": "https://vtpimages.audi.com/carimg2/8712/4708428712.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "10",
+           "image": {
+            "key": "10",
+            "href": "https://vtpimages.audi.com/carimg2/8717/4708428717.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "11",
+           "image": {
+            "key": "11",
+            "href": "https://vtpimages.audi.com/carimg2/1309/4708401309.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "12",
+           "image": {
+            "key": "12",
+            "href": "https://vtpimages.audi.com/carimg2/1211/4708401211.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "13",
+           "image": {
+            "key": "13",
+            "href": "https://vtpimages.audi.com/carimg2/1405/4708401405.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "14",
+           "image": {
+            "key": "14",
+            "href": "https://vtpimages.audi.com/carimg2/8618/4708428618.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "15",
+           "image": {
+            "key": "15",
+            "href": "https://vtpimages.audi.com/carimg2/1307/4708401307.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "16",
+           "image": {
+            "key": "16",
+            "href": "https://vtpimages.audi.com/carimg2/1408/4708401408.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "17",
+           "image": {
+            "key": "17",
+            "href": "https://vtpimages.audi.com/carimg2/1310/4708401310.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "18",
+           "image": {
+            "key": "18",
+            "href": "https://vtpimages.audi.com/carimg2/8612/4708428612.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "19",
+           "image": {
+            "key": "19",
+            "href": "https://vtpimages.audi.com/carimg2/1411/4708401411.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "20",
+           "image": {
+            "key": "20",
+            "href": "https://vtpimages.audi.com/carimg2/8229/4708428229.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "21",
+           "image": {
+            "key": "21",
+            "href": "https://vtpimages.audi.com/carimg2/1410/4708401410.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "22",
+           "image": {
+            "key": "22",
+            "href": "https://vtpimages.audi.com/carimg2/8228/4708428228.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "23",
+           "image": {
+            "key": "23",
+            "href": "https://vtpimages.audi.com/carimg2/8617/4708428617.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "24",
+           "image": {
+            "key": "24",
+            "href": "https://vtpimages.audi.com/carimg2/1305/4708401305.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "25",
+           "image": {
+            "key": "25",
+            "href": "https://vtpimages.audi.com/carimg2/1404/4708401404.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "26",
+           "image": {
+            "key": "26",
+            "href": "https://vtpimages.audi.com/carimg2/1210/4708401210.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "27",
+           "image": {
+            "key": "27",
+            "href": "https://vtpimages.audi.com/carimg2/1403/4708401403.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "28",
+           "image": {
+            "key": "28",
+            "href": "https://vtpimages.audi.com/carimg2/8613/4708428613.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "29",
+           "image": {
+            "key": "29",
+            "href": "https://vtpimages.audi.com/carimg2/8614/4708428614.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "30",
+           "image": {
+            "key": "30",
+            "href": "https://vtpimages.audi.com/carimg2/1304/4708401304.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "31",
+           "image": {
+            "key": "31",
+            "href": "https://vtpimages.audi.com/carimg2/8231/4708428231.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "32",
+           "image": {
+            "key": "32",
+            "href": "https://vtpimages.audi.com/carimg2/1406/4708401406.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "33",
+           "image": {
+            "key": "33",
+            "href": "https://vtpimages.audi.com/carimg2/8713/4708428713.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "34",
+           "image": {
+            "key": "34",
+            "href": "https://vtpimages.audi.com/carimg2/8230/4708428230.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "35",
+           "image": {
+            "key": "35",
+            "href": "https://vtpimages.audi.com/carimg2/8616/4708428616.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "36",
+           "image": {
+            "key": "36",
+            "href": "https://vtpimages.audi.com/carimg2/1407/4708401407.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "37",
+           "image": {
+            "key": "37",
+            "href": "https://vtpimages.audi.com/carimg2/1209/4708401209.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "38",
+           "image": {
+            "key": "38",
+            "href": "https://vtpimages.audi.com/carimg2/1311/4708401311.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "39",
+           "image": {
+            "key": "39",
+            "href": "https://vtpimages.audi.com/carimg2/1303/4708401303.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "40",
+           "image": {
+            "key": "40",
+            "href": "https://vtpimages.audi.com/carimg2/1306/4708401306.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "41",
+           "image": {
+            "key": "41",
+            "href": "https://vtpimages.audi.com/carimg2/1409/4708401409.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "42",
+           "image": {
+            "key": "42",
+            "href": "https://vtpimages.audi.com/carimg2/8715/4708428715.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "43",
+           "image": {
+            "key": "43",
+            "href": "https://vtpimages.audi.com/carimg2/8232/4708428232.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          }
+         ],
+         "type": "photo",
+         "contenttype": "image/jpeg",
+         "width": 640,
+         "height": 480
+        }
+       },
+       {
+        "key": "renderImagesSeat",
+        "imageGroup": {
+         "key": "renderImagesSeat",
+         "images": [
+          {
+           "key": "vtpextcolor",
+           "image": {
+            "key": "vtpextcolor",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGJYwMBfkpTMCWSlMnJm5iemp-kC-uFB6Tn5SYo5ucUliSWayvpGBkSk_Iy-KIDtQDyMPg6N739cvSsu_fjG6KqxSwfNjl479GwZmoFwVEAcygAAfX2lRTkFiUWKuXnlmSkmGoIYBkUCY1ccx0jUIALHznru_AAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpintcolor",
+           "image": {
+            "key": "vtpintcolor",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGNYxMBfkpTMCWSlMnJm5iemp-kC-uGRaflFual5JfpFucUliSWayvpGBkamud5AhP6MAuhw7UDcjD8OxwHkrD5rEt1icSPePTFWestc_8yUDM1CuCogDGUCAj6-0KKcgsSgxV688M6UkQ1DDgEggzOrjGOkaBAA8T-NMyQAAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpwheel",
+           "image": {
+            "key": "vtpwheel",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGNYxMBfkpTMCWSlMnJm5iemp-kC-uGRaflFual5JfpFucUliSWayvpGBkamud5AhP6MAuhw7UDcjD4Nrg7FQyjPfyUIHRdiWsgsyi4RWbmNgBspNg2IGBj6-0qKcgsSixFy98syUkgxBDQMigTCrj2OkaxAApQ-gHMkAAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avpint_dashboard_wf",
+           "image": {
+            "key": "avpint_dashboard_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42Sy0tUcRzFv37mPn_eR5MNRohgFLlRp9HSgSLMBI0WJmGFxnDnXl9pNoxjBRUVPYgeBi6SooX0IIJqUwvpCSUWVIugbRQELaIoCKIHYeN_0Jez-cCBczh8b34RfSwvdK-_-b38p2FteY_IvpwITyWWG-kvEZEIe3BX0N9bV2S3yOUVo71BoSbYk6sLx3L5oK4Q7AlGw2CkLpVMrfLFLHokJmIeFtGa5kE8byw_nAvywa7avYNRYSBenfzPW1Id1YcNUdQY9TYETalU2NfbF65uSmWz6VXpdLYvbFyZbMw2JdOrFxZzLkksGB6WsmK3wZFCJgpGB7K7g3yU2dsn5lB-ZTaMkqLN1xRz2XCYyeUzGLW43ch9tLdoP9Cr0GuwlmKfRm1GDaKO4T1ET6O3o2_DGMC4gXEb8w_WIuwc_g7it4i_Rgqox6hXeOvRLmB-xJymdBZpxVuHvxVpQyZwionllKxAJXHKcJZjj-N14f1m4QzOZ-LfUC2o6_hp_F8kqrD-YB_COY7bivUKeyfeeXRIhHgTqBB1EXUJZx3OGfxTyF3sNM4Aro13AG8OfyPxyxgnMJ5gdWP1oMZxXuDGcOvRjmCcxX6OakQ3SSQxH6GKC0wTe4d_hwUFRKF9Q-_AnER7gPYS4yBeBr8CuYZMox3FOIfxGusq1husT6ivlG7CyeFW4j3D78SfQtYgJ9EXYVzBTlBajzOHm8AbQirRZjAmMWZReVyLsrXY29F87L9i7Etli0LbT8kkJT1YrajFqA849zCm5h-tzGnu6sg0d7a0tXe1bvgHcEXol94CAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avpint_lateral_wf",
+           "image": {
+            "key": "avpint_lateral_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42Sy0uUcRiFX5_5rj-_S6MORohQFLmxmbzkCIWYCRktLMIKjeGbGSfNUYZptKCiogvRxaBFUrSQLkRQbWohXSmkgmohtI2CoEUUCUFUEvb5H_RyNg8cOIfDe_ub6KNFoXf97R_Vvwxr20dE9hdEeCaRwsjuMhHJYg8OB7v74yG7IVfX7O0PSvXBWCGeGS0Ug3gpGAv2ZoKReEOiodkXM_RIRMQ8IqIlF0A8b7SYLwTFYHjVvsFsaSBal_jPW1KXzuUyQVOuMdmUWJNIJpNBa7ol2ZJtSTclVyfW5EJubshkc0FFmHNFIkE-L9Gw2-BIKZUPSv3FIJ_alxNzqLg6nckmRFsoKebyfCZVKKYwVuH2Ig_R3qP9RF-KXo-1DPsMagtqEHUc7zF6K3oX-g6MAYxbGHcx57CqsAv4u4jeITqDlFBPUW_x1qNdwvyMOUX5C6QTrw1_O7IRuYATJlZTthKVwKnEWYE9jteD94eKaZyvRGdRHaib-K34v4ktxZrDPoxzArcT6y32HryL6BDL4F1AZVCXUVdw2nDO4p9G7mO34gzg2ngH8ebxNxG9inES4zlWL1YfahznNW4EtxHtKMY57FeoFnSTWALzCSpcYIrIB_x7LCohCm0WvRtzAu0R2huMQ3gp_BrkBjKFdgzjPMYM1nWsd1hfUN8p34xTwK3Fe4m_FX8SWYucQq_CuIYdo7wRZx43hjeE1KJNY0xgvEAVcS0q12HvRPOx_4qxvyEdCu0AZROU9WF1ohajPuE8wJhceLNKp72nO9W-tWNjV0_nhn-RzzI73AIAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_015_wf",
+           "image": {
+            "key": "avptt_015_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42S3YtMcRjHn_nMOb9zzm_PnGPsTitJeYsL7MystTtFm2WFKKRFS9OZmd3ZtbNMYxaFkJfktVxYJImV1HLDxXovCcWqLbkTpVyIKCUvidn_wLfn5unbt--np2fws5h9JaG9ZfBb7Q9lr3mHyI6iCK8lXNycD4lIDqe7N8h31FX22glbO4LyrGBbsS7bVywFdeVgW7A1G2yuS8aTDX5I5QtbMkHBqsRCtrTkozPzi43bZwaaB16WprTsXHFhRMIi1l4Ro0lG5Xl9pUIxKAW9s7d358pd0Rnx_9T4GZ3x7JyOVFNDkEs0ZJKNicZsqqk-l8jl5gbJ-sZMPNHZOTeXyebGVnrOSzgoFMStkJfL6XiiIb29U6yeUqLix8UYpRdraiGbLpbSqNlE2pG7GG8wvmNOwpyFPRnnKHoVuht9AO8-ZgpzKeY6VBfqGuoG1m_sGpwi_kai14mOIGX0Q_QwXgvGWawPWENUPUFa8Zrx1yJLkFO4lcZaQtPRcdxq3Gk4J_Da8H4x9jHuJ6Jf0QvRV_FT-D-JTcL-jbMH9yCRVuxhnE14pzEhlsU7hc6iz6HP4zbjHsM_gtzCSeF2EXHwduH9xV9G9BLqEOoRdjv2BvQJ3OdEwkTqMfahjuM8QzdiWsTiWA_QlQsMEX6Lf5MxZURjfMVcidWPcQ_jBWo3Xhp_AnIFGcLYjzqJGsEewH6F_RH9harluEUiE_Ge4q_Gv4jMQw5j1qAu48Soqsf9SySG14NMxHiM6kc9QZeI2FTPx1mP4eP8EbUjmakMxk5C_YQ2YLeix6Hf495BXRz9sGp3QdvK9ILVC5csbWtd9A8oI1aa8QIAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_180_wf",
+           "image": {
+            "key": "avptt_180_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42S3YtMcRzGv_OZc37nnN-eOcfs7rSSlLe4wI7dtTNTtFlWiEJatDSdnZmdXTvWNGZRCHlJXsuFRZJYSS03XKz3klBeakvuRCkXIkrJS2L2P_D03DwXT8_T0zP0Wcz-ktDROvSt7oeyV79DZHtRhNcSLvblQyKSxenZFORz9RVdN35LLijPDLYW6zP9xVJQXw62BlsyQV99Q7xhjh9S-cLmzqBgVWwhW1rz0Rn5Rcat04Mtgy9Lk1t3LD8_ImERa4-IkZRReF5_qVAMSsGmWdt6suXu6PT4f2Lc9K6mZKKxK5FqzCabg-amXFMykwqyc-Lxrlwmm0g1ZJuzQVOiM1ddyTkn4aBQELfSvFxOz07G09u6xOotze7MZONijLYXa0ohky6W0qhZRDqQOxhvML5jTsSciT0J5wh6JboHvR_vHmYKcwnmWlQ36irqOtZv7FqcIv4GoteIjiBl9AP0C7xWjDNYH7CGqXqMtOG14K9BFiMncSuJdYSmoeO4NbhTcY7jteP9ovoR7ieiX9EL0FfwU_g_iU3E_o2zG_cAkTbsFzgb8U5hQiyDdxKdQZ9Fn8NtwT2Kfxi5iZPC7Sbi4O3E-4u_lOhF1EHUQ-wO7PXo47jPiISJNGLsRR3DeYpOYFrE4lj30ZUFhgm_xb_BmDKiMb5irsAawLiL8Ry1Cy-NPx65jAxj7EOdQI1gD2K_wv6I_kLVMtwikQl4T_BX4V9A5iKHMGtRl3BiVDXi_iUSw-tFJmA8Qg2gHqNLRGxq5uGsw_Bx_oja3tBZIcYOQgOE1mO3ocei3-PeRl0YfViNO799RXr-qgWLl7S3LfwHPwl0u_ECAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_330_wf",
+           "image": {
+            "key": "avptt_330_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42S3YtMcRzGv_OZc37nnN-eOcdY00pS3uICOztj7GzRZlkhCmnR0nTmZWeXwTRmUQh5SV7LhUWSWEktN1ys95JQXmpL7kQpFyJKyUti9j_w9Nw8F0_P09Mz8FnM3orQ2TbwreGHsle-Q2R7WYTXEi5vKoZEJI_TszEoFhprumHslkJQnR5sLTfmesuVoLEabA225IJNjYl4IuWHVLG0ORuUrJotZEtbMTqtuMC4dbq_tf9lZWLbjqXnhyQsYu0RMdIyDM_rrZTKQSXYOGNbT77aHZ0a_0-MmdpVaM6nc6lsetbMXKqpa1ZzupBvimfj-WSi0JRKpJKJ_MzmZDo7spZzTsJBqSRurXm1mkkm45ltXWJtqDRlc_m4GMPtxZpUymXKlQxqBpFO5A7GG4zvmOMxp2NPwDmCXo7uQe_Hu4fZgrkIczWqG3UVdR3rN_YonDL-OqLXiA4hVfQD9Au8NowzWB-wBql7jLTjteKvQhYiJ3FriQ2EpqDjuPW4k3GO43Xg_WLkI9xPRL-i56Gv4Lfg_yQ2Hvs3zm7cA0TasV_grMc7hQmxHN5JdA59Fn0OtxX3KP5h5CZOC243EQdvJ95f_MVEL6IOoh5id2KvRR_HfUYkTCSJsRd1DOcpuhnTIhbHuo-uLTBI-C3-DUZUEY3xFXMZVh_GXYznqF14GfyxyGVkEGMf6gRqCLsf-xX2R_QX6pbglomMw3uCvwL_AjIbOYQ5CnUJJ0ZdEvcvkRjeBmQcxiNUH-oxukLEpn4OzhoMH-ePqO2JbI0YOwj1EVqL3Y4ejX6Pext1Yfhh9e7cjmWZuSvmLVzU0T7_H681hHTxAgAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpef",
+           "image": {
+            "key": "vtpef",
+            "href": "https://vtp-europe-multi-skodaseat.elvis-eu-prd.webapps.audi.io/fallbackimages/seat_vtp_fallback_1436_804_448.png",
+            "type": "fallback",
+            "contenttype": "image/png"
+           }
+          }
+         ],
+         "type": "render",
+         "contenttype": "image/png"
+        }
+       }
+      ],
+      "items": [
+       {
+        "key": "available_from",
+        "name": {
+         "key": "TS_OFF_VERF"
+        },
+        "value": "Immediately"
+       },
+       {
+        "key": "capCode",
+        "value": "CUTA00V2 5EE A      "
+       },
+       {
+        "key": "cartitle",
+        "name": {
+         "key": "TS_DWA_SEA_TXT_MM"
+        },
+        "mbv": {
+         "code": "KR1BCD"
+        },
+        "value": "CUPRA Tavascan"
+       },
+       {
+        "key": "color",
+        "values": [
+         {
+          "key": "exterior",
+          "values": [
+           {
+            "key": "generic",
+            "value": "Blue"
+           },
+           {
+            "key": "marketing",
+            "values": [
+             {
+              "key": "out",
+              "name": {
+               "key": "TS_t_color"
+              },
+              "value": "Tavascan Blue"
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "key": "interior",
+          "values": [
+           {
+            "key": "generic",
+            "value": "Other"
+           },
+           {
+            "key": "marketing",
+            "values": [
+             {
+              "key": "seat",
+              "name": {
+               "key": "TS_DET_SITZ"
+              },
+              "value": "Character \"Contrast\""
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "key": "dateoffer",
+        "value": "2026-08-06T12:30:51Z"
+       },
+       {
+        "key": "dateproduction",
+        "value": "2025-07-30T00:00:00Z"
+       },
+       {
+        "key": "doors",
+        "name": {
+         "key": "TS_COM_TUER"
+        },
+        "value": "5"
+       },
+       {
+        "key": "drive",
+        "name": {
+         "key": "TS_H_KEY_DRIVE"
+        },
+        "value": "Rear-wheel drive"
+       },
+       {
+        "key": "gear",
+        "name": {
+         "key": "TS_t_gear_VW"
+        },
+        "value": "Automatic"
+       },
+       {
+        "key": "initialreg",
+        "name": {
+         "key": "TS_t_ez"
+        },
+        "value": "2025-10-29T00:00:00Z"
+       },
+       {
+        "key": "knr",
+        "name": {
+         "key": "TS_TXT_KOMM"
+        },
+        "value": "3326260"
+       },
+       {
+        "key": "localCarTitle",
+        "value": "CUPRA Tavascan 210kW V2 77kWh 5dr Auto with Winter Pack"
+       },
+       {
+        "key": "manuf",
+        "name": {
+         "key": "TS_t_manuf"
+        },
+        "value": "CUPRA"
+       },
+       {
+        "key": "mileage",
+        "unit": "MI",
+        "label": "Mileage",
+        "value": "7,085",
+        "raw_value": 7085.0
+       },
+       {
+        "key": "model",
+        "name": {
+         "key": "TS_t_model"
+        },
+        "value": "Tavascan"
+       },
+       {
+        "key": "motor",
+        "values": [
+         {
+          "key": "fuel",
+          "name": {
+           "key": "TS_COM_TXN94"
+          },
+          "value": "Electric"
+         },
+         {
+          "key": "power.kw",
+          "name": {
+           "key": "TS_t_kw"
+          },
+          "unit": "kW",
+          "value": "210"
+         },
+         {
+          "key": "power.ps",
+          "name": {
+           "key": "TS_t_kw"
+          },
+          "unit": "PS",
+          "value": "286"
+         }
+        ]
+       },
+       {
+        "key": "numberplate",
+        "value": "KM75ZDH"
+       },
+       {
+        "key": "prices",
+        "values": [
+         {
+          "key": "sale",
+          "unit": "GBP",
+          "value": "32,795.00",
+          "raw_value": 32795.0
+         }
+        ]
+       },
+       {
+        "key": "seat",
+        "name": {
+         "key": "TS_OFF_SIT"
+        },
+        "value": "5"
+       },
+       {
+        "key": "smod",
+        "name": {
+         "key": "TS_t_smod"
+        },
+        "value": "Endurance"
+       },
+       {
+        "key": "preuse",
+        "code": "9",
+        "value": "Other"
+       }
+      ],
+      "hypermediadealer": {
+       "key": "GBR55174",
+       "href": "https://vtpapi.seat.com/restapi/v1/cuukgwb/datastore/dealer/GBR55174",
+       "dealer": {
+        "key": "GBR55174",
+        "gvoStatus": "",
+        "items": [
+         {
+          "key": "city",
+          "value": "Ashford"
+         },
+         {
+          "key": "name",
+          "value": "JCB SEAT Ashford"
+         },
+         {
+          "key": "phone",
+          "value": "01233 502900"
+         },
+         {
+          "key": "position",
+          "values": [
+           {
+            "key": "latitude",
+            "value": "51.127356"
+           },
+           {
+            "key": "longitude",
+            "value": "0.895132"
+           }
+          ]
+         },
+         {
+          "key": "region",
+          "value": "TN24 0FJ"
+         },
+         {
+          "key": "street",
+          "value": "Orbital Park, The Courtyard,"
+         },
+         {
+          "key": "website",
+          "value": "www.seat.co.uk/dealer/jcb-seat-ashford.html"
+         },
+         {
+          "key": "zip",
+          "value": "TN24 0FJ"
+         }
+        ]
+       }
+      },
+      "hypermediafinancing": [
+       {
+        "key": "default",
+        "financingData": {
+         "key": "default",
+         "name": "Used PCP \u00a31000 Deposit Contribution",
+         "disclaimer": "18s+. Subject to availability and status. Offer available from participating Retailers. Indemnities may be required.\u00a0 Not available in conjunction with any other finance offer. May be varied or withdrawn at any time. Freepost SEAT Financial Services.",
+         "items": [
+          {
+           "key": "disclaimer.product",
+           "value": "18s+. Subject to availability and status. Offer available from participating Retailers. Indemnities may be required.\u00a0 Not available in conjunction with any other finance offer. May be varied or withdrawn at any time. Freepost SEAT Financial Services."
+          },
+          {
+           "key": "disclaimer.calculation",
+           "value": "*With Solutions PCP. Ordered by 15/09/2028. T&Cs apply. Indemnities may be required. CUPRA Financial Services."
+          },
+          {
+           "key": "Rate",
+           "name": "35 Monthly Payments of",
+           "value": "435.16",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "Duration",
+           "name": "Contract Duration",
+           "value": "36",
+           "unit": "months",
+           "symbol": "Months"
+          },
+          {
+           "key": "Mileage",
+           "name": "Annual Mileage",
+           "value": "5,000",
+           "unit": "Miles",
+           "symbol": "Miles"
+          },
+          {
+           "key": "DownPayment",
+           "name": "Customer Deposit",
+           "value": "3,279.50",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "DEPCONT",
+           "name": "CUPRA Contribution",
+           "value": "1,000.00",
+           "unit": "GBP",
+           "symbol": "\u00a3",
+           "note": "The contribution from CUPRA towards the finance deposit."
+          },
+          {
+           "key": "TD",
+           "name": "Total Deposit",
+           "value": "4,279.50",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "INV",
+           "name": "Retail Cash Price",
+           "value": "32,795.00",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "GFV",
+           "name": "Optional Final Payment",
+           "value": "20,227.50",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "OTPFEE",
+           "name": "Option to Purchase Fee",
+           "value": "10.00",
+           "unit": "GBP",
+           "symbol": "\u00a3",
+           "note": "The option to purchase fee is payable at the end of the agreement."
+          },
+          {
+           "key": "TAP",
+           "name": "Total Amount Payable",
+           "value": "39,747.60",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "NetCreditAmount",
+           "name": "Total Amount of Credit",
+           "value": "28,515.50",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "XSM",
+           "name": "Excess Mileage (per mile)",
+           "value": "10.64",
+           "unit": "p",
+           "symbol": "p",
+           "note": "The pence per mile charge above the agreed annual mileage."
+          },
+          {
+           "key": "APR",
+           "name": "Representative APR",
+           "value": "9.9",
+           "unit": "percent",
+           "symbol": "% APR"
+          },
+          {
+           "key": "AER",
+           "name": "Rate of Interest",
+           "value": "9.87",
+           "unit": "percent",
+           "symbol": "% Fixed",
+           "note": "The rate of interest, either fixed or variable, adjusts in accordance with the finance amount."
+          }
+         ]
+        }
+       },
+       {
+        "key": "request",
+        "financingData": {
+         "key": "request",
+         "items": [
+          {
+           "key": "Request",
+           "items": [
+            {
+             "key": "@Domain",
+             "value": "CUPRA.CC.UK"
+            },
+            {
+             "key": "@Name",
+             "value": "Defaults"
+            },
+            {
+             "key": "Vehicle",
+             "items": [
+              {
+               "key": "@Type",
+               "value": "Used"
+              },
+              {
+               "key": "Brand",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "EX"
+                }
+               ]
+              },
+              {
+               "key": "RegDateFirst",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2025-10-29"
+                }
+               ]
+              },
+              {
+               "key": "PriceModel",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "32795.00"
+                }
+               ]
+              },
+              {
+               "key": "Year",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2025"
+                }
+               ]
+              },
+              {
+               "key": "PriceTotal",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "32795.00"
+                }
+               ]
+              },
+              {
+               "key": "Key",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "CUTA00V2 5EE A      "
+                }
+               ]
+              },
+              {
+               "key": "Mileage",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "7085"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "key": "Product",
+             "items": [
+              {
+               "key": "@ID",
+               "value": "1171668"
+              }
+             ]
+            },
+            {
+             "key": "Dealer",
+             "items": [
+              {
+               "key": "ID",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "55174"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       },
+       {
+        "key": "products_request",
+        "financingData": {
+         "key": "products_request",
+         "items": [
+          {
+           "key": "Request",
+           "items": [
+            {
+             "key": "@Domain",
+             "value": "CUPRA.CC.UK"
+            },
+            {
+             "key": "@Name",
+             "value": "Products"
+            },
+            {
+             "key": "Vehicle",
+             "items": [
+              {
+               "key": "@Type",
+               "value": "Used"
+              },
+              {
+               "key": "Brand",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "EX"
+                }
+               ]
+              },
+              {
+               "key": "RegDateFirst",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2025-10-29"
+                }
+               ]
+              },
+              {
+               "key": "PriceModel",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "32795.00"
+                }
+               ]
+              },
+              {
+               "key": "Year",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2025"
+                }
+               ]
+              },
+              {
+               "key": "PriceTotal",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "32795.00"
+                }
+               ]
+              },
+              {
+               "key": "Key",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "CUTA00V2 5EE A      "
+                }
+               ]
+              },
+              {
+               "key": "Mileage",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "7085"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "key": "Dealer",
+             "items": [
+              {
+               "key": "ID",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "55174"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       }
+      ],
+      "hypermediatechdata": [
+       {
+        "key": "NEDC",
+        "techDataType": {
+         "key": "NEDC"
+        }
+       },
+       {
+        "key": "WLTP",
+        "techDataType": {
+         "key": "WLTP",
+         "name": "WLTP",
+         "groups": [
+          {
+           "key": "consumption",
+           "techDataGroup": {
+            "key": "consumption",
+            "name": "Fuel consumption combined according to WLTP",
+            "data": [
+             {
+              "key": "fuel",
+              "techData": {
+               "key": "fuel",
+               "values": [
+                {
+                 "key": "PURE_ELECTRICAL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "ELECTRICAL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "3.7",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "HIGH",
+                   "name": "High",
+                   "value": "4.1",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "MEDIUM",
+                   "name": "Medium",
+                   "value": "4.5",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "LOW",
+                   "name": "Low",
+                   "value": "4.6",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "EXTRA_HIGH",
+                   "name": "Extra High",
+                   "value": "3.0",
+                   "unit": "miles/kWh"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "emission",
+           "techDataGroup": {
+            "key": "emission",
+            "name": "CO\u2082 emissions combined according to WLTP",
+            "data": [
+             {
+              "key": "co2",
+              "techData": {
+               "key": "co2",
+               "values": [
+                {
+                 "key": "PURE_ELECTRICAL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "ELECTRICAL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "0.0",
+                   "unit": "g/km"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "range",
+           "techDataGroup": {
+            "key": "range",
+            "data": [
+             {
+              "key": "range",
+              "techData": {
+               "key": "range",
+               "values": [
+                {
+                 "key": "PURE_ELECTRICAL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "ELECTRICAL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "330.0",
+                   "unit": "miles"
+                  },
+                  {
+                   "key": "CITY",
+                   "name": "City",
+                   "value": "404.0",
+                   "unit": "miles"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "wltp_data",
+           "techDataGroup": {
+            "key": "wltp_data",
+            "data": [
+             {
+              "key": "data",
+              "techData": {
+               "key": "data",
+               "values": [
+                {
+                 "key": "wltp_data_WLTP_DATA",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "wltp_data"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "WLTP_DATA"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "DRAG_COEFFICIENT",
+                   "value": "0.271"
+                  },
+                  {
+                   "key": "HIGH_TYPING",
+                   "value": "0.0"
+                  },
+                  {
+                   "key": "DRAG_COEFFICIENT_H",
+                   "value": "0.314"
+                  },
+                  {
+                   "key": "MASS_VEHICLE_REAR",
+                   "value": "1139.952",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "FUEL_TYPES|0",
+                   "value": "ELECTRICAL"
+                  },
+                  {
+                   "key": "EU_LEER_MIN",
+                   "value": "2178.0",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "MASS_ACTUAL",
+                   "value": "2275.736",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "EU_LEER_MAX",
+                   "value": "2313.0",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "VEHICLE_CLASS",
+                   "value": "CLASS_3B"
+                  },
+                  {
+                   "key": "ENGINE_TYPE",
+                   "value": "PEV"
+                  },
+                  {
+                   "key": "MASS_VEHICLE_FRONT",
+                   "value": "1060.784",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "MASS_VEHICLE",
+                   "value": "2200.736",
+                   "unit": "kg"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          }
+         ]
+        }
+       }
+      ]
+     }
+    },
+    {
+     "key": "R0JSNTUxNjkzMDIzMDIz=",
+     "href": "https://vtpapi.seat.com/restapi/v1/cuukgwb/datastore/cars/R0JSNTUxNjkzMDIzMDIz=",
+     "car": {
+      "key": "R0JSNTUxNjkzMDIzMDIz=",
+      "carid": "GBR551693023023",
+      "images": [
+       {
+        "key": "dealerImages",
+        "imageGroup": {
+         "key": "dealerImages",
+         "images": [
+          {
+           "key": "0",
+           "image": {
+            "key": "0",
+            "href": "https://vtpimages.audi.com/carimg2/1858/4463591858.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "1",
+           "image": {
+            "key": "1",
+            "href": "https://vtpimages.audi.com/carimg2/3401/4463583401.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "2",
+           "image": {
+            "key": "2",
+            "href": "https://vtpimages.audi.com/carimg2/3403/4463583403.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "3",
+           "image": {
+            "key": "3",
+            "href": "https://vtpimages.audi.com/carimg2/1859/4463591859.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "4",
+           "image": {
+            "key": "4",
+            "href": "https://vtpimages.audi.com/carimg2/1763/4463591763.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "5",
+           "image": {
+            "key": "5",
+            "href": "https://vtpimages.audi.com/carimg2/1856/4463591856.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "6",
+           "image": {
+            "key": "6",
+            "href": "https://vtpimages.audi.com/carimg2/3404/4463583404.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "7",
+           "image": {
+            "key": "7",
+            "href": "https://vtpimages.audi.com/carimg2/1860/4463591860.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "8",
+           "image": {
+            "key": "8",
+            "href": "https://vtpimages.audi.com/carimg2/3400/4463583400.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "9",
+           "image": {
+            "key": "9",
+            "href": "https://vtpimages.audi.com/carimg2/3402/4463583402.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "10",
+           "image": {
+            "key": "10",
+            "href": "https://vtpimages.audi.com/carimg2/1855/4463591855.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "11",
+           "image": {
+            "key": "11",
+            "href": "https://vtpimages.audi.com/carimg2/1857/4463591857.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "12",
+           "image": {
+            "key": "12",
+            "href": "https://vtpimages.audi.com/carimg2/1852/4463591852.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "13",
+           "image": {
+            "key": "13",
+            "href": "https://vtpimages.audi.com/carimg2/1854/4463591854.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "14",
+           "image": {
+            "key": "14",
+            "href": "https://vtpimages.audi.com/carimg2/3399/4463583399.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "15",
+           "image": {
+            "key": "15",
+            "href": "https://vtpimages.audi.com/carimg2/1764/4463591764.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "16",
+           "image": {
+            "key": "16",
+            "href": "https://vtpimages.audi.com/carimg2/1853/4463591853.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          }
+         ],
+         "type": "photo",
+         "contenttype": "image/jpeg",
+         "width": 640,
+         "height": 480
+        }
+       },
+       {
+        "key": "renderImagesSeat",
+        "imageGroup": {
+         "key": "renderImagesSeat",
+         "images": [
+          {
+           "key": "vtpextcolor",
+           "image": {
+            "key": "vtpextcolor",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGJYwMBfkpTMCWSlMnJm5iemp-kC-uFB6Tn5SYo5ucUliSWayvpGBkQk_Iy-KIDtQDyMPw2H7e8cWKlwNP_5NYIbiNZ3KrZUnBRmYgXJVQBzIAAJ8fKVFOQWJRYm5euWZKSUZghoGRAJhVh_HSNcgAK7LCu-_AAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpintcolor",
+           "image": {
+            "key": "vtpintcolor",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGNYxMBfkpTMCWSlMnJm5iemp-kC-uGRaflFual5JfpFucUliSWayvpGBkYmud5AhP6MAuhw7UDcjD8OxwHkrD5rEt1icSPePTFWestc_8yUDM1CuCogDGUCAj6-0KKcgsSgxV688M6UkQ1DDgEggzOrjGOkaBACz7gcuyQAAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpwheel",
+           "image": {
+            "key": "vtpwheel",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGNYxMBfkpTMCWSlMnJm5iemp-kC-uGRaflFual5JfpFucUliSWayvpGBkYmud5AhP6MAuhw7UDcjD4Nrg7FQyjPfyUIHRdiWsgsyi4RWbmNgBspNg2IGBj6-0qKcgsSixFy98syUkgxBDQMigTCrj2OkaxAAKq5EfskAAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avpint_dashboard_wf",
+           "image": {
+            "key": "avpint_dashboard_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42Sy0tUYRjG3_l5znfO-TyXpkGsEKEocpOOoznOIkRLqGhhElZoDMc5ppbZMI4XsqjoAt2hRZJERCUVRBs3doeIWpSLoG0QBEFQFAQVtajxP-jl2fzgged54bn7RczRgtDddvd75S9lb3uPyERehMdSlh_uj4lIhDO4L-zvqyuxV-LKqpG-sLgmHMvX5UbzhbCuGI6FI7lwuC6VTDUGYpU8UiZiHRExmhdAfH-0MJQPC-G-2vHBqDgQr0n-5y2raWpINUVN6eTaxihKptfW1zel6nONDX3psDHTl0nneqPmKJnJhItLOdNSFg4NSaLUbXC4mI3CkYHe_WEhyo7vFmtvoT5XsoqxUFOslUO5bL6QRS3F60YeYrzD-IG5HHMN9gqcM-it6EH0cfzHmBnMTZg7UAOo26h7WH-wfZw8wS7iM8TfIEX0U_Q8fhvGZayPWHOUP0fa8VsItiMbkYu4tXiVxFajk7iLcVfhnMfvwv-N-5n4N3Qr-hZBhuAn8hP7D85h3BN47djzOHvwL2GCOoB_EZ1DT6Ov4LbgniU4jcziZHAH8Bz8g_h_CTYTv446iXqG3Y3dgz6P-wqvDK8B4yjqHM4ddBrToiKF9QRden-OYJZFk4jG-IbZgTWF8QjjNeoQfpagCplB7mMcQ11AvcG-if0W-xP6K-VbcPN41fgvCToJriEtyCnMBOoGTgXlDbh_8Srw9yLVGM9RU6gX6AKeTWIdzk6MBDomaiLVWxLGJLEpYj3Y7egl6A-4D1BXFyaWcFu7OrKtnes3bupq3_APSjQQC9gCAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avpint_lateral_wf",
+           "image": {
+            "key": "avpint_lateral_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42SzUtUYRSHzzze-957X-9Hk4gVEhRFbtRxRtNZhFgJFS1MwgqN4TofaU4yjGNFFhV9QN_QIikiopIKpE0byz4gpBblImgbBEEQFAlBRi1s_A86nM0DP_g9B87kdzFHi0LvxsmfNb-VvfMTIocLIkxLRWF4X0REMjiDB8J92cYye2WuqR3JhqX68GChMT1aKIaNpfBgOJIOhxvjsXhzIFY5IxUi1gkRo20RxPdHi_lCWAwPNBwazJQGonWx_5wVdU2ZpuZcazoRi7ckWpOZRH9TmGhO55Lrk-lsJt7clktm12fDltzScs8NqQjzeYmW3QaHS6l8WMoWw3zqUE6soWJTui0TE2NRUqw1-XSqUEyhluP1ItMYHzF-Ya7CrMdejXMBvQM9iD6N_xwzibkVczdqAPUA9QjrL7aPUyDYS3SC6HukhH6JnsXfiHEd6wvWFJUzSCd-O8EuZAtyFbcBr4bIOnQMdynuWpzL-D34f3C_EZ1Dd6DvEyQJ5pF57L84x3HP4HViz-Lsx7-GCeoI_lV0Gn0DfRO3HfciwXnkMU4SdwDPwT-Kv0Cwjegd1FnUK-xe7D70Zdy3eBV4CYyTqEs4D9GtmBbVcawX6PL5UwSPWTKGaIw5zC6scYxnGO9Qx_BTBLXIBPIE4xTqCuo99j3sD9hf0T-o3I5bwFuJ_4agm-A20o6cw6xC3cWppjKBu4BXjT-ErMSYQY2jXqOLeDZVG3D2YFShI6IOx_vLizFGZJxIH3Ynehn6M-5T1K3FB6tyO3q6Uh3dm7Zs7enc_A8c5IFW1gIAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_015_wf",
+           "image": {
+            "key": "avptt_015_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42S3YuMcRzFv_PZ5_k9z_Pb58XYtkVS3uICOztjdnYutO2yWqKQFi1Nz8ys2WUwjVlkCXkp77UXFklihZKbvVnvJXHhJVtulVJKEaUQF8z-B07n5lyczjl1bn8Rs78sdLff_t7wS9lr3yOypyTCG6kpbS9ERCSP07ctLPQ0VnXD1J09YWV-uKvUmOsvlcPGSrgr3JkLtzfGY_GFQUQVijuyYdGq2iK2tBei8wpLjbvnh1uHX5dntg-svDwmNSLWQRGjRcbh-_3lYiksh9sW7O7LV3qjc2P_iSlzU4lsKtWcTiYTTbmmfDLXE-Y3x8JEPB_LNifjieZEc08q3ZLNT6zmXJSasFgUt9q8UsnEmpKZ3ZvF2lpuyrXkY2KMtxdrVjGXKZUzqMl43ch9jHcYPzCnY87HnoFzEr0a3Yc-gv8QM425DHM9qhd1E3UH6w-2j1Mi2ET0OtExpIJ-jH6F345xAesj1ii1T5EO_FaCdUgnMoi7AK-ByBx0DHci7mycM_hd-L9xPxP9hm5D3yBIE_xEfmL_wTmAexSvA_sVzhb8c5ig9uIPonPoi-hLuK24pwhOICM4adxePAd_H_5fguVEr6KOoZ5gd2NvRJ_BfYFXg5fAOIQ6jXMLncK0qI9jPUJX548SjDBhANEY3zBXYQ1hPMB4idqPnyGYilxH7mIcRp1FjWEPY7_F_oT-Su0K3BLeNPznBGsIriCtyHHMOtQ1nHpqE7h_8erxtyLTMJ6ihlDP0GU8m7pFOBsw6tARUXvi2SoxBogMEdmI3YGehP6Aew91efxbdW5b16pM25rFncu6Opb8Azt5v33rAgAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_180_wf",
+           "image": {
+            "key": "avptt_180_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42S3YtMcRjHn_nsOb9zzm_Pi7Fti7Ytb3GBnZndzcyFtl1WiEJatDSdmdmZXTuYxiyyhLyU93JhkSRWqM2NG-9K4sJLttwqpZQiSllxwex_4Ntz83zr6fv51jP6VczBstDTOfqj4Zey131AZHdJhLdSU9pWiIhIDqd_a1joba7uDY07esPK_HBnqTk7WCqHzZVwZ7gjG25rTsQSrUFEFYrbM2HRqp5FbOksROcVlhr3zo-0j7wpz-wcWnV5TGpErAMiRlIm5PuD5WIpLIdbF-zqz1X6onNj_6lpczMtvb2phbm2tlymrTXZkk-1hYnWWCyfT-Xj8UxrPJ7IJ6tWYnI156LUhMWiuFXySiUdT8bSu_JiDZTj2WQuJsYEvVizitl0qZxGTcXrQR5gvMf4iTkdcz72DJwT6DXofvRh_EeYKczlmBtQfaibqNtYf7B9nBLBZqLXiY4hFfQT9Gv8TowLWJ-w7lL7DOnCbydYjyxDzuIuwGsgMgcdw52MOxvnNH43_m_cL0S_ozvQNwhSBOPIOPYfnP24R_C6sF_jbME_hwlqD_5ZdBZ9EX0Jtx33JMFx5A5OCrcPz8Hfi_-XYAXRq6ijqKfYPdib0KdxX-LV4LVgHESdwrmFXohpUZ_Aeoyu1r9LcIdJQ4jG-I65GmsY4yHGK9Q-_DRBI3IduYdxCHUGNYY9gv0O-zP6G7UrcUt4TfgvCNYSXEHakWOYdahrOPXUtuD-xavHH0CaMJ6hhlHP0WU8m7pFOBsx6tARUbsTmepgDBEZJrIJuws9Bf0R9z7q8sRv1bkd3avTHWsXL1ve3bXkH0z9ldvrAgAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_330_wf",
+           "image": {
+            "key": "avptt_330_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42Sy2tUdxzFv_PJvb977y_34RhCWgmBPkQXTeZmJulMFhKSNhLFghWJSpThzp3MJHWSDpNJlMai0gf0YQoumhpKEI20grhxk7Q-oAS7sCkNdFsoFAqFioFCU-rCTv6DHs7mLA7nHDi3Hos5UxNGB2_91faPso_-isjZqgg_SVN1qpwQkSLOxGRUHks1dFv79FhU74xmq6l4plqLUvVoNpqOo6lUOkz3BAlVrrxdiCpWw5awZbCcfKW831j9Yrl_-cfaS4NzbyxtSJOIdUHEyMk2fH-mVqlGtWiy68xEsT6e3Bv-T-zam831lOJ0GI_1hqVsb66UyfbkuscycaFQDKNiujeMw0J3b_zqzkbOojRFlYq4jeb1ej6TCfNnSmKdrnXHuWIoxnZ7sV6uxPlqLY96Hm8U-RbjF4y_MV_A7MR-EecT9JvoCfT7-Pcw-zAPYB5HjaO-Rt3Geort41QJTpG8QXIDqaMfoNfxBzGuYP2OtULzGjKE309wDBlGLuN24bWR2IMOcXfi7saZxx_B_xf3T5Kb6AH0VwR9BFvIFvZTnPO4H-ANYa_jvIX_OSaod_Avo2P0IvpL3H7cTwk-Ru7g9OGO4zn45_CfERwkeQ31Ieo77FHsk-h53Ed4TXgZjIuoSzg30VlMi9Y01n10Y_4KwR12zCEaYxPzMNYCxl2MH1Dv4ucJ2pEbyCrGe6jPUBvYy9g_Y_-BfkLzIdwqXgf-9wRHCK4i_chHmC2o6zitNGdwn-G14p9GOjDWUAuoh-gank3LPpwTGC3ohKiz6UKDGHMkFkicxB5CP4f-Dfcb1NL2t1rcgZHD-YEjrw0fGBl6_T-O7xJr6wIAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpef",
+           "image": {
+            "key": "vtpef",
+            "href": "https://vtp-europe-multi-skodaseat.elvis-eu-prd.webapps.audi.io/fallbackimages/seat_vtp_fallback_1436_804_448.png",
+            "type": "fallback",
+            "contenttype": "image/png"
+           }
+          }
+         ],
+         "type": "render",
+         "contenttype": "image/png"
+        }
+       }
+      ],
+      "items": [
+       {
+        "key": "available_from",
+        "name": {
+         "key": "TS_OFF_VERF"
+        },
+        "value": "2026-09-26T22:00:00Z"
+       },
+       {
+        "key": "capCode",
+        "value": "CUTA00VZ15EE A4"
+       },
+       {
+        "key": "cartitle",
+        "name": {
+         "key": "TS_DWA_SEA_TXT_MM"
+        },
+        "mbv": {
+         "code": "KR1C8D"
+        },
+        "value": "CUPRA Tavascan"
+       },
+       {
+        "key": "color",
+        "values": [
+         {
+          "key": "exterior",
+          "values": [
+           {
+            "key": "generic",
+            "value": "White"
+           },
+           {
+            "key": "marketing",
+            "values": [
+             {
+              "key": "out",
+              "name": {
+               "key": "TS_t_color"
+              },
+              "value": "White Silver"
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "key": "interior",
+          "values": [
+           {
+            "key": "generic",
+            "value": "Other"
+           },
+           {
+            "key": "marketing",
+            "values": [
+             {
+              "key": "seat",
+              "name": {
+               "key": "TS_DET_SITZ"
+              },
+              "value": "Character \"Contrast\""
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "key": "dateoffer",
+        "value": "2026-04-22T09:22:59Z"
+       },
+       {
+        "key": "dateproduction",
+        "value": "2024-10-22T00:00:00Z"
+       },
+       {
+        "key": "drive",
+        "name": {
+         "key": "TS_H_KEY_DRIVE"
+        },
+        "value": "All-wheel drive"
+       },
+       {
+        "key": "gear",
+        "name": {
+         "key": "TS_t_gear_VW"
+        },
+        "value": "Automatic"
+       },
+       {
+        "key": "initialreg",
+        "name": {
+         "key": "TS_t_ez"
+        },
+        "value": "2025-09-27T00:00:00Z"
+       },
+       {
+        "key": "knr",
+        "name": {
+         "key": "TS_TXT_KOMM"
+        },
+        "value": "3023023"
+       },
+       {
+        "key": "localCarTitle",
+        "value": "CUPRA Tavascan VZ1 77 kWh AFV 340 Auto"
+       },
+       {
+        "key": "manuf",
+        "name": {
+         "key": "TS_t_manuf"
+        },
+        "value": "CUPRA"
+       },
+       {
+        "key": "mileage",
+        "unit": "MI",
+        "label": "Mileage",
+        "value": "7,096",
+        "raw_value": 7096.0
+       },
+       {
+        "key": "model",
+        "name": {
+         "key": "TS_t_model"
+        },
+        "value": "Tavascan"
+       },
+       {
+        "key": "motor",
+        "values": [
+         {
+          "key": "fuel",
+          "name": {
+           "key": "TS_COM_TXN94"
+          },
+          "value": "Electric"
+         },
+         {
+          "key": "power.kw",
+          "name": {
+           "key": "TS_t_kw"
+          },
+          "unit": "kW",
+          "value": "250"
+         },
+         {
+          "key": "power.ps",
+          "name": {
+           "key": "TS_t_kw"
+          },
+          "unit": "PS",
+          "value": "340"
+         }
+        ]
+       },
+       {
+        "key": "numberplate",
+        "value": "VX75UYD"
+       },
+       {
+        "key": "prices",
+        "values": [
+         {
+          "key": "sale",
+          "unit": "GBP",
+          "value": "35,761.00",
+          "raw_value": 35761.0
+         }
+        ]
+       },
+       {
+        "key": "smod",
+        "name": {
+         "key": "TS_t_smod"
+        },
+        "value": "VZ"
+       },
+       {
+        "key": "preuse",
+        "code": "9",
+        "value": "Other"
+       }
+      ],
+      "hypermediadealer": {
+       "key": "GBR55169",
+       "href": "https://vtpapi.seat.com/restapi/v1/cuukgwb/datastore/dealer/GBR55169",
+       "dealer": {
+        "key": "GBR55169",
+        "gvoStatus": "",
+        "items": [
+         {
+          "key": "city",
+          "value": "Worcester"
+         },
+         {
+          "key": "name",
+          "value": "Listers SEAT Worcester"
+         },
+         {
+          "key": "phone",
+          "value": "01905 794000"
+         },
+         {
+          "key": "position",
+          "values": [
+           {
+            "key": "latitude",
+            "value": "52.221649"
+           },
+           {
+            "key": "longitude",
+            "value": "-2.228826"
+           }
+          ]
+         },
+         {
+          "key": "region",
+          "value": "WR3 7DG"
+         },
+         {
+          "key": "street",
+          "value": "Ombersley Rd, 391"
+         },
+         {
+          "key": "website",
+          "value": "www.seat.co.uk/dealer/listers-seat-worcester.html"
+         },
+         {
+          "key": "zip",
+          "value": "WR3 7DG"
+         }
+        ]
+       }
+      },
+      "hypermediafinancing": [
+       {
+        "key": "default",
+        "financingData": {
+         "key": "default",
+         "name": "Used PCP \u00a31000 Deposit Contribution",
+         "disclaimer": "18s+. Subject to availability and status. Offer available from participating Retailers. Indemnities may be required.\u00a0 Not available in conjunction with any other finance offer. May be varied or withdrawn at any time. Freepost SEAT Financial Services.",
+         "items": [
+          {
+           "key": "disclaimer.product",
+           "value": "18s+. Subject to availability and status. Offer available from participating Retailers. Indemnities may be required.\u00a0 Not available in conjunction with any other finance offer. May be varied or withdrawn at any time. Freepost SEAT Financial Services."
+          },
+          {
+           "key": "disclaimer.calculation",
+           "value": "*With Solutions PCP. Ordered by 01/09/2028. T&Cs apply. Indemnities may be required. CUPRA Financial Services."
+          },
+          {
+           "key": "Rate",
+           "name": "35 Monthly Payments of",
+           "value": "507.64",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "Duration",
+           "name": "Contract Duration",
+           "value": "36",
+           "unit": "months",
+           "symbol": "Months"
+          },
+          {
+           "key": "Mileage",
+           "name": "Annual Mileage",
+           "value": "5,000",
+           "unit": "Miles",
+           "symbol": "Miles"
+          },
+          {
+           "key": "DownPayment",
+           "name": "Customer Deposit",
+           "value": "3,576.10",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "DEPCONT",
+           "name": "CUPRA Contribution",
+           "value": "1,000.00",
+           "unit": "GBP",
+           "symbol": "\u00a3",
+           "note": "The contribution from CUPRA towards the finance deposit."
+          },
+          {
+           "key": "TD",
+           "name": "Total Deposit",
+           "value": "4,576.10",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "INV",
+           "name": "Retail Cash Price",
+           "value": "35,761.00",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "GFV",
+           "name": "Optional Final Payment",
+           "value": "21,262.50",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "OTPFEE",
+           "name": "Option to Purchase Fee",
+           "value": "10.00",
+           "unit": "GBP",
+           "symbol": "\u00a3",
+           "note": "The option to purchase fee is payable at the end of the agreement."
+          },
+          {
+           "key": "TAP",
+           "name": "Total Amount Payable",
+           "value": "43,616.00",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "NetCreditAmount",
+           "name": "Total Amount of Credit",
+           "value": "31,184.90",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "XSM",
+           "name": "Excess Mileage (per mile)",
+           "value": "11.06",
+           "unit": "p",
+           "symbol": "p",
+           "note": "The pence per mile charge above the agreed annual mileage."
+          },
+          {
+           "key": "APR",
+           "name": "Representative APR",
+           "value": "10.4",
+           "unit": "percent",
+           "symbol": "% APR"
+          },
+          {
+           "key": "AER",
+           "name": "Rate of Interest",
+           "value": "10.38",
+           "unit": "percent",
+           "symbol": "% Fixed",
+           "note": "The rate of interest, either fixed or variable, adjusts in accordance with the finance amount."
+          }
+         ]
+        }
+       },
+       {
+        "key": "request",
+        "financingData": {
+         "key": "request",
+         "items": [
+          {
+           "key": "Request",
+           "items": [
+            {
+             "key": "@Domain",
+             "value": "CUPRA.CC.UK"
+            },
+            {
+             "key": "@Name",
+             "value": "Defaults"
+            },
+            {
+             "key": "Vehicle",
+             "items": [
+              {
+               "key": "@Type",
+               "value": "Used"
+              },
+              {
+               "key": "Brand",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "EX"
+                }
+               ]
+              },
+              {
+               "key": "RegDateFirst",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2025-09-27"
+                }
+               ]
+              },
+              {
+               "key": "PriceModel",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "35761.00"
+                }
+               ]
+              },
+              {
+               "key": "Year",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2024"
+                }
+               ]
+              },
+              {
+               "key": "PriceTotal",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "35761.00"
+                }
+               ]
+              },
+              {
+               "key": "Key",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "CUTA00VZ15EE A4"
+                }
+               ]
+              },
+              {
+               "key": "Mileage",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "7096"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "key": "Product",
+             "items": [
+              {
+               "key": "@ID",
+               "value": "1161066"
+              }
+             ]
+            },
+            {
+             "key": "Dealer",
+             "items": [
+              {
+               "key": "ID",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "55169"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       },
+       {
+        "key": "products_request",
+        "financingData": {
+         "key": "products_request",
+         "items": [
+          {
+           "key": "Request",
+           "items": [
+            {
+             "key": "@Domain",
+             "value": "CUPRA.CC.UK"
+            },
+            {
+             "key": "@Name",
+             "value": "Products"
+            },
+            {
+             "key": "Vehicle",
+             "items": [
+              {
+               "key": "@Type",
+               "value": "Used"
+              },
+              {
+               "key": "Brand",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "EX"
+                }
+               ]
+              },
+              {
+               "key": "RegDateFirst",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2025-09-27"
+                }
+               ]
+              },
+              {
+               "key": "PriceModel",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "35761.00"
+                }
+               ]
+              },
+              {
+               "key": "Year",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2024"
+                }
+               ]
+              },
+              {
+               "key": "PriceTotal",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "35761.00"
+                }
+               ]
+              },
+              {
+               "key": "Key",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "CUTA00VZ15EE A4"
+                }
+               ]
+              },
+              {
+               "key": "Mileage",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "7096"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "key": "Dealer",
+             "items": [
+              {
+               "key": "ID",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "55169"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       }
+      ],
+      "hypermediatechdata": [
+       {
+        "key": "NEDC",
+        "techDataType": {
+         "key": "NEDC"
+        }
+       },
+       {
+        "key": "WLTP",
+        "techDataType": {
+         "key": "WLTP",
+         "name": "WLTP",
+         "groups": [
+          {
+           "key": "consumption",
+           "techDataGroup": {
+            "key": "consumption",
+            "name": "Fuel consumption combined according to WLTP",
+            "data": [
+             {
+              "key": "fuel",
+              "techData": {
+               "key": "fuel",
+               "values": [
+                {
+                 "key": "PURE_ELECTRICAL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "ELECTRICAL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "3.7",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "HIGH",
+                   "name": "High",
+                   "value": "4.1",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "MEDIUM",
+                   "name": "Medium",
+                   "value": "4.6",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "LOW",
+                   "name": "Low",
+                   "value": "4.6",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "EXTRA_HIGH",
+                   "name": "Extra High",
+                   "value": "3.0",
+                   "unit": "miles/kWh"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "emission",
+           "techDataGroup": {
+            "key": "emission",
+            "name": "CO\u2082 emissions combined according to WLTP",
+            "data": [
+             {
+              "key": "co2",
+              "techData": {
+               "key": "co2",
+               "values": [
+                {
+                 "key": "PURE_ELECTRICAL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "ELECTRICAL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "0.0",
+                   "unit": "g/km"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "range",
+           "techDataGroup": {
+            "key": "range",
+            "data": [
+             {
+              "key": "range",
+              "techData": {
+               "key": "range",
+               "values": [
+                {
+                 "key": "PURE_ELECTRICAL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "ELECTRICAL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "321.0",
+                   "unit": "miles"
+                  },
+                  {
+                   "key": "CITY",
+                   "name": "City",
+                   "value": "393.0",
+                   "unit": "miles"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "wltp_data",
+           "techDataGroup": {
+            "key": "wltp_data",
+            "data": [
+             {
+              "key": "data",
+              "techData": {
+               "key": "data",
+               "values": [
+                {
+                 "key": "wltp_data_WLTP_DATA",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "wltp_data"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "WLTP_DATA"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "DRAG_COEFFICIENT",
+                   "value": "0.264"
+                  },
+                  {
+                   "key": "HIGH_TYPING",
+                   "value": "0.0"
+                  },
+                  {
+                   "key": "DRAG_COEFFICIENT_H",
+                   "value": "0.324"
+                  },
+                  {
+                   "key": "MASS_VEHICLE_REAR",
+                   "value": "1141.318",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "FUEL_TYPES|0",
+                   "value": "ELECTRICAL"
+                  },
+                  {
+                   "key": "EU_LEER_MIN",
+                   "value": "2267.0",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "MASS_ACTUAL",
+                   "value": "2334.651",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "EU_LEER_MAX",
+                   "value": "2359.0",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "VEHICLE_CLASS",
+                   "value": "CLASS_3B"
+                  },
+                  {
+                   "key": "ENGINE_TYPE",
+                   "value": "PEV"
+                  },
+                  {
+                   "key": "MASS_VEHICLE_FRONT",
+                   "value": "1118.333",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "MASS_VEHICLE",
+                   "value": "2259.651",
+                   "unit": "kg"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          }
+         ]
+        }
+       }
+      ]
+     }
+    },
+    {
+     "key": "R0JSNTU3MjIzMjk4Mzgz=",
+     "href": "https://vtpapi.seat.com/restapi/v1/cuukgwb/datastore/cars/R0JSNTU3MjIzMjk4Mzgz=",
+     "car": {
+      "key": "R0JSNTU3MjIzMjk4Mzgz=",
+      "carid": "GBR557223298383",
+      "images": [
+       {
+        "key": "dealerImages",
+        "imageGroup": {
+         "key": "dealerImages",
+         "images": [
+          {
+           "key": "0",
+           "image": {
+            "key": "0",
+            "href": "https://vtpimages.audi.com/carimg2/0140/4650400140.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "1",
+           "image": {
+            "key": "1",
+            "href": "https://vtpimages.audi.com/carimg2/0143/4650400143.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "2",
+           "image": {
+            "key": "2",
+            "href": "https://vtpimages.audi.com/carimg2/2836/4650402836.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "3",
+           "image": {
+            "key": "3",
+            "href": "https://vtpimages.audi.com/carimg2/2924/4650402924.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "4",
+           "image": {
+            "key": "4",
+            "href": "https://vtpimages.audi.com/carimg2/2918/4650402918.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "5",
+           "image": {
+            "key": "5",
+            "href": "https://vtpimages.audi.com/carimg2/2833/4650402833.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "6",
+           "image": {
+            "key": "6",
+            "href": "https://vtpimages.audi.com/carimg2/0141/4650400141.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "7",
+           "image": {
+            "key": "7",
+            "href": "https://vtpimages.audi.com/carimg2/2926/4650402926.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "8",
+           "image": {
+            "key": "8",
+            "href": "https://vtpimages.audi.com/carimg2/2838/4650402838.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "9",
+           "image": {
+            "key": "9",
+            "href": "https://vtpimages.audi.com/carimg2/2046/4650402046.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "10",
+           "image": {
+            "key": "10",
+            "href": "https://vtpimages.audi.com/carimg2/2927/4650402927.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "11",
+           "image": {
+            "key": "11",
+            "href": "https://vtpimages.audi.com/carimg2/2837/4650402837.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "12",
+           "image": {
+            "key": "12",
+            "href": "https://vtpimages.audi.com/carimg2/2045/4650402045.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "13",
+           "image": {
+            "key": "13",
+            "href": "https://vtpimages.audi.com/carimg2/2830/4650402830.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "14",
+           "image": {
+            "key": "14",
+            "href": "https://vtpimages.audi.com/carimg2/0137/4650400137.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "15",
+           "image": {
+            "key": "15",
+            "href": "https://vtpimages.audi.com/carimg2/2925/4650402925.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "16",
+           "image": {
+            "key": "16",
+            "href": "https://vtpimages.audi.com/carimg2/2921/4650402921.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "17",
+           "image": {
+            "key": "17",
+            "href": "https://vtpimages.audi.com/carimg2/2044/4650402044.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "18",
+           "image": {
+            "key": "18",
+            "href": "https://vtpimages.audi.com/carimg2/3427/4650403427.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "19",
+           "image": {
+            "key": "19",
+            "href": "https://vtpimages.audi.com/carimg2/2040/4650402040.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "20",
+           "image": {
+            "key": "20",
+            "href": "https://vtpimages.audi.com/carimg2/2919/4650402919.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "21",
+           "image": {
+            "key": "21",
+            "href": "https://vtpimages.audi.com/carimg2/3429/4650403429.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "22",
+           "image": {
+            "key": "22",
+            "href": "https://vtpimages.audi.com/carimg2/0142/4650400142.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "23",
+           "image": {
+            "key": "23",
+            "href": "https://vtpimages.audi.com/carimg2/2832/4650402832.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "24",
+           "image": {
+            "key": "24",
+            "href": "https://vtpimages.audi.com/carimg2/2042/4650402042.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "25",
+           "image": {
+            "key": "25",
+            "href": "https://vtpimages.audi.com/carimg2/0135/4650400135.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "26",
+           "image": {
+            "key": "26",
+            "href": "https://vtpimages.audi.com/carimg2/2834/4650402834.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "27",
+           "image": {
+            "key": "27",
+            "href": "https://vtpimages.audi.com/carimg2/2835/4650402835.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "28",
+           "image": {
+            "key": "28",
+            "href": "https://vtpimages.audi.com/carimg2/2043/4650402043.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "29",
+           "image": {
+            "key": "29",
+            "href": "https://vtpimages.audi.com/carimg2/2920/4650402920.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "30",
+           "image": {
+            "key": "30",
+            "href": "https://vtpimages.audi.com/carimg2/2047/4650402047.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "31",
+           "image": {
+            "key": "31",
+            "href": "https://vtpimages.audi.com/carimg2/0138/4650400138.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "32",
+           "image": {
+            "key": "32",
+            "href": "https://vtpimages.audi.com/carimg2/0136/4650400136.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "33",
+           "image": {
+            "key": "33",
+            "href": "https://vtpimages.audi.com/carimg2/2923/4650402923.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "34",
+           "image": {
+            "key": "34",
+            "href": "https://vtpimages.audi.com/carimg2/2831/4650402831.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "35",
+           "image": {
+            "key": "35",
+            "href": "https://vtpimages.audi.com/carimg2/2922/4650402922.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "36",
+           "image": {
+            "key": "36",
+            "href": "https://vtpimages.audi.com/carimg2/2041/4650402041.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "37",
+           "image": {
+            "key": "37",
+            "href": "https://vtpimages.audi.com/carimg2/0139/4650400139.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "38",
+           "image": {
+            "key": "38",
+            "href": "https://vtpimages.audi.com/carimg2/2928/4650402928.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "39",
+           "image": {
+            "key": "39",
+            "href": "https://vtpimages.audi.com/carimg2/3428/4650403428.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          }
+         ],
+         "type": "photo",
+         "contenttype": "image/jpeg",
+         "width": 640,
+         "height": 480
+        }
+       },
+       {
+        "key": "renderImagesSeat",
+        "imageGroup": {
+         "key": "renderImagesSeat",
+         "images": [
+          {
+           "key": "vtpextcolor",
+           "image": {
+            "key": "vtpextcolor",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGJYwMBfkpTMCWSlMnJm5iemp-kC-uFB6Tn5SYo5ucUliSWayvpGBkQk_Iy-KIDtQDyMPg6N739cvSsu_fjG6KqxSwfNjl479GwZmoFwVEAcygAAfX2lRTkFiUWKuXnlmSkmGoIYBkUCY1ccx0jUIACQJmM-_AAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpintcolor",
+           "image": {
+            "key": "vtpintcolor",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGNYxMBfkpTMCWSlMnJm5iemp-kC-uGRaflFual5JfpFucUliSWayvpGBkYmud5AhP6MAuhw7UDcjDwOnZHyC1R-3uvfZjuc8m8VOh7RVXGZgBspVAXEgAwjw8ZUW5RQkFiXm6pVnppRkCGoYEAmEWX0cI12DAOmRpm3JAAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpwheel",
+           "image": {
+            "key": "vtpwheel",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGNYxMBfkpTMCWSlMnJm5iemp-kC-uGRaflFual5JfpFucUliSWayvpGBkYmud5AhP6MAuhw7UDcjD0Pn7qvij8w2LrBJ_JXZ12pT5hHEmsrADJSbBsUMDHx8pUU5BYlFibl65ZkpJRmCGgZEAmFWH8dI1yAA1R9X6MkAAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avpint_dashboard_wf",
+           "image": {
+            "key": "avpint_dashboard_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42S3YtMcRjHn_nMOb9zzs95MTat0Ja37M3uzu7M7s5caFtsWVdIi3Y1nZkz7LLWNDv7kpeQl0IoFxYXiISSGxfWYpWEC5Jyq7hRiiiFuGD2P_D03HzqW9_PU8_tL2KOlIXelbe_1_5S9sb3iIyXRLgn8dLQ9piIRDgDu8LtxaYqe1WuXThcDCsN4WipqTBSKodNlXA0HC6EQ00tyZZ0IFY1I3ER66CIkZkB8f2R8mApLIe7GscGokp_oj75nzO_vq2Yas9k8qn2bCbVmsq3RslCMmprTrems5lMphCFyShbLLak51R7zks8HByUmqrbwFAlF4XD_fndYTnKjW0Ta2e5uZCJkmLMaIq1dLCQK5VzqEb8JcgDjHcYPzAXYTZgL8Y5iV6PHkAfwX-EmcXsxtyM6kfdRN3B-oPt45QItpK4TuINUkE_Rr_CX4lxAesj1iSzniJd-B0Em5A1yFncRrxaYsvRSdw5uMtwTuP34P_G_UziG7oTfYMgS_AT-Yn9B-cA7lG8LuxXODvwz2GC2oN_Fl1AX0Rfxu3APUNwArmLk8Xtx3Pw9-H_JVhL4irqGOoJdi92H_o07gu8OF4K4xDqFM4tdDumhTWNrt4-SXCX2a8RjfENcx3WAoyHGC9R-_FzBAuR68h9jMOoM6g32NPYb7E_ob_ilvDq8J8TbCC4gnQgxzFrUNdw5jIrhfsXby7-TqQO4ylqAvUMXcazqVmBswUdIzYlarwlX12MvcQmiPVhd6HnoT_gTqEuzTxXjdvZsy7XuWHVmu6ertX_ALg7XK3SAgAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avpint_lateral_wf",
+           "image": {
+            "key": "avpint_lateral_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42SzUtUYRTGz_y89733vt6PRhGjROiL3Kjj-DUuQqwEbWURVlgM1xknzVGGabTog4o-oCIFF1ktKoqoINpEYFYGEdUiiaBtUJsgKAqCilzY-B_0cDa_hwPnOfDc-ybmWF7o23jvZ-UfZW__iMjBnAgPpSQ3ujciImmcoZFw70B9kb0iV1btHwgLteF4rj41lsuH9YVwPNyfCkfr47F4UyBWcUdKRKzjIkZiCcT3x_LZXJgPR-oODKULg9Ga2H9qRU2ipT-TSrekmsKGTLylOYw3pROZ1lhzcyyTaUkU3f5EQ6ox3VhWvHNJSsJsVqLFbEOjhWQ2LAzkw2zyQEas4XxDKpGOibEUUqy12VQyl0-i6vDXII8xPmD8wlyFWYu9Guc8eit6CH0K_ylmG2Y35k7UIOoO6j7WAraPkyPYQ_QW0XdIAf0MPY-_EeMy1mesGUpfIJ347QQ7kC5kCrcOr5LIenQMtwx3Hc4Efi_-X9yvRH-gO9C3CdoIfiO_sRdwjuGexuvEnsfZh38RE9Qh_Cl0Cn0FfQ23HXeS4BzyAKcNdxDPwT-Cv0iwhegN1BnUc-w-7N3oCdzXeCV4jRgnUBdw7qJbMS2sOXTx9xmCByx7i2iMH5g9WCsxnmC8QR3FTxJUIbeQRxgnUZOod9hz2O-xv6C_4-bwqvFfEWwjuI60I2cxy1E3cSoobcRdxKvAH0aqMV6gplEv0Xk8m_INOLvQESKzog7G-4uDcZjINJHd2J3o5ehPuLOoq0vVKnc7enuSHds2dXX3dm7-B5Vsn17QAgAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_015_wf",
+           "image": {
+            "key": "avptt_015_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42Sy0tUcRzFv_OZe3_33p937m2SMCqCsshF6R1f6SJEy6ggsAgrNIY7MzpaUw3jaNGDih5QUUGLXguLMiqQNm3sDSEV0QOhbVCbICgSgopa2PgfdDibszicc-CMfhNzsCB0tY3-qPit7E0fEdmbF-GVRPO7shERyeD07wyzPTUlXTFvoCcsLguH8jXpwXwhrCmGQ-FAOtxVUxvU1vsRlc3tToU5q2SL2NKWjS_NrjbuXxppGXlbqGzbv354QqIi1mERo0mm4XmDhVw-LIQ7q_f0Z4p98argPzGnqj5T35jIhLWZzPJUc5BONTSmUz1NQWNd2Bj0NoVBQ6I3k-6tT8ws5VySaJjLiVtqXiwmg0RDck-vWDsKiXRTJhBjur1Yi3LpZL6QRFXjVSIPMT5g_MRcgLkMeyHOafQGdD_6GN5jzGbMtZhbUH2o26i7WH-xPZw8_jbiN4lPIEX0U_QbvDaMy1ifscYoG0fa8VrwNyNrkPO41cQqiCxBB7gzcRfjnMXrxPuD-5X4JLoVfQu_Gf8X8gv7L84h3OPE2rHf4GzHu4AJah_eeXQafQV9FbcF9xz-KeQeTjNuHzEH7wDeFP464tdRJ1DPsLuwu9FncV8SixKrwziCOoNzB70c08J6gi5tH8O_x4x3iMaYxOzAmovxCOM16iBeEn8echO5j3EUdQ41gf0E-z32F_R33Dyx-Xgv8DfiX0NakJOY5agbOLMoq8OdIjYLbwcyH2McdRH1HF0gZlO-AmcrOkLkgai9takSMfYTuUikG7sdPRv9CfcBanj6VeVua2dHsnXjyjVrO9tX_QNA8E2i5QIAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_180_wf",
+           "image": {
+            "key": "avptt_180_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42S72tNcRzHP_e1c77nnK9zz3EtTSzFyB7Ydrexe-8DrY0JpUYaMt3OztnuxsXtumMZIT8KmfLArweICSVPPJnfpYXkRytPFU-UIkohHnD3H3j3efKp96f3612fW1_EHCwKm9pvfa_6pex17xEZKojwQioK23MxEYlwBrYFud6G8l5VvbM3KNUFuwoN4WChGDSUgl3BzjDY3tCUbFrkx1Quv6MnyFvls5gt7bnEwtxy4-650dbR18Wa9uHVFyekQsQ6IGKkZVKeN1jMF4JisK1-90BU6k_UJv9TM2tTYSZKL4rSUWMy2RxFfcmwb_Hinp5U1JtKNYUtmXRLGLaUDdPKOeekIsjnxS2Tl0rZxnQyu7tPrK3FxjAdJcWYpBdrXj7MFopZVD1eDXIf4x3GD8w5mHXYc3FOoNegB9CH8R5iZjBXYm5A9aNuoG5j_cH2cAr4m0lcIzGBlNCP0a_w2jHOY33EGmPKONKB14q_HlmBnMatJ15FbAE6iTsNdz7OCF4X3m_czyS-odvQ1_Ez-D-Rn9h_cPbjHiHegf0KZwveGUxQe_BOo0P0BfQl3FbcU_jHkTs4Gdx-4g7eXry_-KtIXEEdRT3B3oTdjR7BfU68gngzxkHUSZyb6BSmhfUIXe4-hn-HqW8QjfENsxNrFsYDjJeofXhZ_GrkGnIX4xDqFGoC-xH2W-xP6K-4BeKz8Z7hr8W_jLQixzArUVdxpjOlGfcv8el4W5HZGOOos6in6CJxm8olOBvRMWL3RA019ZQHY5jYWWLd2B3oGegPuPdQFye_qtJt6-rMtq1dumJlV8eyfx34I_TlAgAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_330_wf",
+           "image": {
+            "key": "avptt_330_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_42Sy0tUcRzFv_Px3t-999edexsljJKgF7VIvc6oOYsQLcOCoCKsqBjuzOhoTTZMY0kPKnpARQUt0lpU9KACadOmrAwiKqIHQtugNkFQJAQVuajxP-hwNmdxOOfAGfkm5kBR2NI-8qP6t7I3fERksCDCK6ko9OciIpLF6dsZ5rrry7q6Znd3WKoN9xTqMwOFYlhfCveEuzNhf308iDf6EZXL70qHeatsi9jSnostya00HgzfaL3xtji_ff-ay-NSIWIdFjFaZAqeN1DMF8JiuLNub1-21BtbHPwnZi0Okk3pZLwnnu5OpOM9PQ2Z5mwQNDUkmoLmMNOcDBqy6camRJipLOcMS0WYz4tbbl4qpRKJILW3R6wdxYZMSzYQY6q9WAvymVShmELV4c1HHmJ8wPiJORezFnsezmn0OnQf-hjeY8wk5irMTahe1G3UXaxJbA-ngL-N2E1i40gJ_QT9Bq8d4yLWZ6z7THuGdOC14m9EOpHzuHVEq4ksQge4lbgLcc7ideH9wf1KbALdhr6Fn8T_hfzCnsQ5hHucaAf2G5zteBcwQe3DO4_OoC-hr-C24p7DP4Xcw0ni9hJ18A7g_cVfTewa6gTqKfYW7K3os7gviVYQTWAcQZ3BuYNeimlhjaHL2-_j32P6O0RjTGCuxZqN8QjjNeogXgq_BrmJPMA4ijqHGscew36P_QX9HbdAdA7eC_z1-FeRVuQkZhXqOs4MpiVw_xKdgbcDmYPxDDWEeo4uErWpWoazGR0hMipqMJ4uE2M_kSEiW7E70DPRn3BHUZenXlXltnWtTbWtX965qqtjxT_50oy15QIAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpef",
+           "image": {
+            "key": "vtpef",
+            "href": "https://vtp-europe-multi-skodaseat.elvis-eu-prd.webapps.audi.io/fallbackimages/seat_vtp_fallback_1436_804_448.png",
+            "type": "fallback",
+            "contenttype": "image/png"
+           }
+          }
+         ],
+         "type": "render",
+         "contenttype": "image/png"
+        }
+       }
+      ],
+      "items": [
+       {
+        "key": "available_from",
+        "name": {
+         "key": "TS_OFF_VERF"
+        },
+        "value": "Immediately"
+       },
+       {
+        "key": "capCode",
+        "value": "CUTA00VZ25EE A4"
+       },
+       {
+        "key": "cartitle",
+        "name": {
+         "key": "TS_DWA_SEA_TXT_MM"
+        },
+        "mbv": {
+         "code": "KR1C8D"
+        },
+        "value": "CUPRA Tavascan"
+       },
+       {
+        "key": "color",
+        "values": [
+         {
+          "key": "exterior",
+          "values": [
+           {
+            "key": "generic",
+            "value": "Blue"
+           },
+           {
+            "key": "marketing",
+            "values": [
+             {
+              "key": "out",
+              "name": {
+               "key": "TS_t_color"
+              },
+              "value": "Tavascan Blue"
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "key": "interior",
+          "values": [
+           {
+            "key": "generic",
+            "value": "Other"
+           },
+           {
+            "key": "marketing",
+            "values": [
+             {
+              "key": "seat",
+              "name": {
+               "key": "TS_DET_SITZ"
+              },
+              "value": "Character \"Hero\""
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "key": "dateoffer",
+        "value": "2026-07-10T10:37:20Z"
+       },
+       {
+        "key": "dateproduction",
+        "value": "2024-08-14T00:00:00Z"
+       },
+       {
+        "key": "drive",
+        "name": {
+         "key": "TS_H_KEY_DRIVE"
+        },
+        "value": "All-wheel drive"
+       },
+       {
+        "key": "gear",
+        "name": {
+         "key": "TS_t_gear_VW"
+        },
+        "value": "Automatic"
+       },
+       {
+        "key": "initialreg",
+        "name": {
+         "key": "TS_t_ez"
+        },
+        "value": "2025-09-01T00:00:00Z"
+       },
+       {
+        "key": "knr",
+        "name": {
+         "key": "TS_TXT_KOMM"
+        },
+        "value": "3298383"
+       },
+       {
+        "key": "localCarTitle",
+        "value": "CUPRA Tavascan 250kW VZ2 77kWh AWD 5dr Auto **\u00a31000 Deposit Contribution**"
+       },
+       {
+        "key": "manuf",
+        "name": {
+         "key": "TS_t_manuf"
+        },
+        "value": "CUPRA"
+       },
+       {
+        "key": "mileage",
+        "unit": "MI",
+        "label": "Mileage",
+        "value": "9,764",
+        "raw_value": 9764.0
+       },
+       {
+        "key": "model",
+        "name": {
+         "key": "TS_t_model"
+        },
+        "value": "Tavascan"
+       },
+       {
+        "key": "motor",
+        "values": [
+         {
+          "key": "fuel",
+          "name": {
+           "key": "TS_COM_TXN94"
+          },
+          "value": "Electric"
+         },
+         {
+          "key": "power.kw",
+          "name": {
+           "key": "TS_t_kw"
+          },
+          "unit": "kW",
+          "value": "250"
+         },
+         {
+          "key": "power.ps",
+          "name": {
+           "key": "TS_t_kw"
+          },
+          "unit": "PS",
+          "value": "340"
+         }
+        ]
+       },
+       {
+        "key": "numberplate",
+        "value": "WJ75ZSK"
+       },
+       {
+        "key": "prices",
+        "values": [
+         {
+          "key": "sale",
+          "unit": "GBP",
+          "value": "36,995.00",
+          "raw_value": 36995.0
+         }
+        ]
+       },
+       {
+        "key": "smod",
+        "name": {
+         "key": "TS_t_smod"
+        },
+        "value": "VZ"
+       },
+       {
+        "key": "preuse",
+        "code": "9",
+        "value": "Other"
+       }
+      ],
+      "hypermediadealer": {
+       "key": "GBR55722",
+       "href": "https://vtpapi.seat.com/restapi/v1/cuukgwb/datastore/dealer/GBR55722",
+       "dealer": {
+        "key": "GBR55722",
+        "gvoStatus": "",
+        "items": [
+         {
+          "key": "city",
+          "value": "Exeter"
+         },
+         {
+          "key": "name",
+          "value": "Yeomans SEAT Exeter"
+         },
+         {
+          "key": "position",
+          "values": [
+           {
+            "key": "latitude",
+            "value": "50.698608"
+           },
+           {
+            "key": "longitude",
+            "value": "-3.519989"
+           }
+          ]
+         },
+         {
+          "key": "region",
+          "value": "EX2 8NB"
+         },
+         {
+          "key": "street",
+          "value": "Denbury Court,"
+         },
+         {
+          "key": "zip",
+          "value": "EX2 8NB"
+         }
+        ]
+       }
+      },
+      "hypermediafinancing": [
+       {
+        "key": "default",
+        "financingData": {
+         "key": "default",
+         "name": "Used PCP \u00a31000 Deposit Contribution",
+         "disclaimer": "18s+. Subject to availability and status. Offer available from participating Retailers. Indemnities may be required.\u00a0 Not available in conjunction with any other finance offer. May be varied or withdrawn at any time. Freepost SEAT Financial Services.",
+         "items": [
+          {
+           "key": "disclaimer.product",
+           "value": "18s+. Subject to availability and status. Offer available from participating Retailers. Indemnities may be required.\u00a0 Not available in conjunction with any other finance offer. May be varied or withdrawn at any time. Freepost SEAT Financial Services."
+          },
+          {
+           "key": "disclaimer.calculation",
+           "value": "*With Solutions PCP. Ordered by 01/09/2028. T&Cs apply. Indemnities may be required. CUPRA Financial Services."
+          },
+          {
+           "key": "Rate",
+           "name": "35 Monthly Payments of",
+           "value": "524.43",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "Duration",
+           "name": "Contract Duration",
+           "value": "36",
+           "unit": "months",
+           "symbol": "Months"
+          },
+          {
+           "key": "Mileage",
+           "name": "Annual Mileage",
+           "value": "5,000",
+           "unit": "Miles",
+           "symbol": "Miles"
+          },
+          {
+           "key": "DownPayment",
+           "name": "Customer Deposit",
+           "value": "3,699.50",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "DEPCONT",
+           "name": "CUPRA Contribution",
+           "value": "1,000.00",
+           "unit": "GBP",
+           "symbol": "\u00a3",
+           "note": "The contribution from CUPRA towards the finance deposit."
+          },
+          {
+           "key": "TD",
+           "name": "Total Deposit",
+           "value": "4,699.50",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "INV",
+           "name": "Retail Cash Price",
+           "value": "36,995.00",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "GFV",
+           "name": "Optional Final Payment",
+           "value": "22,072.50",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "OTPFEE",
+           "name": "Option to Purchase Fee",
+           "value": "10.00",
+           "unit": "GBP",
+           "symbol": "\u00a3",
+           "note": "The option to purchase fee is payable at the end of the agreement."
+          },
+          {
+           "key": "TAP",
+           "name": "Total Amount Payable",
+           "value": "45,137.05",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "NetCreditAmount",
+           "name": "Total Amount of Credit",
+           "value": "32,295.50",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "XSM",
+           "name": "Excess Mileage (per mile)",
+           "value": "12.04",
+           "unit": "p",
+           "symbol": "p",
+           "note": "The pence per mile charge above the agreed annual mileage."
+          },
+          {
+           "key": "APR",
+           "name": "Representative APR",
+           "value": "10.4",
+           "unit": "percent",
+           "symbol": "% APR"
+          },
+          {
+           "key": "AER",
+           "name": "Rate of Interest",
+           "value": "10.38",
+           "unit": "percent",
+           "symbol": "% Fixed",
+           "note": "The rate of interest, either fixed or variable, adjusts in accordance with the finance amount."
+          }
+         ]
+        }
+       },
+       {
+        "key": "request",
+        "financingData": {
+         "key": "request",
+         "items": [
+          {
+           "key": "Request",
+           "items": [
+            {
+             "key": "@Domain",
+             "value": "CUPRA.CC.UK"
+            },
+            {
+             "key": "@Name",
+             "value": "Defaults"
+            },
+            {
+             "key": "Vehicle",
+             "items": [
+              {
+               "key": "@Type",
+               "value": "Used"
+              },
+              {
+               "key": "Brand",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "EX"
+                }
+               ]
+              },
+              {
+               "key": "RegDateFirst",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2025-09-01"
+                }
+               ]
+              },
+              {
+               "key": "PriceModel",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "36995.00"
+                }
+               ]
+              },
+              {
+               "key": "Year",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2024"
+                }
+               ]
+              },
+              {
+               "key": "PriceTotal",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "36995.00"
+                }
+               ]
+              },
+              {
+               "key": "Key",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "CUTA00VZ25EE A4"
+                }
+               ]
+              },
+              {
+               "key": "Mileage",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "9764"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "key": "Product",
+             "items": [
+              {
+               "key": "@ID",
+               "value": "1161182"
+              }
+             ]
+            },
+            {
+             "key": "Dealer",
+             "items": [
+              {
+               "key": "ID",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "55722"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       },
+       {
+        "key": "products_request",
+        "financingData": {
+         "key": "products_request",
+         "items": [
+          {
+           "key": "Request",
+           "items": [
+            {
+             "key": "@Domain",
+             "value": "CUPRA.CC.UK"
+            },
+            {
+             "key": "@Name",
+             "value": "Products"
+            },
+            {
+             "key": "Vehicle",
+             "items": [
+              {
+               "key": "@Type",
+               "value": "Used"
+              },
+              {
+               "key": "Brand",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "EX"
+                }
+               ]
+              },
+              {
+               "key": "RegDateFirst",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2025-09-01"
+                }
+               ]
+              },
+              {
+               "key": "PriceModel",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "36995.00"
+                }
+               ]
+              },
+              {
+               "key": "Year",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2024"
+                }
+               ]
+              },
+              {
+               "key": "PriceTotal",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "36995.00"
+                }
+               ]
+              },
+              {
+               "key": "Key",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "CUTA00VZ25EE A4"
+                }
+               ]
+              },
+              {
+               "key": "Mileage",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "9764"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "key": "Dealer",
+             "items": [
+              {
+               "key": "ID",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "55722"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       }
+      ],
+      "hypermediatechdata": [
+       {
+        "key": "NEDC",
+        "techDataType": {
+         "key": "NEDC"
+        }
+       },
+       {
+        "key": "WLTP",
+        "techDataType": {
+         "key": "WLTP",
+         "name": "WLTP",
+         "groups": [
+          {
+           "key": "consumption",
+           "techDataGroup": {
+            "key": "consumption",
+            "name": "Fuel consumption combined according to WLTP",
+            "data": [
+             {
+              "key": "fuel",
+              "techData": {
+               "key": "fuel",
+               "values": [
+                {
+                 "key": "PURE_ELECTRICAL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "ELECTRICAL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "3.5",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "HIGH",
+                   "name": "High",
+                   "value": "3.7",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "MEDIUM",
+                   "name": "Medium",
+                   "value": "4.2",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "LOW",
+                   "name": "Low",
+                   "value": "4.3",
+                   "unit": "miles/kWh"
+                  },
+                  {
+                   "key": "EXTRA_HIGH",
+                   "name": "Extra High",
+                   "value": "2.8",
+                   "unit": "miles/kWh"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "emission",
+           "techDataGroup": {
+            "key": "emission",
+            "name": "CO\u2082 emissions combined according to WLTP",
+            "data": [
+             {
+              "key": "co2",
+              "techData": {
+               "key": "co2",
+               "values": [
+                {
+                 "key": "PURE_ELECTRICAL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "ELECTRICAL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "0.0",
+                   "unit": "g/km"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "range",
+           "techDataGroup": {
+            "key": "range",
+            "data": [
+             {
+              "key": "range",
+              "techData": {
+               "key": "range",
+               "values": [
+                {
+                 "key": "PURE_ELECTRICAL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "ELECTRICAL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "299.0",
+                   "unit": "miles"
+                  },
+                  {
+                   "key": "CITY",
+                   "name": "City",
+                   "value": "364.0",
+                   "unit": "miles"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "wltp_data",
+           "techDataGroup": {
+            "key": "wltp_data",
+            "data": [
+             {
+              "key": "data",
+              "techData": {
+               "key": "data",
+               "values": [
+                {
+                 "key": "wltp_data_WLTP_DATA",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "wltp_data"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "WLTP_DATA"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "DRAG_COEFFICIENT",
+                   "value": "0.264"
+                  },
+                  {
+                   "key": "HIGH_TYPING",
+                   "value": "0.0"
+                  },
+                  {
+                   "key": "DRAG_COEFFICIENT_H",
+                   "value": "0.324"
+                  },
+                  {
+                   "key": "MASS_VEHICLE_REAR",
+                   "value": "1142.008",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "FUEL_TYPES|0",
+                   "value": "ELECTRICAL"
+                  },
+                  {
+                   "key": "EU_LEER_MIN",
+                   "value": "2267.0",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "MASS_ACTUAL",
+                   "value": "2334.9049999999997",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "EU_LEER_MAX",
+                   "value": "2359.0",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "VEHICLE_CLASS",
+                   "value": "CLASS_3B"
+                  },
+                  {
+                   "key": "ENGINE_TYPE",
+                   "value": "PEV"
+                  },
+                  {
+                   "key": "MASS_VEHICLE_FRONT",
+                   "value": "1117.897",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "MASS_VEHICLE",
+                   "value": "2259.9049999999997",
+                   "unit": "kg"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          }
+         ]
+        }
+       }
+      ]
+     }
+    },
+    {
+     "key": "R0JSNTUwNjMzMzA1Mjcz=",
+     "href": "https://vtpapi.seat.com/restapi/v1/cuukgwb/datastore/cars/R0JSNTUwNjMzMzA1Mjcz=",
+     "car": {
+      "key": "R0JSNTUwNjMzMzA1Mjcz=",
+      "carid": "GBR550633305273",
+      "images": [
+       {
+        "key": "dealerImages",
+        "imageGroup": {
+         "key": "dealerImages",
+         "images": [
+          {
+           "key": "0",
+           "image": {
+            "key": "0",
+            "href": "https://vtpimages.audi.com/carimg2/1363/4665601363.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "1",
+           "image": {
+            "key": "1",
+            "href": "https://vtpimages.audi.com/carimg2/4677/4665414677.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "2",
+           "image": {
+            "key": "2",
+            "href": "https://vtpimages.audi.com/carimg2/9766/4665609766.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "3",
+           "image": {
+            "key": "3",
+            "href": "https://vtpimages.audi.com/carimg2/1362/4665601362.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "4",
+           "image": {
+            "key": "4",
+            "href": "https://vtpimages.audi.com/carimg2/4679/4665414679.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "5",
+           "image": {
+            "key": "5",
+            "href": "https://vtpimages.audi.com/carimg2/9655/4665609655.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "6",
+           "image": {
+            "key": "6",
+            "href": "https://vtpimages.audi.com/carimg2/9767/4665609767.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "7",
+           "image": {
+            "key": "7",
+            "href": "https://vtpimages.audi.com/carimg2/7380/4665647380.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "8",
+           "image": {
+            "key": "8",
+            "href": "https://vtpimages.audi.com/carimg2/9654/4665609654.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "9",
+           "image": {
+            "key": "9",
+            "href": "https://vtpimages.audi.com/carimg2/4678/4665414678.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "10",
+           "image": {
+            "key": "10",
+            "href": "https://vtpimages.audi.com/carimg2/5197/4665635197.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "11",
+           "image": {
+            "key": "11",
+            "href": "https://vtpimages.audi.com/carimg2/1361/4665601361.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "12",
+           "image": {
+            "key": "12",
+            "href": "https://vtpimages.audi.com/carimg2/5196/4665635196.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          },
+          {
+           "key": "13",
+           "image": {
+            "key": "13",
+            "href": "https://vtpimages.audi.com/carimg2/9765/4665609765.jpg?im=Resize,width=640,height=480",
+            "type": "photo",
+            "contenttype": "image/jpeg",
+            "width": 640,
+            "height": 480
+           }
+          }
+         ],
+         "type": "photo",
+         "contenttype": "image/jpeg",
+         "width": 640,
+         "height": 480
+        }
+       },
+       {
+        "key": "renderImagesSeat",
+        "imageGroup": {
+         "key": "renderImagesSeat",
+         "images": [
+          {
+           "key": "vtpextcolor",
+           "image": {
+            "key": "vtpextcolor",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGJYwMBfkpTMCWSlMnJm5iemp-kC-uFB6Tn5SYo5ucUliSWayvpGBkRk_Iy-KIDtQDyMPg0ZK4Q6ZhTsc77X1yrjNDf3pUDuvgoEZKFcFxIEMIMDHV1qUU5BYlJirV56ZUpIhqGFAJBBm9XGMdA0CAGW3hBS_AAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpintcolor",
+           "image": {
+            "key": "vtpintcolor",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGNYxMBfkpTMCWSlMnJm5iemp-kC-uGRaflFual5JfpFucUliSWayvpGBkZmut28AP6MAuhw7UDcjD8NF5u--U7d27LB47HX_4csFwUFbUrQZmIFyVUAcyAACfHylRTkFiUWJuXrlmSklGYIaBkQCYVYfx0jXIACRj_IAyQAAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpwheel",
+           "image": {
+            "key": "vtpwheel",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_1vzloG1tIiBKdppzWfxH2wcIQ-YGBgqChgYGNYxMBfkpTMCWSlMnJm5iemp-kC-uGRaflFual5JfpFucUliSWayvpGBkZmut28AP6MAuhw7UDcjD4Np-abgBs2C5Q1uZ7sWyZV5_1PM92JgBspNg2IGBj6-0qKcgsSixFy98syUkgxBDQMigTCrj2OkaxAAyQXFLckAAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avpint_dashboard_wf",
+           "image": {
+            "key": "avpint_dashboard_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_y2TW2gcdRTG__vbuWfmP6wxRqEtKM2qD-1u9pILsghpg61UKU0RJWmXye5sdu1eJrOzTSJKlapIrZdWsHipKEUoGp_0oVrQomJB8UGrj97wQiO2VCIirUUnIpyX7_AdPg7nd5YvCLUXCqYnllcH_9KM3d8jxGIgRPI9kQzacwkhRBWz0fLm_EysnVgPru_6XrSpVQ8ylV4QeplaJ2z57agTZnLZ3Igr9NgkkkLoDwuhjK0JIWUvbAZe6LU2LzSqUT11y6hXKIx6Y95sNu_7w8XR2fxwcXykMJurVXMFr1j0s7VqPjs2ck08_ZlIes2m6Pf2B412VK563fpsxwur5YWa0Pe1gvCBKCuUtXChb2xWykFYRn0LOYQ4jfIN6iaMDMa3mE9h7cJqYj2KrSJPo46jbke9F62BdgTtJPoVjEHMAHcvqZOkvkL0MMpYHyC3IK5DeQHlMvov6KfQf6BvFbEV-zjubsQUooI4ilbB3oz9B84g4gziVxI3Y8WdfuwhzKexS9jvIC-jWlgz2L-RuoS1jFvA_Z3EtSgXMa5g7sE8SP9tWDdir8Pei_0YziTG5_FRsFaRzyP_RAX5OPIRrArWi1gvY9-KfTv2YeT7yBXcBO4hxNuYRew6jsPAQeSDyKu4d-LGa75GagXtCbQPMaYxZrCexf4OJ4mTR1zAOoeTRn6NdhjtU8zzWPEKR7HPo-okzqGfQf8bIpInGPiZ1HqEg5hGuYS6E30j-hvoH6GcQjmL9hByD7KJPIB7PeJ1lCfRnkH7Av0nDDAOYHyJsYJ5BCvOukjfDux5nBTOBuRZ3F24ryJSiJsQE4hDqBJ1CO1dtBOYFcwB-vLY_-AMIO9HbED5GO0Y2ifIHVghjoFpY22jv4R5H_IlzEXMq0JbzM3GReIY4k0SMxiTWOuwfkR7JYbxOb-9vxF22mvIlybvvqc8FfWqjU75jtBfSv8Hd2l4PJdN1_3GXD0qDWfHsmmvGdS9Us1rdv10xWv5oVeamCpv6bRrjbny9hjpQtprx08WNTrtbindrXSC2LOwz1_q-vM9v13xS6Pp0G9X_XC-5zUb0VIQ-l0_Km31a16vGfUn79q28wb9f_Uv8vXkk9UDAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avpint_lateral_wf",
+           "image": {
+            "key": "avpint_lateral_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_y2TW2gcdRTG__vbuWfmP6wxRqEtKM2qD202102QRUgbbKVKaYooSbtMZmeza2d3J7OzTSJKlapIrZdWsHhFKULR-KQPkYIWFQuKD1p99IYXGrGlEhFpLToR4bx8h-_wcTi_s3xBqJ1YMD2xvNb7l2bs_R4hFiMhsisiGzXnMkKICma94c0F_al2Ut27sR14yZZGLer3O1Hs9VdbcSNoJq24f7AwOOoKPTWJrBD6w0IoY-tCSNmJw8iLvcbWhXolqeVuCYaLxcJosTjrjw8NBb7nDY-MB9XRgdmxsZGBgfGRYmV0dqwyXLwmnf5MZL0wFDnvYFRvJuXQS4LYC8sLVaEfaETxA0lBKOvRQt8c-uUoLqO-jexDnEb5BnULRj_Gt5hPYe3BCrEexVaRp1HHUXei3otWRzuGdgr9CkYvZoS7n9wpcl8hOhhlrA-Q2xDXobyAchn9F_QV9B_oWkNsx34Fdy9iCuEjjqP52Fux_8DpRZxB_ErmZqy0043dh_k0dgn7XeRlVAtrBvs3cpewlnGHcX8ncy3KRYwrmPswD9N9G9aN2Buw92M_hjOJ8Xl6Eqw15PPIP1FBPo58BMvHehHrZexbsW_HPop8H7mKm8E9gngHcwS7huPQcxj5IPIq7p246Zqvk1tFewLtQ4xpjBmsZ7G_w8niDCEuYJ3DySO_RjuK9inmeax0hePY51F1MufQz6D_DQnZk_T8TG4jwkFMo1xC3Y2-Gf1N9I9QVlDOoj2E3IcMkYdwr0e8gfIk2jNoX6D_hAHGIYwvMVYxj2GlWRfp2oU9j5PD2YQ8i7sH9zVEDnETYgJxBFWi9qG9h3YS08fsoWsI-x-cHuT9iE0oH6OdQPsEuQsrxjEwbawddJcw70O-hLmIeVVoi4OzaZE5gXiLzAzGJNYGrB_RXk1RfC5oHqzHreY68KXJu-8pTyWdSr1VviMOlvL_oV0aGB8s5GtBfa6WlAYKY4W8F0Y1r1T1wnaQ971Gym5pYqq8rdWs1ufKO1Ogh_JeM32xpN5qtkv5tt-KUs_CgWCpHcx3gqYflIr5OGhWgni-44X1ZCmKg3aQlLYHVa8TJt3Zu3bsvkH_X_0LJ2DAQNMDAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_015_wf",
+           "image": {
+            "key": "avptt_015_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_y2TW2gcdRTG__vbnWtm_sMaYxTagtKs-tDuJdlkgyxC2mCVKqEpoiTtMp2dza7dy2R2tklEqVIVqfXSPli8FUsRisYnfagUtahYUHzQ6qM3vNCILZWISGvRSRHOy3c4Hx-H8zvLF4TSCwUzE8urg3-r-s4fEGIxECL5vkgG7bmEEKKK0Wi5c3421oPru74bbWrVg6zXC0I3W-uELb8ddcJsIVcYdYQWG0RSCO0xIVKlNSGk7IXNwA3d1uaFRjWqp2_LjRdq-eJYrlTwxlx3T8GvFkfcan5kLJ8fLuZro6XisFcrlYrXxe7PRdJtNoXl7guiqJLLFysLNaHtbQXhw1FOpNZShbax6VWCsILyNnIIcZrUtyib0LPo32E8i7kDs4n5BJaCPI0yjnI3ygOoDdTDqCfRrqAPYgQ4u0mfJP01oodewfwQuQVxA6mXSF1G-xXtFNqP9K0itmK9hrMTMY3wEEdQPazNWH9iDyLOIH4jcStm3OnHGsJ4DquM9S7yMoqJOYv1O-lLmMs4Izh_kLie1EX0Kxi7MA7QfwfmzVjrsHZjPYk9if5FfAnMVeSLyL9QQD6FfBzTw3wZ81Ws27HuxDqE_AC5gpPAOYh4B6OIVce2GTiAfAR5FecenHjN46RXUJ9G_Qh9Bn0W8wWs77GT2MOIC5jnsDPIb1APoX6GcR4zXuEI1nkUjcQ5tDNo_0BE8gQDv5Bej7ARM6QuoUyhbUR7E-1jUqdInUV9FLkL2UTux7kR8QapZ1CfR_0S7Wd00Pejf4W-gnEYM866SN92rHnsNPYG5FmcHTivI9KIWxATiIMoEmUI9T3UExgexgB9w1j_Yg8gH0JsIPUJ6lHUT5HbMUNsHcPC3EZ_GeNB5CsYixhXhbpY2BMXiaOIt0jMok9irsP8CfVYTOFxv72vEXbaa6yXJ--7vzId9aqNTuWu0F_KXKO6nB8v5DJ1vzFXj8r5XCmXcZtB3S3X3GbXz3huyw_d8sRUZcqN6luuqel6J6pMLkaV4dHcGtgZtx3_WdTotLvlTNfrBPHMwl5_qevP9_y255fHMqHfrvrhfM9tNqKlIPS7flTe6tfcXjPqT967beom7X_1HxVVERjYAwAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_180_wf",
+           "image": {
+            "key": "avptt_180_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_y2TW2gcZRTHv_3tzjUz37DGGIW2oDSrPrTZbO7IIqQNVqkSmiJK0i7T2W-za_cymZ1tElGqVEVqvbQPFm_FUoSi8UkfKkUtKhYUH7T66A0vNGJLJSLSWnRShPPyP5w_fw7nd5YvCK0TCWYmlld7_9bNnT8gxGIoRPp9kQ6bcykhRBmr1vDnVH-ie9e3lR9valTD_qATRn5_pRU1VDNuRf2FfGHEE0ZiEGkhjMeEyIytCSFlJ6qHfuQ3Ni_UynE1e9twoTCkyqOFsj8-MlQIRkdH8nvK-aFBVVHjlbI_PBgEowU1pq5L3J-LtF-vC8ffF8ZxaWAsX1qoCGNvI4wejvMis5YqjI31oBRGJbS3kX2I02S-RduE2Y_5Hdaz2Duw69hP4GjI02jjaHejPYBeQz-MfhLjCmYvVoi3m-xJsl8jOpgl7A-RWxA3kHmJzGWMXzFOYfxI1ypiK85reDsR04gAcQQ9wNmM8yduL-IM4jdSt2InnW6cPqzncIo47yIvo9nYszi_k72EvYw3hPcHqevJXMS8grUL6wDdd2DfjLMOZzfOk7iTmF8kl8BeRb6I_AsN5FPIx7ED7JexX8W5HedOnEPID5AreCm8g4h3sIZxqrguPQeQjyCv4t2Dl6x5nOwK-tPoH2HOYM5iv4DzPW4adxBxAfscbg75Dfoh9M-wzmMnKxzBOY9mkDqHcQbjH4hJn6DnF7LrES5ihswltCmMjRhvYnxM5hSZs-iPInch68j9eDci3iDzDPrz6F9i_IwJ5n7MrzBXsA5jJ1kX6dqOM4-bxd2APIu3A-91RBZxC2ICcRBNovWhv4d-AivA6qFrEOdf3B7kQ4gNZD5BP4r-KXI7doRrYjnY2-guYj2IfAVrEeuq0BcLe5IidRTxFqlZzEnsddg_oR9LKDyumvtqUau5xnpx8r77S9Nxp1xrle6K1FLuGtXFgfFCPldVtblqXBzIj-Vzfj2s-sWKX2-rXOA3VOQXJ6ZKU35c3XJNTVdbcWlyMS4NjuTXwM75zeTP4lqr2S7m2kErTGYW9qqltprvqGagiqO5SDXLKprv-PVavBRGqq3i4lZV8Tv1uDt977apm4z_1X_F9HKN2AMAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "avptt_330_wf",
+           "image": {
+            "key": "avptt_330_wf",
+            "href": "https://render.seat.co.uk/SEA/RENDER/PRD/render/fast/v3_y2TW2gcdRTG__vbuWfmP6wxRqEtKM2qD21ms5sbsghpg1WqhKaIkrbLZDLJrt3LZHa2SUSpUhWp9dI-WLwVSxGKxid9qBS1qFhQfNDqoze80IgtlYhIa9FJEc7LdzgfH4fzO8sXhNqJBVNjy6u9f2vGzh8QYjESIvu-yEbNuYwQYgaz1vDnwv5U965vh36yqVGN-oNOFPv9s624ETaTVtw_4A0MuUJPDSIrhP6YEMrImhBSduJ65Md-Y_NCbSap5m4rhtOeXwyKpWCwUBwZLpRGB0ve0PDgUOgVStOz3uBMqeBPhwPXpe7PRdav14Xt74uSpFIsepWFWaHvbUTxw4knlLVUoW-sB5UorqC-jexDnEb5FnUTRj_Gd5jPYu3AqmM9ga0iT6OOot6N-gBaDe0w2kn0Kxi9mBHuHnInyX2N6GBUsD5EbkHcgPISymX0X9FPof9I1ypiK_ZruDsRk4gAcQQtwN6M_SdOL-IM4jcyt2KlnW7sPsznsMvY7yIvo1pYu7B_J3cJaxm3hPsHmetRLmJcwdyNeYDuO7Buxl6HvQf7SZxxjC_SS2CtIl9E_oUK8ink41gB1stYr2Lfjn0n9iHkB8gV3AzuQcQ7mIPYVRyHngPIR5BXce_BTdc8Tm4F7Wm0jzCmMHZhvYD9PU4Wp4i4gHUOJ4_8Bu0Q2meY57HSFY5gn0fVyZxDP4P-DyRkT9DzC7n1CAcxhXIJdQJ9I_qb6B-jnEI5i_YocjeyjtyPeyPiDZRn0J5H-xL9Zwww9mN8hbGCeRgrzbpI13bseZwczgbkWdwduK8jcohbEGOIg6gStQ_tPbQTmAFmD11F7H9xepAPITagfIJ2FO1T5HasGMfAtLG20V3GfBD5CuYi5lWhLQ5Mp0XmKOItMrswxrHWYf2Ediyl8HjY3FeLW8011svj991fmUw6M7VW5a44XMpfo7pcGB3w8tWwNldNygVvxMv79ajql2f9ejvMB34jjP3y2ERlwk-qW66pyWorqYwvplAPeWtg5_1m-mdJrdVsl_PtoBWlMwt7w6V2ON8Jm0FYHs7HYXMmjOc7fr2WLEVx2A6T8tZw1u_Uk-7svdsmbtL_V_8BxgF5otgDAAA",
+            "type": "render",
+            "contenttype": "image/png"
+           }
+          },
+          {
+           "key": "vtpef",
+           "image": {
+            "key": "vtpef",
+            "href": "https://vtp-europe-multi-skodaseat.elvis-eu-prd.webapps.audi.io/fallbackimages/seat_vtp_fallback_1436_804_448.png",
+            "type": "fallback",
+            "contenttype": "image/png"
+           }
+          }
+         ],
+         "type": "render",
+         "contenttype": "image/png"
+        }
+       }
+      ],
+      "items": [
+       {
+        "key": "available_from",
+        "name": {
+         "key": "TS_OFF_VERF"
+        },
+        "value": "2026-10-17T22:00:00Z"
+       },
+       {
+        "key": "capCode",
+        "value": "CUFO25VZ55EPTA4 1"
+       },
+       {
+        "key": "cartitle",
+        "name": {
+         "key": "TS_DWA_SEA_TXT_MM"
+        },
+        "mbv": {
+         "code": "KMPRZT"
+        },
+        "value": "CUPRA Formentor"
+       },
+       {
+        "key": "color",
+        "values": [
+         {
+          "key": "exterior",
+          "values": [
+           {
+            "key": "generic",
+            "value": "Grey"
+           },
+           {
+            "key": "marketing",
+            "values": [
+             {
+              "key": "out",
+              "name": {
+               "key": "TS_t_color"
+              },
+              "value": "Matte Enceladus Gray"
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "key": "interior",
+          "values": [
+           {
+            "key": "generic",
+            "value": "Other"
+           },
+           {
+            "key": "marketing",
+            "values": [
+             {
+              "key": "seat",
+              "name": {
+               "key": "TS_DET_SITZ"
+              },
+              "value": "Fabric \"Tech Performance\" - PVC - Dinamica"
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "key": "dateoffer",
+        "value": "2026-07-18T13:28:52Z"
+       },
+       {
+        "key": "dateproduction",
+        "value": "2026-06-10T00:00:00Z"
+       },
+       {
+        "key": "drive",
+        "name": {
+         "key": "TS_H_KEY_DRIVE"
+        },
+        "value": "All-wheel drive"
+       },
+       {
+        "key": "gear",
+        "name": {
+         "key": "TS_t_gear_VW"
+        },
+        "value": "Automatic"
+       },
+       {
+        "key": "initialreg",
+        "name": {
+         "key": "TS_t_ez"
+        },
+        "value": "2026-07-17T00:00:00Z"
+       },
+       {
+        "key": "knr",
+        "name": {
+         "key": "TS_TXT_KOMM"
+        },
+        "value": "3305273"
+       },
+       {
+        "key": "localCarTitle",
+        "value": "CUPRA Formentor 2.5 TSI 390 VZ5 5dr DSG 4Drive"
+       },
+       {
+        "key": "manuf",
+        "name": {
+         "key": "TS_t_manuf"
+        },
+        "value": "CUPRA"
+       },
+       {
+        "key": "mileage",
+        "unit": "MI",
+        "label": "Mileage",
+        "value": "3,000",
+        "raw_value": 3000.0
+       },
+       {
+        "key": "model",
+        "name": {
+         "key": "TS_t_model"
+        },
+        "value": "Formentor"
+       },
+       {
+        "key": "motor",
+        "values": [
+         {
+          "key": "capacity",
+          "name": {
+           "key": "TS_t_hu"
+          },
+          "unit": "cm\u00b3",
+          "value": "2,480"
+         },
+         {
+          "key": "fuel",
+          "name": {
+           "key": "TS_COM_TXN94"
+          },
+          "value": "Petrol"
+         },
+         {
+          "key": "power.kw",
+          "name": {
+           "key": "TS_t_kw"
+          },
+          "unit": "kW",
+          "value": "287"
+         },
+         {
+          "key": "power.ps",
+          "name": {
+           "key": "TS_t_kw"
+          },
+          "unit": "PS",
+          "value": "390"
+         }
+        ]
+       },
+       {
+        "key": "numberplate",
+        "value": "BP26XTK"
+       },
+       {
+        "key": "prices",
+        "values": [
+         {
+          "key": "sale",
+          "unit": "GBP",
+          "value": "64,985.00",
+          "raw_value": 64985.0
+         }
+        ]
+       },
+       {
+        "key": "smod",
+        "name": {
+         "key": "TS_t_smod"
+        },
+        "value": "VZ5"
+       },
+       {
+        "key": "preuse",
+        "code": "9",
+        "value": "Other"
+       }
+      ],
+      "hypermediadealer": {
+       "key": "GBR55063",
+       "href": "https://vtpapi.seat.com/restapi/v1/cuukgwb/datastore/dealer/GBR55063",
+       "dealer": {
+        "key": "GBR55063",
+        "gvoStatus": "",
+        "items": [
+         {
+          "key": "city",
+          "value": "Coventry"
+         },
+         {
+          "key": "name",
+          "value": "Listers SEAT Coventry"
+         },
+         {
+          "key": "phone",
+          "value": "02476 456700"
+         },
+         {
+          "key": "position",
+          "values": [
+           {
+            "key": "latitude",
+            "value": "52.3972"
+           },
+           {
+            "key": "longitude",
+            "value": "-1.4376"
+           }
+          ]
+         },
+         {
+          "key": "region",
+          "value": "CV3 2AN"
+         },
+         {
+          "key": "street",
+          "value": "Brandon Rd, ."
+         },
+         {
+          "key": "website",
+          "value": "www.seat.co.uk/dealer/listers-seat-coventry.html"
+         },
+         {
+          "key": "zip",
+          "value": "CV3 2AN"
+         }
+        ]
+       }
+      },
+      "hypermediafinancing": [
+       {
+        "key": "default",
+        "financingData": {
+         "key": "default",
+         "name": "PCP 0-12 \u00a31000 DC",
+         "disclaimer": "18s+. Subject to status & availability. Available from participating Retailers. Exclusions may apply. Indemnities may be required. Not available in conjunction with any other finance offer and may be varied or withdrawn at any time. Freepost SEAT Financial Services.",
+         "items": [
+          {
+           "key": "disclaimer.product",
+           "value": "18s+. Subject to status & availability. Available from participating Retailers. Exclusions may apply. Indemnities may be required. Not available in conjunction with any other finance offer and may be varied or withdrawn at any time. Freepost SEAT Financial Services."
+          },
+          {
+           "key": "disclaimer.calculation",
+           "value": "*With Solutions PCP. Ordered by 01/09/2028. T&Cs apply. Indemnities may be required. CUPRA Financial Services."
+          },
+          {
+           "key": "Rate",
+           "name": "35 Monthly Payments of",
+           "value": "773.48",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "Duration",
+           "name": "Contract Duration",
+           "value": "36",
+           "unit": "months",
+           "symbol": "Months"
+          },
+          {
+           "key": "Mileage",
+           "name": "Annual Mileage",
+           "value": "10,000",
+           "unit": "Miles",
+           "symbol": "Miles"
+          },
+          {
+           "key": "DownPayment",
+           "name": "Customer Deposit",
+           "value": "19,495.50",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "DEPCONT",
+           "name": "CUPRA Contribution",
+           "value": "1,000.00",
+           "unit": "GBP",
+           "symbol": "\u00a3",
+           "note": "The contribution from CUPRA towards the finance deposit."
+          },
+          {
+           "key": "TD",
+           "name": "Total Deposit",
+           "value": "20,495.50",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "INV",
+           "name": "Retail Cash Price",
+           "value": "64,985.00",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "GFV",
+           "name": "Optional Final Payment",
+           "value": "28,327.50",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "OTPFEE",
+           "name": "Option to Purchase Fee",
+           "value": "10.00",
+           "unit": "GBP",
+           "symbol": "\u00a3",
+           "note": "The option to purchase fee is payable at the end of the agreement."
+          },
+          {
+           "key": "TAP",
+           "name": "Total Amount Payable",
+           "value": "75,904.80",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "NetCreditAmount",
+           "name": "Total Amount of Credit",
+           "value": "44,489.50",
+           "unit": "GBP",
+           "symbol": "\u00a3"
+          },
+          {
+           "key": "XSM",
+           "name": "Excess Mileage (per mile)",
+           "value": "11.80",
+           "unit": "p",
+           "symbol": "p",
+           "note": "The pence per mile charge above the agreed annual mileage."
+          },
+          {
+           "key": "APR",
+           "name": "Representative APR",
+           "value": "10.4",
+           "unit": "percent",
+           "symbol": "% APR"
+          },
+          {
+           "key": "AER",
+           "name": "Rate of Interest",
+           "value": "10.38",
+           "unit": "percent",
+           "symbol": "% Fixed",
+           "note": "The rate of interest, either fixed or variable, adjusts in accordance with the finance amount."
+          }
+         ]
+        }
+       },
+       {
+        "key": "request",
+        "financingData": {
+         "key": "request",
+         "items": [
+          {
+           "key": "Request",
+           "items": [
+            {
+             "key": "@Domain",
+             "value": "CUPRA.CC.UK"
+            },
+            {
+             "key": "@Name",
+             "value": "Defaults"
+            },
+            {
+             "key": "Vehicle",
+             "items": [
+              {
+               "key": "@Type",
+               "value": "Used"
+              },
+              {
+               "key": "Brand",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "EX"
+                }
+               ]
+              },
+              {
+               "key": "RegDateFirst",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2026-07-17"
+                }
+               ]
+              },
+              {
+               "key": "PriceModel",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "64985.00"
+                }
+               ]
+              },
+              {
+               "key": "Year",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2026"
+                }
+               ]
+              },
+              {
+               "key": "PriceTotal",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "64985.00"
+                }
+               ]
+              },
+              {
+               "key": "Key",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "CUFO25VZ55EPTA4 1"
+                }
+               ]
+              },
+              {
+               "key": "Mileage",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "3000"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "key": "Product",
+             "items": [
+              {
+               "key": "@ID",
+               "value": "1161058"
+              }
+             ]
+            },
+            {
+             "key": "Dealer",
+             "items": [
+              {
+               "key": "ID",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "55063"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       },
+       {
+        "key": "products_request",
+        "financingData": {
+         "key": "products_request",
+         "items": [
+          {
+           "key": "Request",
+           "items": [
+            {
+             "key": "@Domain",
+             "value": "CUPRA.CC.UK"
+            },
+            {
+             "key": "@Name",
+             "value": "Products"
+            },
+            {
+             "key": "Vehicle",
+             "items": [
+              {
+               "key": "@Type",
+               "value": "Used"
+              },
+              {
+               "key": "Brand",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "EX"
+                }
+               ]
+              },
+              {
+               "key": "RegDateFirst",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2026-07-17"
+                }
+               ]
+              },
+              {
+               "key": "PriceModel",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "64985.00"
+                }
+               ]
+              },
+              {
+               "key": "Year",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "2026"
+                }
+               ]
+              },
+              {
+               "key": "PriceTotal",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "64985.00"
+                }
+               ]
+              },
+              {
+               "key": "Key",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "CUFO25VZ55EPTA4 1"
+                }
+               ]
+              },
+              {
+               "key": "Mileage",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "3000"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "key": "Dealer",
+             "items": [
+              {
+               "key": "ID",
+               "items": [
+                {
+                 "key": "#Value",
+                 "value": "55063"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       }
+      ],
+      "hypermediatechdata": [
+       {
+        "key": "NEDC",
+        "techDataType": {
+         "key": "NEDC"
+        }
+       },
+       {
+        "key": "WLTP",
+        "techDataType": {
+         "key": "WLTP",
+         "name": "WLTP",
+         "groups": [
+          {
+           "key": "consumption",
+           "techDataGroup": {
+            "key": "consumption",
+            "name": "Fuel consumption combined according to WLTP",
+            "data": [
+             {
+              "key": "fuel",
+              "techData": {
+               "key": "fuel",
+               "values": [
+                {
+                 "key": "PURE_PETROL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "PETROL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "27.7",
+                   "unit": "mpg"
+                  },
+                  {
+                   "key": "HIGH",
+                   "name": "High",
+                   "value": "32.9",
+                   "unit": "mpg"
+                  },
+                  {
+                   "key": "MEDIUM",
+                   "name": "Medium",
+                   "value": "28.0",
+                   "unit": "mpg"
+                  },
+                  {
+                   "key": "LOW",
+                   "name": "Low",
+                   "value": "18.2",
+                   "unit": "mpg"
+                  },
+                  {
+                   "key": "EXTRA_HIGH",
+                   "name": "Extra High",
+                   "value": "29.3",
+                   "unit": "mpg"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "emission",
+           "techDataGroup": {
+            "key": "emission",
+            "name": "CO\u2082 emissions combined according to WLTP",
+            "data": [
+             {
+              "key": "co2",
+              "techData": {
+               "key": "co2",
+               "values": [
+                {
+                 "key": "PURE_PETROL",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "PURE"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "PETROL"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "COMBINED",
+                   "name": "Combined",
+                   "value": "231.0",
+                   "unit": "g/km"
+                  },
+                  {
+                   "key": "HIGH",
+                   "name": "High",
+                   "value": "194.0",
+                   "unit": "g/km"
+                  },
+                  {
+                   "key": "MEDIUM",
+                   "name": "Medium",
+                   "value": "229.0",
+                   "unit": "g/km"
+                  },
+                  {
+                   "key": "LOW",
+                   "name": "Low",
+                   "value": "353.0",
+                   "unit": "g/km"
+                  },
+                  {
+                   "key": "EXTRA_HIGH",
+                   "name": "Extra High",
+                   "value": "218.0",
+                   "unit": "g/km"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          },
+          {
+           "key": "wltp_data",
+           "techDataGroup": {
+            "key": "wltp_data",
+            "data": [
+             {
+              "key": "data",
+              "techData": {
+               "key": "data",
+               "values": [
+                {
+                 "key": "wltp_data_WLTP_DATA",
+                 "items": [
+                  {
+                   "key": "energy_management",
+                   "value": "wltp_data"
+                  },
+                  {
+                   "key": "fuel",
+                   "value": "WLTP_DATA"
+                  }
+                 ],
+                 "values": [
+                  {
+                   "key": "HIGH_TYPING",
+                   "value": "0.0"
+                  },
+                  {
+                   "key": "DRAG_COEFFICIENT",
+                   "value": "0.377"
+                  },
+                  {
+                   "key": "DRAG_COEFFICIENT_H",
+                   "value": "0.43"
+                  },
+                  {
+                   "key": "MASS_VEHICLE_REAR",
+                   "value": "709.157",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "FUEL_TYPES|0",
+                   "value": "PETROL"
+                  },
+                  {
+                   "key": "EU_LEER_MIN",
+                   "value": "1701.0",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "MASS_ACTUAL",
+                   "value": "1745.835",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "EU_LEER_MAX",
+                   "value": "1762.0",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "ENGINE_TYPE",
+                   "value": "ICE"
+                  },
+                  {
+                   "key": "VEHICLE_CLASS",
+                   "value": "CLASS_3B"
+                  },
+                  {
+                   "key": "MASS_VEHICLE_FRONT",
+                   "value": "961.678",
+                   "unit": "kg"
+                  },
+                  {
+                   "key": "MASS_VEHICLE",
+                   "value": "1670.835",
+                   "unit": "kg"
+                  }
+                 ]
+                }
+               ]
+              }
+             }
+            ]
+           }
+          }
+         ]
+        }
+       }
+      ]
+     }
+    }
+   ]
+  }
+ }
+}
