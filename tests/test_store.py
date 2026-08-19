@@ -3,7 +3,7 @@ import sqlite3
 import pytest
 
 from carparator.model import Car, FuelType
-from carparator.store import SCHEMA_VERSION, SqliteStore
+from carparator.store import SCHEMA_VERSION, SqliteStore, TransactionError
 
 
 @pytest.fixture
@@ -191,3 +191,18 @@ def test_store_raw_overwrites_on_a_later_run(store):
     assert store.connection.execute(
         "SELECT payload, fetched_at FROM raw_listings"
     ).fetchall() == [("new", "2026-08-20T10:00:00Z")]
+
+
+def test_transaction_commits_once_for_a_single_level_block(store):
+    with store.transaction():
+        store.upsert_car(a_car(), observed_at="2026-08-19T10:00:00Z", run_id=1)
+
+    (row,) = stored_cars(store)
+    assert row["source_id"] == "GBR1"
+
+
+def test_nested_transaction_raises_instead_of_silently_degrading(store):
+    with store.transaction():
+        with pytest.raises(TransactionError):
+            with store.transaction():
+                pass

@@ -11,6 +11,11 @@ from carparator.model import Car
 
 SCHEMA_VERSION = 1
 
+
+class TransactionError(RuntimeError):
+    """Raised when a store transaction is used in an unsupported way."""
+
+
 _DDL = """
 CREATE TABLE IF NOT EXISTS cars (
     source            TEXT    NOT NULL,
@@ -113,7 +118,18 @@ class SqliteStore:
 
         Commits once the block exits, whether cleanly or via an exception, so
         that a mid-run failure still leaves the listings seen so far durable.
+
+        Not re-entrant: nesting a transaction() inside another raises
+        TransactionError. Without this, the inner block's exit would clear
+        the transaction flag and commit early, silently degrading the outer
+        block's remaining writes to per-write autocommit.
         """
+        if self._in_transaction:
+            raise TransactionError(
+                "transaction() is not re-entrant"
+                " — a nested call would commit early and break the outer"
+                " transaction's atomicity"
+            )
         self._in_transaction = True
         try:
             yield
