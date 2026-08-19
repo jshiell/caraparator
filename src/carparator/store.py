@@ -149,6 +149,46 @@ class SqliteStore:
             (car.source, car.source_id, observed_at, car.price_pence),
         )
 
+    def start_run(self, source: str, *, started_at: str) -> int:
+        with self.connection:
+            cursor = self.connection.execute(
+                "INSERT INTO scrape_runs (source, started_at, status)"
+                " VALUES (?, ?, 'running')",
+                (source, started_at),
+            )
+        return int(cursor.lastrowid)
+
+    def finish_run(
+        self,
+        run_id: int,
+        *,
+        finished_at: str,
+        expected_total: int | None,
+        listings_seen: int,
+        listings_stored: int,
+        skipped_non_electric: int,
+        mapping_errors: int,
+        status: str,
+        error: str | None = None,
+    ) -> None:
+        with self.connection:
+            self.connection.execute(
+                "UPDATE scrape_runs SET finished_at = ?, expected_total = ?,"
+                " listings_seen = ?, listings_stored = ?, skipped_non_electric = ?,"
+                " mapping_errors = ?, status = ?, error = ? WHERE id = ?",
+                (
+                    finished_at,
+                    expected_total,
+                    listings_seen,
+                    listings_stored,
+                    skipped_non_electric,
+                    mapping_errors,
+                    status,
+                    error,
+                    run_id,
+                ),
+            )
+
     def close(self) -> None:
         self.connection.close()
 
