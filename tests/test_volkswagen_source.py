@@ -173,6 +173,38 @@ def test_non_electric_listings_are_skipped(source, vehicles):
     assert source.to_car(RawListing(source="volkswagen", source_id="x", payload=petrol)) is None
 
 
+def test_a_listing_missing_the_model_is_a_mapping_error(source, vehicles):
+    document = dict(vehicles[0])
+    document.pop("MODEL_TEXT_STR")
+
+    with pytest.raises(ValueError, match="R7EC4DX"):
+        source.to_car(RawListing(source="volkswagen", source_id="x", payload=document))
+
+
+def test_a_listing_missing_the_mileage_is_a_mapping_error(source, vehicles):
+    document = dict(vehicles[0])
+    document.pop("MILEAGE_MIL_INT")
+
+    with pytest.raises(ValueError, match="R7EC4DX"):
+        source.to_car(RawListing(source="volkswagen", source_id="x", payload=document))
+
+
+def test_a_listing_missing_the_dealer_name_is_a_mapping_error(source, vehicles):
+    document = dict(vehicles[0])
+    document.pop("POOL_NAME1_STR")
+
+    with pytest.raises(ValueError, match="R7EC4DX"):
+        source.to_car(RawListing(source="volkswagen", source_id="x", payload=document))
+
+
+def test_a_listing_with_genuinely_zero_mileage_still_maps_to_zero(source, vehicles):
+    document = dict(vehicles[0], MILEAGE_MIL_INT=0)
+
+    car = source.to_car(RawListing(source="volkswagen", source_id="x", payload=document))
+
+    assert car.mileage_miles == 0
+
+
 def test_every_vehicle_on_the_page_maps_without_error(source, vehicles):
     cars = [source.to_car(raw(vehicles, i)) for i in range(len(vehicles))]
 

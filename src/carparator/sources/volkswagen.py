@@ -174,19 +174,28 @@ class VolkswagenSource:
         fuel = (_text(vehicle, "FUEL_TYPE_LST") or "").lower()
         if fuel not in _FUEL_TYPES:
             raise ValueError(f"unrecognised fuel type {fuel!r}")
+        model = _text(vehicle, "MODEL_TEXT_STR")
+        if model is None:
+            raise ValueError(f"listing {vehicle.get('ID')!r} has no model")
+        mileage_miles = _integer(vehicle, "MILEAGE_MIL_INT")
+        if mileage_miles is None:
+            raise ValueError(f"listing {vehicle.get('ID')!r} has no mileage")
+        dealer_name = _text(vehicle, "POOL_NAME1_STR")
+        if dealer_name is None:
+            raise ValueError(f"listing {vehicle.get('ID')!r} has no dealer name")
 
         return Car(
             source=self.name,
             source_id=str(vehicle["ID"]),
             brand=_text(vehicle, "MANUFACTURER_LST") or "Volkswagen",
-            model=_text(vehicle, "MODEL_TEXT_STR") or "",
+            model=model,
             battery_kwh=_decimal(vehicle, "BATTERY_CAPACITY_FLT"),
             doors=_integer(vehicle, "NUMBER_OF_DOORS_INT"),
-            mileage_miles=_integer(vehicle, "MILEAGE_MIL_INT") or 0,
+            mileage_miles=mileage_miles,
             year=int(registered[:4]),
             registration=_text(vehicle, "LICENSE_PLATE_STR"),
             price_pence=round(price * 100),
-            dealer_name=_text(vehicle, "POOL_NAME1_STR") or "",
+            dealer_name=dealer_name,
             fuel_type=_FUEL_TYPES[fuel],
             trim=_text(vehicle, "TRIM_STR"),
             description=_text(vehicle, "SUB_MODEL_TEXT_STR"),
