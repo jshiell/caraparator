@@ -1,3 +1,4 @@
+import logging
 import sqlite3
 
 import pytest
@@ -54,6 +55,15 @@ class FakeSource:
         if raw.source_id in self._non_electric:
             return None
         return a_car(self.name, raw.source_id)
+
+
+class FakeSourceWithFailedPages(FakeSource):
+    """A FakeSource that also retains failed-page bodies, like VolkswagenSource."""
+
+    def __init__(self, *args, failed_pages=(), failed_page_bodies=(), **kwargs):
+        super().__init__(*args, **kwargs)
+        self.failed_pages = list(failed_pages)
+        self.failed_page_bodies = list(failed_page_bodies)
 
 
 def runs(store):
@@ -181,3 +191,66 @@ def test_a_multi_listing_source_commits_the_listing_work_once(store):
     # per listing.
     assert commit_count == 3
     assert car_count(store, "cupra") == 5
+
+
+def test_retained_failed_page_bodies_are_written_to_disk(store, tmp_path):
+    source = FakeSourceWithFailedPages(
+        "volkswagen", ["a"],
+        failed_pages=[3, 7], failed_page_bodies=["<html>3</html>", "<html>7</html>"],
+    )
+
+    ingest([source], store)
+
+    directory = tmp_path / "test.db.failed-pages"
+    assert (directory / "volkswagen-page3.html").read_text() == "<html>3</html>"
+    assert (directory / "volkswagen-page7.html").read_text() == "<html>7</html>"
+
+
+def test_only_the_retained_bodies_are_written_when_more_pages_failed_than_were_kept(
+    store, tmp_path
+):
+    source = FakeSourceWithFailedPages(
+        "volkswagen", ["a"],
+        failed_pages=[3, 7, 9], failed_page_bodies=["<html>3</html>"],
+    )
+
+    ingest([source], store)
+
+    directory = tmp_path / "test.db.failed-pages"
+    assert [path.name for path in directory.iterdir()] == ["volkswagen-page3.html"]
+
+
+def test_writing_a_failed_page_logs_the_path_it_was_written_to(store, tmp_path, caplog):
+    source = FakeSourceWithFailedPages(
+        "volkswagen", ["a"], failed_pages=[7], failed_page_bodies=["<html>7</html>"]
+    )
+    written = tmp_path / "test.db.failed-pages" / "volkswagen-page7.html"
+
+    with caplog.at_level(logging.WARNING):
+        ingest([source], store)
+
+    assert str(written) in caplog.text
+
+
+def test_ingest_result_counts_failed_pages(store):
+    source = FakeSourceWithFailedPages(
+        "volkswagen", ["a"], failed_pages=[3, 7], failed_page_bodies=["x"]
+    )
+
+    (result,) = ingest([source], store)
+
+    assert result.failed_pages == 2
+
+
+def test_a_source_without_failed_page_attributes_creates_no_failed_pages_directory(
+    store, tmp_path
+):
+    ingest([FakeSource("cupra", ["a"])], store)
+
+    assert not (tmp_path / "test.db.failed-pages").exists()
+
+
+def test_a_clean_run_creates_no_failed_pages_directory(store, tmp_path):
+    ingest([FakeSourceWithFailedPages("volkswagen", ["a"])], store)
+
+    assert not (tmp_path / "test.db.failed-pages").exists()

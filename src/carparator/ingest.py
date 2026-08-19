@@ -6,6 +6,7 @@ import json
 import logging
 from dataclasses import dataclass
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Iterable
 
 from carparator.sources import ListingSource
@@ -27,6 +28,7 @@ class IngestResult:
     listings_stored: int = 0
     skipped_non_electric: int = 0
     mapping_errors: int = 0
+    failed_pages: int = 0
     status: str = COMPLETE
     error: str | None = None
 
@@ -79,6 +81,7 @@ def _ingest_one(
         result.error = f"{type(error).__name__}: {error}"
 
     result.expected_total = getattr(source, "expected_total", None)
+    _retain_failed_pages(source, store, result)
     if result.status != FAILED:
         result.status = COMPLETE if _is_complete(result, limit) else PARTIAL
 
@@ -94,6 +97,29 @@ def _ingest_one(
         error=result.error,
     )
     return result
+
+
+def _retain_failed_pages(
+    source: ListingSource, store: SqliteStore, result: IngestResult
+) -> None:
+    """Persist any pages a source couldn't parse, so an operator can inspect them.
+
+    Not every source retains failed pages (CupraSource doesn't, and the
+    ListingSource protocol doesn't require it), so both attributes are read
+    defensively.
+    """
+    pages = getattr(source, "failed_pages", [])
+    bodies = getattr(source, "failed_page_bodies", [])
+    result.failed_pages = len(pages)
+    if not bodies:
+        return
+
+    directory = Path(f"{store.path}.failed-pages")
+    directory.mkdir(parents=True, exist_ok=True)
+    for page, body in zip(pages, bodies):
+        path = directory / f"{source.name}-page{page}.html"
+        path.write_text(body)
+        logger.warning("%s: wrote failed page %d to %s", source.name, page, path)
 
 
 def _is_complete(result: IngestResult, limit: int | None) -> bool:

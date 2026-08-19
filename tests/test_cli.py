@@ -43,6 +43,47 @@ def test_a_failing_source_exits_non_zero(tmp_path, monkeypatch):
     assert main(["scrape", "--db", str(tmp_path / "cars.db")]) == 1
 
 
+def test_report_line_mentions_failed_pages_when_a_source_dropped_any(
+    tmp_path, capsys, monkeypatch
+):
+    from carparator import cli
+    from carparator.ingest import IngestResult
+
+    monkeypatch.setattr(cli, "build_sources", lambda name: [_StubSource()])
+    monkeypatch.setattr(
+        cli,
+        "ingest",
+        lambda sources, store, limit=None: [
+            IngestResult(
+                source="volkswagen",
+                run_id=1,
+                expected_total=1,
+                listings_seen=1,
+                listings_stored=1,
+                failed_pages=2,
+            )
+        ],
+    )
+
+    main(["scrape", "--db", str(tmp_path / "cars.db")])
+
+    report = capsys.readouterr().out
+    assert "failed_pages 2" in report
+
+
+def test_report_line_omits_failed_pages_when_none_were_dropped(
+    tmp_path, capsys, monkeypatch
+):
+    from carparator import cli
+
+    monkeypatch.setattr(cli, "build_sources", lambda name: [_StubSource()])
+
+    main(["scrape", "--db", str(tmp_path / "cars.db")])
+
+    report = capsys.readouterr().out
+    assert "failed_pages" not in report
+
+
 class _StubSource:
     name = "stub"
     expected_total = 1

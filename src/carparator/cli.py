@@ -48,14 +48,17 @@ def main(argv: Sequence[str] | None = None) -> int:
         results = ingest(build_sources(args.source), store, limit=args.limit)
 
     for result in results:
-        print(
+        line = (
             f"{result.source}: seen {result.listings_seen}"
             f"/{result.expected_total if result.expected_total is not None else '?'}"
             f" stored {result.listings_stored}"
             f" skipped {result.skipped_non_electric}"
             f" errors {result.mapping_errors}"
-            f" [{result.status}]"
         )
+        if result.failed_pages:
+            line += f" failed_pages {result.failed_pages}"
+        line += f" [{result.status}]"
+        print(line)
         if result.error:
             print(f"  {result.error}", file=sys.stderr)
 

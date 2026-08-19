@@ -96,7 +96,8 @@ CREATE INDEX IF NOT EXISTS cars_last_seen  ON cars (last_seen);
 
 class SqliteStore:
     def __init__(self, path: str | Path):
-        self.connection = sqlite3.connect(path)
+        self.path = Path(path)
+        self.connection = sqlite3.connect(self.path)
         self.connection.execute("PRAGMA journal_mode=WAL")
         self.connection.execute("PRAGMA foreign_keys=ON")
         self._in_transaction = False

@@ -73,6 +73,12 @@ def test_init_schema_is_idempotent(store):
     }
 
 
+def test_store_exposes_the_path_it_was_opened_with(tmp_path):
+    path = tmp_path / "test.db"
+    with SqliteStore(path) as store:
+        assert store.path == path
+
+
 def a_car(**overrides):
     fields = dict(
         source="cupra",
