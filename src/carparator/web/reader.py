@@ -3,11 +3,37 @@
 from __future__ import annotations
 
 import sqlite3
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Sequence
 
 from carparator.ingest import COMPLETE
 from carparator.store import SCHEMA_VERSION
+
+
+NO_RUNS = "no_runs"
+NO_COMPLETE_RUN = "no_complete_run"
+COMPLETE_RUN = "complete"
+
+
+@dataclass(frozen=True)
+class SourceCoverage:
+    """How far a source's stock can be trusted to be current."""
+
+    source: str
+    state: str
+    completed_at: str | None = None
+
+
+@dataclass(frozen=True)
+class Coverage:
+    sources: list[SourceCoverage]
+    cars_with_no_run: int
+
+    @property
+    def is_partial(self) -> bool:
+        """True when any source cannot say which of its cars have sold."""
+        return any(each.state != COMPLETE_RUN for each in self.sources)
 
 
 class ReaderError(RuntimeError):
@@ -70,6 +96,47 @@ class Reader:
         """
         clause, parameters = scope_clause(self.complete_run_floors())
         return self._query(f"SELECT * FROM cars WHERE {clause}", parameters)
+
+    def coverage(self) -> Coverage:
+        """What each source can honestly claim about its own stock."""
+        floors = self.complete_run_floors()
+        completions = self._finished_at(floors.values())
+        have_run = {row["source"] for row in self._query("SELECT source FROM scrape_runs")}
+
+        sources = []
+        for source in sorted(self._sources()):
+            if source in floors:
+                state, completed_at = COMPLETE_RUN, completions.get(floors[source])
+            elif source in have_run:
+                state, completed_at = NO_COMPLETE_RUN, None
+            else:
+                state, completed_at = NO_RUNS, None
+            sources.append(SourceCoverage(source, state, completed_at))
+        return Coverage(sources, self._cars_with_no_run())
+
+    def _finished_at(self, run_ids) -> dict[int, str | None]:
+        run_ids = list(run_ids)
+        if not run_ids:
+            return {}
+        rows = self._query(
+            "SELECT id, finished_at FROM scrape_runs"
+            f" WHERE id IN ({', '.join('?' * len(run_ids))})",
+            run_ids,
+        )
+        return {row["id"]: row["finished_at"] for row in rows}
+
+    def _sources(self) -> set[str]:
+        """Never hardcoded — a source exists if either table mentions it."""
+        rows = self._query(
+            "SELECT source FROM scrape_runs UNION SELECT source FROM cars"
+        )
+        return {row["source"] for row in rows}
+
+    def _cars_with_no_run(self) -> int:
+        rows = self._query(
+            "SELECT COUNT(*) AS total FROM cars WHERE last_seen_run_id IS NULL"
+        )
+        return rows[0]["total"]
 
     def complete_run_floors(self) -> dict[str, int]:
         """Per source, the id of its most recent run recorded as complete."""

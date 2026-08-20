@@ -199,3 +199,57 @@ def test_a_car_with_no_run_recorded_is_never_dropped(tmp_path):
         store.upsert_car(car(source_id="unattributed"), observed_at=WHEN, run_id=None)
 
     assert ids(Reader(db).current_stock()) == ["listed", "unattributed"]
+
+
+def coverage_by_source(reader):
+    return {each.source: each for each in reader.coverage().sources}
+
+
+def test_coverage_reports_a_source_whose_latest_run_completed(tmp_path):
+    db = tmp_path / "cars.db"
+    with writing(db) as store:
+        add_run(store, "cupra", COMPLETE, at="2026-07-30T09:00:00Z")
+        store.upsert_car(car(), observed_at=WHEN, run_id=None)
+
+    cupra = coverage_by_source(Reader(db))["cupra"]
+
+    assert cupra.state == "complete"
+    assert cupra.completed_at == "2026-07-30T09:00:00Z"
+
+
+def test_coverage_reports_a_source_that_has_run_but_never_completed(tmp_path):
+    db = tmp_path / "cars.db"
+    with writing(db) as store:
+        add_run(store, "volkswagen", PARTIAL)
+
+    volkswagen = coverage_by_source(Reader(db))["volkswagen"]
+
+    assert volkswagen.state == "no_complete_run"
+    assert volkswagen.completed_at is None
+
+
+def test_coverage_reports_a_source_with_cars_but_no_runs_at_all(tmp_path):
+    db = tmp_path / "cars.db"
+    with writing(db) as store:
+        store.upsert_car(car("stub", "a"), observed_at=WHEN, run_id=None)
+
+    assert coverage_by_source(Reader(db))["stub"].state == "no_runs"
+
+
+def test_coverage_derives_its_sources_from_both_runs_and_cars(tmp_path):
+    db = tmp_path / "cars.db"
+    with writing(db) as store:
+        add_run(store, "volkswagen", PARTIAL)
+        store.upsert_car(car("stub", "a"), observed_at=WHEN, run_id=None)
+
+    assert set(coverage_by_source(Reader(db))) == {"volkswagen", "stub"}
+
+
+def test_coverage_counts_the_cars_attributed_to_no_run(tmp_path):
+    db = tmp_path / "cars.db"
+    with writing(db) as store:
+        complete = add_run(store, "cupra", COMPLETE)
+        store.upsert_car(car(source_id="attributed"), observed_at=WHEN, run_id=complete)
+        store.upsert_car(car(source_id="orphan"), observed_at=WHEN, run_id=None)
+
+    assert Reader(db).coverage().cars_with_no_run == 1
