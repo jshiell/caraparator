@@ -9,7 +9,7 @@ from typing import Sequence
 
 from carparator.ingest import COMPLETE
 from carparator.store import SCHEMA_VERSION
-from carparator.web.query import FilterSpec, build_where
+from carparator.web.query import FIELDS, FilterSpec, build_where, unknown_clause
 
 
 NO_RUNS = "no_runs"
@@ -106,6 +106,28 @@ class Reader:
             f"SELECT * FROM cars WHERE ({scope}) AND ({where})",
             scope_parameters + parameters,
         )
+
+    def unknown_counts(self, spec: FilterSpec) -> dict[str, int]:
+        """Per nullable field, how many cars in scope it cannot speak for.
+
+        Deliberately blind to the field's own filter and its own toggle: the
+        number answers "how many cars would this filter hide", so it must not
+        move when the user acts on the answer. Every *other* active filter does
+        apply, so the number describes the result set actually on screen.
+        """
+        scope, scope_parameters = scope_clause(self.complete_run_floors())
+        counts = {}
+        for each in FIELDS:
+            if not each.nullable:
+                continue
+            where, parameters = build_where(spec.without(each.name))
+            rows = self._query(
+                f"SELECT COUNT(*) AS total FROM cars"
+                f" WHERE ({scope}) AND ({where}) AND ({unknown_clause(each)})",
+                scope_parameters + parameters,
+            )
+            counts[each.name] = rows[0]["total"]
+        return counts
 
     def coverage(self) -> Coverage:
         """What each source can honestly claim about its own stock."""

@@ -318,3 +318,105 @@ def test_a_car_with_no_location_at_all_counts_as_unknown(tmp_path):
 
     assert found(reader, {"location": ["Chester"]}) == ["located", "unstated"]
     assert found(reader, {"submitted": ["1"], "location": ["Chester"]}) == ["located"]
+
+
+def ranged(reader, query):
+    return reader.unknown_counts(parse_filters(query))["range_miles"]
+
+
+def test_the_unknown_count_is_the_cars_a_filter_would_hide(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car(source_id="far", range_miles=250),
+            car(source_id="near", range_miles=120),
+            car(source_id="a", range_miles=None),
+            car(source_id="b", range_miles=None),
+        ],
+    )
+
+    assert ranged(reader, {"range_min": ["200"]}) == 2
+
+
+def test_the_unknown_count_does_not_change_when_the_box_is_unticked(tmp_path):
+    """Otherwise the control reads "include 0 unknown" the moment you untick it."""
+    reader = stocked(
+        tmp_path / "c.db",
+        [car(source_id="far", range_miles=250), car(source_id="a"), car(source_id="b")],
+    )
+
+    ticked = {"submitted": ["1"], "range_min": ["200"], "unknown_range_miles": ["on"]}
+    unticked = {"submitted": ["1"], "range_min": ["200"]}
+
+    assert ranged(reader, ticked) == ranged(reader, unticked) == 2
+
+
+def test_the_unknown_count_ignores_the_field_s_own_range(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [car(source_id="a"), car(source_id="b")],
+    )
+
+    assert ranged(reader, {"range_min": ["200"]}) == ranged(reader, {"range_max": ["1"]})
+
+
+def test_the_unknown_count_respects_every_other_filter(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car("cupra", "a"),
+            car("cupra", "b"),
+            car("volkswagen", "c", brand="Volkswagen"),
+        ],
+    )
+
+    assert ranged(reader, {"range_min": ["200"], "source": ["cupra"]}) == 2
+
+
+def test_the_unknown_count_stays_inside_the_current_stock(tmp_path):
+    db = tmp_path / "c.db"
+    with SqliteStore(db) as store:
+        store.init_schema()
+        runs = []
+        for _ in range(2):
+            run_id = store.start_run("cupra", started_at=WHEN)
+            store.finish_run(
+                run_id,
+                finished_at=WHEN,
+                expected_total=1,
+                listings_seen=1,
+                listings_stored=1,
+                skipped_non_electric=0,
+                mapping_errors=0,
+                status=COMPLETE,
+            )
+            runs.append(run_id)
+        store.upsert_car(car(source_id="sold"), observed_at=WHEN, run_id=runs[0])
+        store.upsert_car(car(source_id="listed"), observed_at=WHEN, run_id=runs[1])
+
+    assert ranged(Reader(db), {"range_min": ["200"]}) == 1
+
+
+def test_the_buckets_account_for_every_car_in_scope(tmp_path):
+    """unknown + known-matching + known-not-matching == the scoped total."""
+    reader = stocked(
+        tmp_path / "c.db",
+        [car(source_id=f"far{n}", range_miles=250) for n in range(3)]
+        + [car(source_id=f"near{n}", range_miles=120) for n in range(2)]
+        + [car(source_id=f"none{n}") for n in range(4)],
+    )
+    excluding_unknown = {"submitted": ["1"], "range_min": ["200"]}
+
+    unknown = ranged(reader, excluding_unknown)
+    known_matching = len(reader.search(parse_filters(excluding_unknown)))
+
+    assert len(reader.current_stock()) == 9
+    assert unknown == 4
+    assert known_matching == 3
+    assert 9 - unknown - known_matching == 2
+
+
+def test_a_fully_populated_field_reports_no_unknowns(tmp_path):
+    reader = stocked(tmp_path / "c.db", [car(range_miles=250)])
+
+    assert ranged(reader, {}) == 0

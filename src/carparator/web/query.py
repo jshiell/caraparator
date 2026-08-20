@@ -94,6 +94,15 @@ class FilterSpec:
     def includes_unknown(self, name: str) -> bool:
         return name not in self.excluded_unknown
 
+    def without(self, name: str) -> "FilterSpec":
+        """This spec with one field's filter and toggle taken out."""
+        return FilterSpec(
+            {key: value for key, value in self.choices.items() if key != name},
+            {key: value for key, value in self.ranges.items() if key != name},
+            {key: value for key, value in self.texts.items() if key != name},
+            self.excluded_unknown - {name},
+        )
+
     def as_query(self) -> dict[str, list[str]]:
         """The query string that reproduces this spec."""
         args: dict[str, list[str]] = {"submitted": ["1"]}
@@ -203,3 +212,8 @@ def _add(conditions, parameters, spec: FilterSpec, each: Field, clause, values) 
         clause = f"({clause}) OR ({absent})"
     conditions.append(f"({clause})")
     parameters.extend(values)
+
+
+def unknown_clause(each: Field) -> str:
+    """True for the rows this field cannot speak for."""
+    return " AND ".join(f"{column} IS NULL" for column in each.columns)
