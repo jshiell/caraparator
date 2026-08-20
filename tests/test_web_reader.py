@@ -4,7 +4,7 @@ import pytest
 
 from carparator.model import Car, FuelType
 from carparator.store import SqliteStore
-from carparator.web.reader import DatabaseNotFound, Reader
+from carparator.web.reader import DatabaseNotFound, Reader, SchemaMismatch
 
 
 def car(source="cupra", source_id="a", **overrides):
@@ -65,3 +65,22 @@ def test_a_missing_database_names_the_path_it_looked_for(tmp_path):
 
     assert "absent.db" in str(raised.value)
     assert "carparator scrape" in str(raised.value)
+
+
+@pytest.mark.parametrize("version", [0, 2])
+def test_a_foreign_schema_version_is_refused(tmp_path, version):
+    db = build(tmp_path / "cars.db", [car()])
+    with sqlite3.connect(db) as connection:
+        connection.execute(f"PRAGMA user_version = {version}")
+
+    with pytest.raises(SchemaMismatch) as raised:
+        Reader(db).cars()
+
+    assert str(version) in str(raised.value)
+    assert "re-scrape" in str(raised.value)
+
+
+def test_the_current_schema_version_is_accepted(tmp_path):
+    db = build(tmp_path / "cars.db", [car()])
+
+    assert len(Reader(db).cars()) == 1

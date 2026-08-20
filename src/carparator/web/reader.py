@@ -6,6 +6,8 @@ import sqlite3
 from pathlib import Path
 from typing import Sequence
 
+from carparator.store import SCHEMA_VERSION
+
 
 class ReaderError(RuntimeError):
     """Raised when a database cannot be read, with a message a user can act on."""
@@ -13,6 +15,10 @@ class ReaderError(RuntimeError):
 
 class DatabaseNotFound(ReaderError):
     """Raised when the database file does not exist."""
+
+
+class SchemaMismatch(ReaderError):
+    """Raised when the database was written by a different schema version."""
 
 
 class Reader:
@@ -32,7 +38,24 @@ class Reader:
             )
         connection = sqlite3.connect(f"file:{self.path}?mode=ro", uri=True)
         connection.row_factory = sqlite3.Row
+        self._check_schema_version(connection)
         return connection
+
+    def _check_schema_version(self, connection: sqlite3.Connection) -> None:
+        """Refuse a database this code cannot read.
+
+        There are no migrations, so a version mismatch would otherwise surface
+        as `no such column` at render time. Version 0 means init_schema never
+        ran at all.
+        """
+        (version,) = connection.execute("PRAGMA user_version").fetchone()
+        if version != SCHEMA_VERSION:
+            connection.close()
+            raise SchemaMismatch(
+                f"{self.path} has schema version {version},"
+                f" but this build reads version {SCHEMA_VERSION}"
+                " — there are no migrations, so delete the database and re-scrape"
+            )
 
     def cars(self) -> list[dict]:
         return self._query("SELECT * FROM cars")
