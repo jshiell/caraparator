@@ -71,6 +71,14 @@ class FakeSourceWithFailedPages(FakeSource):
         self.failed_page_bodies = list(failed_page_bodies)
 
 
+class FakeSourceWithoutTotal(FakeSource):
+    """A source that cannot say how many listings it should have found."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.expected_total = None
+
+
 def runs(store):
     store.connection.row_factory = sqlite3.Row
     try:
@@ -383,3 +391,15 @@ def test_failed_page_bodies_are_retained_whatever_the_locale(tmp_path):
     assert completed.returncode == 0, completed.stderr
     retained = tmp_path / "test.db.failed-pages" / "volkswagen-page7.html"
     assert retained.read_text(encoding="utf-8") == "<html>price \u00a34,995</html>"
+
+
+def test_a_run_that_cannot_know_its_total_is_never_complete(store):
+    """`complete` licenses the sold-listing inference, so it has to be earned.
+
+    A source reporting no expected total leaves the run nothing to be short of,
+    so a pass truncated by a site change would otherwise be indistinguishable
+    from a full one — and every listing it never reached would look sold.
+    """
+    ingest([FakeSourceWithoutTotal("volkswagen", ["a", "b"])], store)
+
+    assert [run["status"] for run in runs(store)] == ["partial"]

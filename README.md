@@ -83,12 +83,11 @@ carparator.db.failed-pages/volkswagen-page7.html
 - Only Volkswagen retains bodies; the CUPRA API returns JSON directly, so there is no
   intermediate document worth keeping.
 
-A run truncated this way is recorded as `partial` **provided the expected total was
-read** — it comes from page 1, so in the ordinary case it is known before any failure.
-The sold-listing rule above then protects you: absences in a `partial` run prove
-nothing. If a site change is severe enough that the total cannot be read either, the
-run has no yardstick to be short of; check `listings_seen` on the run before trusting
-a `complete` status after any run that reported `failed_pages`.
+A run truncated this way is recorded as `partial`, so the sold-listing rule above
+protects you: absences in a `partial` run prove nothing. This holds even if a site
+change is severe enough that the expected total cannot be read either — a run with no
+total to be measured against is never recorded as `complete`, because a truncated pass
+and a full one would otherwise be indistinguishable.
 
 Nothing here is load-bearing. If the directory cannot be created or written — a
 read-only volume, a full disk — the failure is logged and the scrape continues. Losing

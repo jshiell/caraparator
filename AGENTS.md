@@ -44,6 +44,11 @@ fixed after the fact. Breaking one is silent — no test elsewhere will notice.
   `FuelType` deliberately, so a mapper bug can never be silently absorbed as a
   fuel-type exclusion. `to_car` returning `None` is a skip; raising is an error; the
   two are counted separately.
+- **`complete` must be earned, never defaulted to.** It is the one status that licenses
+  inferring a listing has sold, so an unknown `expected_total` yields `partial`. Left as
+  `complete`, a site change that broke both the vehicle payload and the total marker
+  would end the run having seen nothing and report full coverage — making every listing
+  look sold overnight.
 - **`SqliteStore.transaction()` is not re-entrant** and raises `TransactionError` rather
   than silently nesting into a single flat commit.
 - **Required fields must raise, not default.** Mappers previously wrote `or 0` / `or ""`

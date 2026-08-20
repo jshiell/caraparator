@@ -142,7 +142,10 @@ def _is_complete(result: IngestResult, limit: int | None) -> bool:
     if limit is not None:
         return False
     if result.expected_total is None:
-        return True
+        # No total means no yardstick: a run cut short by a site change cannot be
+        # told apart from a full one. Withhold 'complete' rather than license the
+        # sold-listing inference on a run whose coverage is unknown.
+        return False
     return result.listings_seen >= result.expected_total
 
 
