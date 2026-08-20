@@ -1,6 +1,10 @@
 import pytest
 
+from carparator.ingest import COMPLETE
+from carparator.model import Car, FuelType
+from carparator.store import SqliteStore
 from carparator.web.query import FIELDS, FilterSpec, parse_filters
+from carparator.web.reader import Reader
 
 
 def test_an_empty_query_string_filters_nothing():
@@ -95,3 +99,144 @@ def test_a_filter_spec_round_trips_through_its_query_string():
     spec = parse_filters({"submitted": ["1"], "source": ["cupra"], "year_min": ["2022"]})
 
     assert parse_filters(spec.as_query()) == spec
+
+
+WHEN = "2026-08-01T00:00:00Z"
+
+
+def car(source="cupra", source_id="a", **overrides):
+    fields = dict(
+        source=source,
+        source_id=source_id,
+        brand="CUPRA",
+        model="Born",
+        mileage_miles=10_000,
+        year=2023,
+        price_pence=3_000_000,
+        dealer_name="A Dealer",
+        fuel_type=FuelType.ELECTRIC,
+    )
+    return Car(**{**fields, **overrides})
+
+
+def stocked(path, cars):
+    with SqliteStore(path) as store:
+        store.init_schema()
+        for each in cars:
+            store.upsert_car(each, observed_at=WHEN, run_id=None)
+    return Reader(path)
+
+
+def found(reader, query):
+    return sorted(each["source_id"] for each in reader.search(parse_filters(query)))
+
+
+def test_no_filters_returns_every_car(tmp_path):
+    reader = stocked(tmp_path / "c.db", [car(source_id="a"), car(source_id="b")])
+
+    assert found(reader, {}) == ["a", "b"]
+
+
+def test_a_choice_filter_keeps_only_the_chosen_values(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [car("cupra", "a"), car("volkswagen", "b", brand="Volkswagen")],
+    )
+
+    assert found(reader, {"source": ["cupra"]}) == ["a"]
+
+
+def test_several_choices_of_one_field_are_an_either_or(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [car("cupra", "a"), car("volkswagen", "b", brand="Volkswagen")],
+    )
+
+    assert found(reader, {"source": ["cupra", "volkswagen"]}) == ["a", "b"]
+
+
+def test_choices_of_different_fields_narrow_together(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [car("cupra", "a"), car("cupra", "b", brand="Volkswagen")],
+    )
+
+    assert found(reader, {"source": ["cupra"], "brand": ["Volkswagen"]}) == ["b"]
+
+
+def test_a_model_choice_ignores_the_spelling_the_source_used(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [car(source_id="upper", model="ID.3"), car(source_id="mixed", model="Id.3")],
+    )
+
+    assert found(reader, {"model": ["id.3"]}) == ["mixed", "upper"]
+
+
+def test_a_range_filter_keeps_the_bounds_themselves(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car(source_id="early", year=2021),
+            car(source_id="in", year=2022),
+            car(source_id="late", year=2025),
+        ],
+    )
+
+    assert found(reader, {"year_min": ["2022"], "year_max": ["2022"]}) == ["in"]
+
+
+def test_a_price_range_is_compared_in_pence(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car(source_id="cheap", price_pence=2_499_900),
+            car(source_id="dear", price_pence=2_500_100),
+        ],
+    )
+
+    assert found(reader, {"price_max": ["25000"]}) == ["cheap"]
+
+
+def test_a_dealer_search_matches_part_of_the_name(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car(source_id="a", dealer_name="Swansway Chester"),
+            car(source_id="b", dealer_name="Marshall Oxford"),
+        ],
+    )
+
+    assert found(reader, {"dealer": ["chester"]}) == ["a"]
+
+
+def test_filters_never_reach_outside_the_current_stock(tmp_path):
+    db = tmp_path / "c.db"
+    with SqliteStore(db) as store:
+        store.init_schema()
+        old = store.start_run("cupra", started_at=WHEN)
+        store.finish_run(
+            old,
+            finished_at=WHEN,
+            expected_total=1,
+            listings_seen=1,
+            listings_stored=1,
+            skipped_non_electric=0,
+            mapping_errors=0,
+            status=COMPLETE,
+        )
+        current = store.start_run("cupra", started_at=WHEN)
+        store.finish_run(
+            current,
+            finished_at=WHEN,
+            expected_total=1,
+            listings_seen=1,
+            listings_stored=1,
+            skipped_non_electric=0,
+            mapping_errors=0,
+            status=COMPLETE,
+        )
+        store.upsert_car(car(source_id="sold"), observed_at=WHEN, run_id=old)
+        store.upsert_car(car(source_id="listed"), observed_at=WHEN, run_id=current)
+
+    assert found(Reader(db), {"source": ["cupra"]}) == ["listed"]

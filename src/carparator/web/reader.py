@@ -9,6 +9,7 @@ from typing import Sequence
 
 from carparator.ingest import COMPLETE
 from carparator.store import SCHEMA_VERSION
+from carparator.web.query import FilterSpec, build_where
 
 
 NO_RUNS = "no_runs"
@@ -96,6 +97,15 @@ class Reader:
         """
         clause, parameters = scope_clause(self.complete_run_floors())
         return self._query(f"SELECT * FROM cars WHERE {clause}", parameters)
+
+    def search(self, spec: FilterSpec) -> list[dict]:
+        """The current stock, narrowed by the user's filters."""
+        scope, scope_parameters = scope_clause(self.complete_run_floors())
+        where, parameters = build_where(spec)
+        return self._query(
+            f"SELECT * FROM cars WHERE ({scope}) AND ({where})",
+            scope_parameters + parameters,
+        )
 
     def coverage(self) -> Coverage:
         """What each source can honestly claim about its own stock."""

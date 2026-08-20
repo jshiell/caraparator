@@ -169,3 +169,25 @@ def _number(values: list[str] | None, each: Field) -> Any:
 def _unscale(bound: Any, each: Field) -> str:
     value = bound / each.scale if each.scale != 1 else bound
     return str(int(value) if each.numeric is int and value == int(value) else value)
+
+
+def build_where(spec: FilterSpec) -> tuple[str, list]:
+    """The filter half of the WHERE clause. Scoping to stock is the reader's."""
+    conditions, parameters = [], []
+    for name, values in spec.choices.items():
+        each = BY_NAME[name]
+        expression = each.key_sql or each.columns[0]
+        conditions.append(f"{expression} IN ({', '.join('?' * len(values))})")
+        parameters.extend(values)
+    for name, (low, high) in spec.ranges.items():
+        column = BY_NAME[name].columns[0]
+        for bound, comparison in ((low, ">="), (high, "<=")):
+            if bound is not None:
+                conditions.append(f"{column} {comparison} ?")
+                parameters.append(bound)
+    for name, text in spec.texts.items():
+        each = BY_NAME[name]
+        matches = " OR ".join(f"{column} LIKE ?" for column in each.columns)
+        conditions.append(f"({matches})")
+        parameters.extend([f"%{text}%"] * len(each.columns))
+    return " AND ".join(conditions) if conditions else "1", parameters
