@@ -15,6 +15,10 @@ from carparator.store import SqliteStore
 
 SOURCES = {"cupra": CupraSource, "volkswagen": VolkswagenSource}
 DEFAULT_DB = "carparator.db"
+# Never anything else: the Werkzeug debugger and an unauthenticated view of the
+# database have no business on a routable address.
+LOOPBACK = "127.0.0.1"
+DEFAULT_PORT = 8000
 
 
 def build_sources(name: str | None) -> list[ListingSource]:
@@ -36,6 +40,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="cap listings per source; forces the run to be recorded as partial",
     )
     scrape.add_argument("-v", "--verbose", action="store_true")
+
+    serve = subcommands.add_parser("serve", help="browse the database in a browser")
+    serve.add_argument("--db", default=DEFAULT_DB)
+    serve.add_argument("--port", type=int, default=DEFAULT_PORT)
+    serve.add_argument("-v", "--verbose", action="store_true")
 
     args = parser.parse_args(argv)
     logging.basicConfig(
@@ -69,7 +78,37 @@ def scrape_command(args: argparse.Namespace) -> int:
     return 1 if any(result.status == FAILED for result in results) else 0
 
 
-COMMANDS = {"scrape": scrape_command}
+def serve_command(args: argparse.Namespace) -> int:
+    """Serve the read-only web view on the loopback address."""
+    try:
+        # Imported here, not at module scope, so `scrape` still runs without
+        # the web extra installed.
+        from carparator.web.app import create_app
+    except ImportError:
+        print(
+            "carparator serve needs Flask: run `uv sync --extra web`",
+            file=sys.stderr,
+        )
+        return 1
+
+    from carparator.web.reader import Reader, ReaderError
+
+    reader = Reader(args.db)
+    try:
+        # Fail now, with a message, rather than on the first request.
+        reader.coverage()
+    except ReaderError as error:
+        print(error, file=sys.stderr)
+        return 1
+
+    print(f"carparator: http://{LOOPBACK}:{args.port}/  (Ctrl-C to stop)")
+    create_app(reader).run(
+        host=LOOPBACK, port=args.port, debug=False, use_reloader=False
+    )
+    return 0
+
+
+COMMANDS = {"scrape": scrape_command, "serve": serve_command}
 
 
 if __name__ == "__main__":  # pragma: no cover

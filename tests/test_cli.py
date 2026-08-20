@@ -112,3 +112,59 @@ class _StubSource:
             dealer_name="d",
             fuel_type=FuelType.ELECTRIC,
         )
+
+
+def scraped(path):
+    from carparator.store import SqliteStore
+
+    with SqliteStore(path) as store:
+        store.init_schema()
+    return path
+
+
+def test_serve_binds_the_loopback_address_only(tmp_path, monkeypatch):
+    """The UI is a local tool and the Werkzeug debugger is remote code
+    execution for anything that can reach the port."""
+    from flask import Flask
+
+    captured = {}
+    monkeypatch.setattr(Flask, "run", lambda self, **kwargs: captured.update(kwargs))
+
+    assert main(["serve", "--db", str(scraped(tmp_path / "c.db")), "--port", "8123"]) == 0
+    assert captured["host"] == "127.0.0.1"
+    assert captured["port"] == 8123
+    assert captured["debug"] is False
+    assert captured["use_reloader"] is False
+
+
+def test_serve_without_the_web_extra_says_how_to_install_it(tmp_path, monkeypatch, capsys):
+    import sys
+
+    monkeypatch.setitem(sys.modules, "flask", None)
+    monkeypatch.delitem(sys.modules, "carparator.web.app", raising=False)
+
+    exit_code = main(["serve", "--db", str(scraped(tmp_path / "c.db"))])
+
+    assert exit_code == 1
+    assert "--extra web" in capsys.readouterr().err
+
+
+def test_serve_on_a_missing_database_explains_rather_than_traces(tmp_path, capsys):
+    exit_code = main(["serve", "--db", str(tmp_path / "absent.db")])
+
+    assert exit_code == 1
+    error = capsys.readouterr().err
+    assert "absent.db" in error
+    assert "Traceback" not in error
+
+
+def test_scrape_still_runs_when_the_web_extra_is_absent(tmp_path, monkeypatch):
+    import sys
+
+    from carparator import cli
+
+    monkeypatch.setitem(sys.modules, "flask", None)
+    monkeypatch.delitem(sys.modules, "carparator.web.app", raising=False)
+    monkeypatch.setattr(cli, "build_sources", lambda name: [_StubSource()])
+
+    assert main(["scrape", "--db", str(tmp_path / "c.db")]) == 0
