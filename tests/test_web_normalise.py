@@ -58,7 +58,13 @@ def test_absent_values_are_not_offered_as_an_option():
             "drivetrain",
             DRIVETRAIN_KEY_SQL,
             drivetrain_key,
-            ["Rear-wheel drive", "Rear wheel drive", "Four-wheel drive", " FRONT "],
+            [
+                "Rear-wheel drive",
+                "Rear wheel drive",
+                "Four-wheel drive",
+                " FRONT ",
+                "Four  -  wheel  drive",
+            ],
         ),
     ],
 )

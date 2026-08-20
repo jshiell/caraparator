@@ -177,17 +177,29 @@ def build_where(spec: FilterSpec) -> tuple[str, list]:
     for name, values in spec.choices.items():
         each = BY_NAME[name]
         expression = each.key_sql or each.columns[0]
-        conditions.append(f"{expression} IN ({', '.join('?' * len(values))})")
-        parameters.extend(values)
+        clause = f"{expression} IN ({', '.join('?' * len(values))})"
+        _add(conditions, parameters, spec, each, clause, list(values))
     for name, (low, high) in spec.ranges.items():
-        column = BY_NAME[name].columns[0]
-        for bound, comparison in ((low, ">="), (high, "<=")):
-            if bound is not None:
-                conditions.append(f"{column} {comparison} ?")
-                parameters.append(bound)
+        each = BY_NAME[name]
+        bounds = [(bound, sign) for bound, sign in ((low, ">="), (high, "<=")) if bound is not None]
+        clause = " AND ".join(f"{each.columns[0]} {sign} ?" for _, sign in bounds)
+        _add(conditions, parameters, spec, each, clause, [bound for bound, _ in bounds])
     for name, text in spec.texts.items():
         each = BY_NAME[name]
-        matches = " OR ".join(f"{column} LIKE ?" for column in each.columns)
-        conditions.append(f"({matches})")
-        parameters.extend([f"%{text}%"] * len(each.columns))
+        clause = " OR ".join(f"{column} LIKE ?" for column in each.columns)
+        _add(conditions, parameters, spec, each, clause, [f"%{text}%"] * len(each.columns))
     return " AND ".join(conditions) if conditions else "1", parameters
+
+
+def _add(conditions, parameters, spec: FilterSpec, each: Field, clause, values) -> None:
+    """Add one field's predicate, widened to keep its unknowns if asked.
+
+    Only fields the user actually filtered on get here, which is what makes the
+    unknown toggle inert on its own: it discloses what a filter would hide, so
+    with no filter set there is nothing for it to hide.
+    """
+    if each.nullable and spec.includes_unknown(each.name):
+        absent = " AND ".join(f"{column} IS NULL" for column in each.columns)
+        clause = f"({clause}) OR ({absent})"
+    conditions.append(f"({clause})")
+    parameters.extend(values)

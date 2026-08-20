@@ -240,3 +240,81 @@ def test_filters_never_reach_outside_the_current_stock(tmp_path):
         store.upsert_car(car(source_id="listed"), observed_at=WHEN, run_id=current)
 
     assert found(Reader(db), {"source": ["cupra"]}) == ["listed"]
+
+
+def test_a_range_on_a_nullable_column_keeps_the_unknowns_by_default(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car(source_id="far", range_miles=250),
+            car(source_id="near", range_miles=120),
+            car(source_id="unstated", range_miles=None),
+        ],
+    )
+
+    assert found(reader, {"range_min": ["200"]}) == ["far", "unstated"]
+
+
+def test_unticking_the_box_drops_the_unknowns(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [car(source_id="far", range_miles=250), car(source_id="unstated")],
+    )
+
+    assert found(reader, {"submitted": ["1"], "range_min": ["200"]}) == ["far"]
+
+
+def test_unticking_a_box_for_a_field_nobody_filtered_on_removes_nothing(tmp_path):
+    """The toggle discloses what a filter would hide. With no filter, it hides
+    nothing — it must not become a filter in its own right."""
+    reader = stocked(
+        tmp_path / "c.db",
+        [car(source_id="stated", range_miles=250), car(source_id="unstated")],
+    )
+
+    assert found(reader, {"submitted": ["1"], "year_min": ["2020"]}) == [
+        "stated",
+        "unstated",
+    ]
+
+
+def test_a_drivetrain_choice_ignores_hyphenation(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car(source_id="cupra-spelling", drivetrain="Rear-wheel drive"),
+            car(source_id="vw-spelling", drivetrain="Rear wheel drive"),
+            car(source_id="other", drivetrain="Four-wheel drive"),
+        ],
+    )
+
+    assert found(reader, {"drivetrain": ["rear wheel drive"]}) == [
+        "cupra-spelling",
+        "vw-spelling",
+    ]
+
+
+def test_a_location_search_matches_either_the_town_or_the_postcode(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car(source_id="by-town", dealer_city="Chester", dealer_postcode="CH1 4QJ"),
+            car(source_id="by-postcode", dealer_city="Leeds", dealer_postcode="CH1 9AA"),
+            car(source_id="elsewhere", dealer_city="Leeds", dealer_postcode="LS1 1AA"),
+        ],
+    )
+
+    assert found(reader, {"location": ["CH1"]}) == ["by-postcode", "by-town"]
+
+
+def test_a_car_with_no_location_at_all_counts_as_unknown(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car(source_id="located", dealer_city="Chester"),
+            car(source_id="unstated"),
+        ],
+    )
+
+    assert found(reader, {"location": ["Chester"]}) == ["located", "unstated"]
+    assert found(reader, {"submitted": ["1"], "location": ["Chester"]}) == ["located"]

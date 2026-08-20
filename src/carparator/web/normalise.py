@@ -9,29 +9,33 @@ displayed text can be checked against each other.
 
 from __future__ import annotations
 
-import re
 from collections import Counter
 from typing import Callable, Iterable
 
 # `lower()`, not `casefold()`, so these agree exactly with SQLite's LOWER().
 MODEL_KEY_SQL = "LOWER(TRIM(model))"
-DRIVETRAIN_KEY_SQL = (
-    "REPLACE(REPLACE(REPLACE(LOWER(TRIM(drivetrain)), '-', ' '), '  ', ' '), '  ', ' ')"
-)
-
-_RUN_OF_SEPARATORS = re.compile(r"[-\s]+")
+# Collapsing arbitrary whitespace runs is not expressible in SQLite, so neither
+# side does it: both settle for what the sources actually emit, single
+# separators, and stay identical on everything else.
+DRIVETRAIN_KEY_SQL = "REPLACE(LOWER(TRIM(drivetrain)), '-', ' ')"
 
 
 def model_key(value: str | None) -> str | None:
     """Fold `ID.3` and `Id.3` onto one option."""
-    return None if value is None else value.strip().lower()
+    return None if value is None else value.strip(" ").lower()
 
 
 def drivetrain_key(value: str | None) -> str | None:
-    """Fold on case and on hyphen-versus-space."""
+    """Fold on case and on hyphen-versus-space.
+
+    Deliberately the same algorithm as DRIVETRAIN_KEY_SQL rather than a tidier
+    one: filtering happens in SQL and the option list is built in Python, so a
+    value the two folded differently would be unselectable — the user would
+    tick an option and get nothing back.
+    """
     if value is None:
         return None
-    return _RUN_OF_SEPARATORS.sub(" ", value.strip().lower())
+    return value.strip(" ").lower().replace("-", " ")
 
 
 def canonical_forms(
