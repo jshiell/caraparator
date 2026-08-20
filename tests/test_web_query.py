@@ -579,3 +579,18 @@ def test_a_seat_count_typed_as_text_still_matches_the_integer_column(tmp_path):
     )
 
     assert found(reader, {"submitted": ["1"], "seats": ["5"]}) == ["five"]
+
+
+def test_declared_nullability_matches_the_schema(tmp_path):
+    """AGENTS.md requires the nullable tier to come from the schema's NOT
+    NULL constraints, never from how populated a column happens to look in a
+    data sample. Nothing else ties FIELDS to the schema, so this reads the
+    real DDL back with PRAGMA table_info and checks every field against it."""
+    db = tmp_path / "c.db"
+    with SqliteStore(db) as store:
+        store.init_schema()
+        columns = store.connection.execute("PRAGMA table_info(cars)").fetchall()
+    schema_nullable = {name: not notnull for _, name, _, notnull, *_ in columns}
+
+    for each in FIELDS:
+        assert each.nullable == schema_nullable[each.name], each.name

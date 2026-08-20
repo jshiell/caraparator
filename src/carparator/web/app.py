@@ -38,7 +38,7 @@ def create_app(reader: Reader, *, now: Callable[[], str] | None = None) -> Flask
             coverage=coverage,
             banners=[_banner(each) for each in coverage.sources],
             controls=_controls(stock, forms, unknown, spec),
-            cars=[_present(row, forms, coverage, clock()) for row in reader.search(spec)],
+            cars=[_present(row, forms, clock()) for row in reader.search(spec)],
             sorts=SORTS,
             show_last_seen=coverage.is_partial,
         )
@@ -188,7 +188,7 @@ def _controls(stock, forms, unknown, spec) -> list[dict]:
     return controls
 
 
-def _present(row: dict, forms, coverage, now: str) -> dict:
+def _present(row: dict, forms, now: str) -> dict:
     """One table row, with folded spellings and formatted money."""
     shown = dict(row)
     for each in CHOICE_FIELDS:
