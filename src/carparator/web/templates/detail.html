@@ -1,0 +1,60 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>{{ car.brand }} {{ car.model }} — carparator</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 1rem; font-size: 14px;
+         max-width: 46rem; }
+  th, td { padding: 2px 8px; text-align: left; border-bottom: 1px solid #ddd; }
+  th { color: #555; font-weight: normal; width: 12rem; }
+  table { border-collapse: collapse; width: 100%; margin-bottom: 1.5rem; }
+  img { max-width: 100%; }
+  .absent { color: #666; font-size: 12px; }
+</style>
+
+<p><a href="/">← all cars</a></p>
+
+<h1>{{ car.brand }} {{ car.model }} — {{ price }}</h1>
+<p>{{ car.year }} · {{ '{:,}'.format(car.mileage_miles) }} miles · {{ car.source }}</p>
+
+{% if image %}<img src="{{ image }}" alt="">{% endif %}
+
+<h2>Details</h2>
+<table>
+  {% for label, value in stated %}
+    <tr><th>{{ label }}</th><td>{{ value }}</td></tr>
+  {% endfor %}
+</table>
+
+<h2>Dealer</h2>
+<table>
+  <tr><th>Name</th><td>{{ car.dealer_name }}</td></tr>
+  {% if car.dealer_postcode %}
+    <tr><th>Postcode</th><td>{{ car.dealer_postcode }}</td></tr>
+  {% endif %}
+  {% if phone %}
+    <tr><th>Phone</th><td><a href="tel:{{ phone }}">{{ car.dealer_phone }}</a></td></tr>
+  {% endif %}
+</table>
+
+<h2>Price history</h2>
+<table>
+  <tr><th>Observed</th><td>Price</td><td>Change</td></tr>
+  {% for observation in history %}
+    <tr>
+      <th>{{ observation.observed_at }}</th>
+      <td>{{ observation.price }}</td>
+      <td>{{ observation.change or '' }}</td>
+    </tr>
+  {% endfor %}
+</table>
+
+<h2>Seen</h2>
+<table>
+  <tr><th>First seen</th><td>{{ car.first_seen }}</td></tr>
+  <tr><th>Last seen</th><td>{{ car.last_seen }}</td></tr>
+</table>
+
+{% if absent %}
+  <p class="absent">Not provided by this listing: {{ absent | join(', ') }}.
+    Neither source publishes a link to the original advert, so there is none here.</p>
+{% endif %}

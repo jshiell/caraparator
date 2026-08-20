@@ -9,7 +9,7 @@ from datetime import UTC, datetime
 from typing import Callable
 from urllib.parse import urlencode
 
-from flask import Flask, render_template, request
+from flask import Flask, abort, render_template, request
 
 from carparator.web.normalise import canonical_forms
 from carparator.web.query import CHOICE, FIELDS, SORTS, parse_filters
@@ -43,7 +43,92 @@ def create_app(reader: Reader, *, now: Callable[[], str] | None = None) -> Flask
             show_last_seen=coverage.is_partial,
         )
 
+    @app.get("/car/<source>/<path:source_id>")
+    def detail(source: str, source_id: str) -> str:
+        row = reader.car(source, source_id)
+        if row is None:
+            abort(404)
+        return render_template(
+            "detail.html",
+            car=row,
+            price=_pounds(row["price_pence"]),
+            image=_safe_url(row["image_url"]),
+            phone=_telephone(row["dealer_phone"]),
+            history=_history(reader.price_history(source, source_id)),
+            stated=[(label, row[name]) for label, name in DETAIL_FIELDS if row[name] is not None],
+            absent=[label for label, name in DETAIL_FIELDS if row[name] is None],
+        )
+
     return app
+
+
+DETAIL_FIELDS: tuple[tuple[str, str], ...] = (
+    ("Trim", "trim"),
+    ("Description", "description"),
+    ("Battery (kWh)", "battery_kwh"),
+    ("Range (miles)", "range_miles"),
+    ("Power (kW)", "power_kw"),
+    ("Power (PS)", "power_ps"),
+    ("Drivetrain", "drivetrain"),
+    ("Transmission", "transmission"),
+    ("Body style", "body_style"),
+    ("Colour", "colour"),
+    ("Doors", "doors"),
+    ("Seats", "seats"),
+    ("AC charging (kW)", "ac_charge_kw"),
+    ("DC charging (kW)", "dc_charge_kw"),
+    ("Registration", "registration"),
+    ("First registered", "first_registered"),
+    ("Model year", "model_year"),
+    ("Previous owners", "previous_owners"),
+    ("VIN", "vin"),
+    ("Engine (cc)", "engine_cc"),
+    ("Monthly price", "monthly_price_pence"),
+    ("Dealer town", "dealer_city"),
+    ("Dealer postcode", "dealer_postcode"),
+)
+
+SAFE_SCHEMES = ("http://", "https://")
+
+
+def _safe_url(url: str | None) -> str | None:
+    """Autoescaping does not police URL schemes, and these come from a third
+    party, so anything but plain http(s) is dropped rather than rendered."""
+    if url and url.lower().startswith(SAFE_SCHEMES):
+        return url
+    return None
+
+
+def _telephone(number: str | None) -> str | None:
+    """A tel: target built only from the characters a phone number may hold."""
+    if not number:
+        return None
+    dialable = "".join(each for each in number if each.isdigit() or each == "+")
+    return dialable or None
+
+
+def _history(observations: list[dict]) -> list[dict]:
+    """Each observed price with its change from the one before it."""
+    shown = []
+    previous = None
+    for each in observations:
+        change = None if previous is None else each["price_pence"] - previous
+        shown.append(
+            {
+                "observed_at": each["observed_at"],
+                "price": _pounds(each["price_pence"]),
+                "change": _change(change),
+            }
+        )
+        previous = each["price_pence"]
+    return shown
+
+
+def _change(pence: int | None) -> str | None:
+    if not pence:
+        return None
+    sign = "+" if pence > 0 else "\u2212"
+    return f"{sign}{_pounds(abs(pence))}"
 
 
 def _bound(value, field) -> str:

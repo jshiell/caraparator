@@ -140,3 +140,87 @@ def test_filter_options_are_offered_once_per_folded_spelling(tmp_path):
     )
 
     assert body(web.get("/")).count('value="id.3"') == 1
+
+
+def detail(web, source="cupra", source_id="a"):
+    return web.get(f"/car/{source}/{source_id}")
+
+
+def test_the_detail_page_shows_the_car(tmp_path):
+    web = client(tmp_path, [car(trim="V2", colour="Aurora Blue", vin="ABC123")])
+
+    page = body(detail(web))
+
+    assert "Aurora Blue" in page
+    assert "ABC123" in page
+
+
+def test_an_unknown_car_is_a_404(tmp_path):
+    web = client(tmp_path, [car("cupra", "a")])
+
+    assert detail(web, "cupra", "missing").status_code == 404
+    assert detail(web, "volkswagen", "a").status_code == 404
+
+
+def test_a_source_id_containing_a_slash_still_resolves(tmp_path):
+    web = client(tmp_path, [car(source_id="a/b")])
+
+    assert detail(web, "cupra", "a/b").status_code == 200
+
+
+def test_the_detail_page_shows_the_price_history_with_its_changes(tmp_path):
+    db = tmp_path / "c.db"
+    with SqliteStore(db) as store:
+        store.init_schema()
+        store.upsert_car(car(price_pence=3_000_000), observed_at=WHEN, run_id=None)
+        store.upsert_car(
+            car(price_pence=2_800_000), observed_at="2026-08-05T00:00:00Z", run_id=None
+        )
+    app = create_app(Reader(db))
+    app.config["TESTING"] = True
+
+    page = body(app.test_client().get("/car/cupra/a"))
+
+    assert "£30,000" in page
+    assert "£28,000" in page
+    assert "−£2,000" in page
+
+
+def test_fields_the_source_never_provides_are_named_once_together(tmp_path):
+    web = client(tmp_path, [car()])
+
+    page = body(detail(web))
+
+    assert page.count("Not provided by this listing") == 1
+    assert "VIN" in page
+
+
+def test_no_link_to_the_original_listing_is_invented(tmp_path):
+    """Neither source exposes a listing URL, so there is nothing to link to."""
+    web = client(tmp_path, [car()])
+
+    page = body(detail(web)).lower()
+
+    assert "cupra.co.uk" not in page
+    assert "volkswagen.co.uk" not in page
+
+
+@pytest.mark.parametrize(
+    "url", ["javascript:alert(1)", "data:text/html;base64,PHN2Zz4=", "file:///etc/passwd"]
+)
+def test_an_image_url_with_an_unexpected_scheme_is_not_loaded(tmp_path, url):
+    web = client(tmp_path, [car(image_url=url)])
+
+    assert "<img" not in body(detail(web))
+
+
+def test_an_ordinary_image_url_is_loaded(tmp_path):
+    web = client(tmp_path, [car(image_url="https://images.example/car.jpg")])
+
+    assert 'src="https://images.example/car.jpg"' in body(detail(web))
+
+
+def test_the_list_links_to_each_car(tmp_path):
+    web = client(tmp_path, [car(source_id="a/b")])
+
+    assert "/car/cupra/a/b" in body(web.get("/"))

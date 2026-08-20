@@ -130,6 +130,21 @@ class Reader:
             counts[each.name] = rows[0]["total"]
         return counts
 
+    def car(self, source: str, source_id: str) -> dict | None:
+        rows = self._query(
+            "SELECT * FROM cars WHERE source = ? AND source_id = ?",
+            (source, source_id),
+        )
+        return rows[0] if rows else None
+
+    def price_history(self, source: str, source_id: str) -> list[dict]:
+        """Every observed price, oldest first."""
+        return self._query(
+            "SELECT observed_at, price_pence FROM price_history"
+            " WHERE source = ? AND source_id = ? ORDER BY observed_at",
+            (source, source_id),
+        )
+
     def coverage(self) -> Coverage:
         """What each source can honestly claim about its own stock."""
         floors = self.complete_run_floors()
