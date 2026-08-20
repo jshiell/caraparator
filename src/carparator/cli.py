@@ -1,4 +1,4 @@
-"""`carparator scrape` — the ingestion entry point."""
+"""The command line: `carparator scrape` ingests, `carparator serve` reads."""
 
 from __future__ import annotations
 
@@ -42,7 +42,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         level=logging.DEBUG if args.verbose else logging.WARNING,
         format="%(levelname)s %(name)s: %(message)s",
     )
+    return COMMANDS[args.command](args)
 
+
+def scrape_command(args: argparse.Namespace) -> int:
+    """Fetch listings into the database."""
     with SqliteStore(args.db) as store:
         store.init_schema()
         results = ingest(build_sources(args.source), store, limit=args.limit)
@@ -63,6 +67,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(f"  {result.error}", file=sys.stderr)
 
     return 1 if any(result.status == FAILED for result in results) else 0
+
+
+COMMANDS = {"scrape": scrape_command}
 
 
 if __name__ == "__main__":  # pragma: no cover
