@@ -6,6 +6,7 @@ import sqlite3
 from pathlib import Path
 from typing import Sequence
 
+from carparator.ingest import COMPLETE
 from carparator.store import SCHEMA_VERSION
 
 
@@ -60,9 +61,48 @@ class Reader:
     def cars(self) -> list[dict]:
         return self._query("SELECT * FROM cars")
 
+    def current_stock(self) -> list[dict]:
+        """The cars still believed to be for sale.
+
+        Absence only implies "sold" across a run that completed, so each source
+        is scoped by its own most recent complete run and sources without one
+        keep every car they have.
+        """
+        clause, parameters = scope_clause(self.complete_run_floors())
+        return self._query(f"SELECT * FROM cars WHERE {clause}", parameters)
+
+    def complete_run_floors(self) -> dict[str, int]:
+        """Per source, the id of its most recent run recorded as complete."""
+        rows = self._query(
+            "SELECT source, MAX(id) AS run_id FROM scrape_runs"
+            " WHERE status = ? GROUP BY source",
+            (COMPLETE,),
+        )
+        return {row["source"]: row["run_id"] for row in rows}
+
     def _query(self, sql: str, parameters: Sequence | dict = ()) -> list[dict]:
         connection = self._connect()
         try:
             return [dict(row) for row in connection.execute(sql, parameters)]
         finally:
             connection.close()
+
+
+def scope_clause(floors: dict[str, int]) -> tuple[str, list]:
+    """SQL keeping only the cars a complete run has not proven absent.
+
+    Expressed as an exclusion, so the default is to include: a car is dropped
+    only on positive evidence that a complete run passed over it. The
+    comparison is `<` against the floor rather than `>=` in the positive form,
+    because presence in any *later* run — complete or not, such as a
+    `--limit` one — is evidence the car exists and must win. A NULL run id is
+    no evidence either way and is never dropped; SQL's NULL comparison would
+    otherwise discard those rows silently.
+    """
+    conditions, parameters = [], []
+    for source, floor in sorted(floors.items()):
+        conditions.append(
+            "NOT (source = ? AND last_seen_run_id IS NOT NULL AND last_seen_run_id < ?)"
+        )
+        parameters.extend([source, floor])
+    return " AND ".join(conditions) if conditions else "1", parameters
