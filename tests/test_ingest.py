@@ -1,5 +1,9 @@
 import logging
+import os
 import sqlite3
+import subprocess
+import sys
+import textwrap
 from contextlib import contextmanager
 
 import pytest
@@ -340,3 +344,42 @@ def test_a_failed_page_retention_error_does_not_abort_the_run_or_the_next_source
         "volkswagen": "complete",
         "cupra": "complete",
     }
+
+
+def test_failed_page_bodies_are_retained_whatever_the_locale(tmp_path):
+    """Scrapes run from cron and systemd, where the default encoding is ASCII.
+
+    Every Volkswagen page carries a price in pounds, so retention that leans
+    on the locale default would fail precisely when it is needed.
+    """
+    script = textwrap.dedent(
+        f"""
+        from pathlib import Path
+        from types import SimpleNamespace
+        from carparator.ingest import IngestResult, _retain_failed_pages
+
+        store = SimpleNamespace(path=Path({str(tmp_path / "test.db")!r}))
+        source = SimpleNamespace(
+            name="volkswagen",
+            failed_pages=[7],
+            failed_page_bodies=["<html>price \\u00a34,995</html>"],
+        )
+        _retain_failed_pages(
+            source, store, IngestResult("volkswagen", run_id=1, expected_total=None)
+        )
+        """
+    )
+    ascii_locale = dict(
+        os.environ, LC_ALL="C", PYTHONCOERCECLOCALE="0", PYTHONUTF8="0"
+    )
+
+    completed = subprocess.run(
+        [sys.executable, "-c", script],
+        env=ascii_locale,
+        capture_output=True,
+        text=True,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    retained = tmp_path / "test.db.failed-pages" / "volkswagen-page7.html"
+    assert retained.read_text(encoding="utf-8") == "<html>price \u00a34,995</html>"

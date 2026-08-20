@@ -127,7 +127,7 @@ def _retain_failed_pages(
         directory.mkdir(parents=True, exist_ok=True)
         for page, body in zip(pages, bodies):
             path = directory / f"{source.name}-page{page}.html"
-            path.write_text(body)
+            path.write_text(body, encoding="utf-8")
             logger.warning(
                 "%s: wrote failed page %d to %s", source.name, page, path
             )
