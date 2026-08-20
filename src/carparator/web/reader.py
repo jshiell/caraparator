@@ -9,7 +9,7 @@ from typing import Sequence
 
 from carparator.ingest import COMPLETE
 from carparator.store import SCHEMA_VERSION
-from carparator.web.query import FIELDS, FilterSpec, build_where, unknown_clause
+from carparator.web.query import FIELDS, FilterSpec, build_where, order_by, unknown_clause
 
 
 NO_RUNS = "no_runs"
@@ -103,7 +103,8 @@ class Reader:
         scope, scope_parameters = scope_clause(self.complete_run_floors())
         where, parameters = build_where(spec)
         return self._query(
-            f"SELECT * FROM cars WHERE ({scope}) AND ({where})",
+            f"SELECT * FROM cars WHERE ({scope}) AND ({where})"
+            f" ORDER BY {order_by(spec)}",
             scope_parameters + parameters,
         )
 

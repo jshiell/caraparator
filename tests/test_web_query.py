@@ -420,3 +420,102 @@ def test_a_fully_populated_field_reports_no_unknowns(tmp_path):
     reader = stocked(tmp_path / "c.db", [car(range_miles=250)])
 
     assert ranged(reader, {}) == 0
+
+
+def ordered(reader, query):
+    return [each["source_id"] for each in reader.search(parse_filters(query))]
+
+
+def test_results_are_cheapest_first_by_default(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car(source_id="dear", price_pence=4_000_000),
+            car(source_id="cheap", price_pence=1_000_000),
+        ],
+    )
+
+    assert ordered(reader, {}) == ["cheap", "dear"]
+
+
+def test_a_column_and_direction_can_be_chosen(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [car(source_id="old", year=2020), car(source_id="new", year=2024)],
+    )
+
+    assert ordered(reader, {"sort": ["year"], "dir": ["desc"]}) == ["new", "old"]
+
+
+@pytest.mark.parametrize(
+    "query",
+    [
+        {"sort": ["dealer_phone; DROP TABLE cars"]},
+        {"sort": ["not_a_column"]},
+        {"sort": [""]},
+    ],
+)
+def test_an_unrecognised_column_never_reaches_the_database(tmp_path, query):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car(source_id="dear", price_pence=4_000_000, year=2020),
+            car(source_id="cheap", price_pence=1_000_000, year=2024),
+        ],
+    )
+
+    assert ordered(reader, query) == ["cheap", "dear"]
+
+
+def test_an_unrecognised_direction_falls_back_without_losing_the_column(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car(source_id="dear", price_pence=4_000_000, year=2020),
+            car(source_id="cheap", price_pence=1_000_000, year=2024),
+        ],
+    )
+
+    assert ordered(reader, {"sort": ["year"], "dir": ["sideways"]}) == ["dear", "cheap"]
+
+
+@pytest.mark.parametrize("direction", ["asc", "desc"])
+def test_cars_with_no_value_sort_last_whichever_way_round(tmp_path, direction):
+    """Sorting by range ascending must not present 800 unknowns as the worst."""
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car(source_id="unstated"),
+            car(source_id="far", range_miles=250),
+            car(source_id="near", range_miles=120),
+        ],
+    )
+
+    assert ordered(reader, {"sort": ["range_miles"], "dir": [direction]})[-1] == "unstated"
+
+
+def test_equal_values_keep_a_stable_order_so_a_bookmark_still_works(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car("volkswagen", "b", brand="Volkswagen"),
+            car("cupra", "c"),
+            car("cupra", "a"),
+        ],
+    )
+
+    assert ordered(reader, {"sort": ["price_pence"]}) == ["a", "c", "b"]
+
+
+def test_a_normalised_column_sorts_on_the_value_that_is_displayed(tmp_path):
+    """Raw text sort puts ID.3 and Id.3 either side of e-up!, undoing the fold."""
+    reader = stocked(
+        tmp_path / "c.db",
+        [
+            car(source_id="upper", model="ID.3"),
+            car(source_id="mixed", model="Id.3"),
+            car(source_id="lower", model="e-up!"),
+        ],
+    )
+
+    assert ordered(reader, {"sort": ["model"]}) == ["lower", "mixed", "upper"]

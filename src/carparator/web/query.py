@@ -77,6 +77,27 @@ FIELDS: tuple[Field, ...] = (
 
 BY_NAME = {each.name: each for each in FIELDS}
 
+# Sort column and direction are chosen from these, never bound as parameters —
+# SQLite cannot parameterise an ORDER BY, so the whitelist is the only defence.
+SORTS: dict[str, tuple[str, str]] = {
+    "price_pence": ("Price", "price_pence"),
+    "year": ("Year", "year"),
+    "mileage_miles": ("Mileage", "mileage_miles"),
+    "battery_kwh": ("Battery", "battery_kwh"),
+    "range_miles": ("Range", "range_miles"),
+    "power_kw": ("Power", "power_kw"),
+    "brand": ("Brand", "brand"),
+    "model": ("Model", MODEL_KEY_SQL),
+    "drivetrain": ("Drivetrain", DRIVETRAIN_KEY_SQL),
+    "seats": ("Seats", "seats"),
+    "body_style": ("Body style", "body_style"),
+    "dealer_name": ("Dealer", "dealer_name"),
+    "last_seen": ("Last seen", "last_seen"),
+}
+DEFAULT_SORT = "price_pence"
+DIRECTIONS = {"asc": "ASC", "desc": "DESC"}
+DEFAULT_DIRECTION = "asc"
+
 
 @dataclass(frozen=True)
 class FilterSpec:
@@ -86,6 +107,8 @@ class FilterSpec:
     ranges: dict[str, tuple[Any, Any]] = dataclass_field(default_factory=dict)
     texts: dict[str, str] = dataclass_field(default_factory=dict)
     excluded_unknown: frozenset[str] = frozenset()
+    sort: str = DEFAULT_SORT
+    direction: str = DEFAULT_DIRECTION
 
     def is_active(self, name: str) -> bool:
         """Whether this field is narrowing the results at all."""
@@ -118,6 +141,8 @@ class FilterSpec:
         for each in FIELDS:
             if each.nullable and self.includes_unknown(each.name):
                 args[f"unknown_{each.name}"] = ["on"]
+        args["sort"] = [self.sort]
+        args["dir"] = [self.direction]
         return args
 
 
@@ -144,7 +169,16 @@ def parse_filters(args: Mapping[str, list[str]]) -> FilterSpec:
             text = _first(args.get(each.param)).strip()
             if text:
                 texts[each.name] = text
-    return FilterSpec(choices, ranges, texts, _excluded_unknown(args))
+    sort = _first(args.get("sort"))
+    direction = _first(args.get("dir"))
+    return FilterSpec(
+        choices,
+        ranges,
+        texts,
+        _excluded_unknown(args),
+        sort if sort in SORTS else DEFAULT_SORT,
+        direction if direction in DIRECTIONS else DEFAULT_DIRECTION,
+    )
 
 
 def _excluded_unknown(args: Mapping[str, list[str]]) -> frozenset[str]:
@@ -217,3 +251,16 @@ def _add(conditions, parameters, spec: FilterSpec, each: Field, clause, values) 
 def unknown_clause(each: Field) -> str:
     """True for the rows this field cannot speak for."""
     return " AND ".join(f"{column} IS NULL" for column in each.columns)
+
+
+def order_by(spec: FilterSpec) -> str:
+    """The ORDER BY clause, built only from whitelisted names.
+
+    Absent values sort last in both directions: SQLite orders NULLs first
+    ascending, which would present every car whose range nobody stated as
+    though it had the worst range. The tiebreak on the primary key keeps a
+    bookmarked URL showing the same page twice.
+    """
+    _, expression = SORTS.get(spec.sort, SORTS[DEFAULT_SORT])
+    direction = DIRECTIONS.get(spec.direction, DIRECTIONS[DEFAULT_DIRECTION])
+    return f"{expression} IS NULL, {expression} {direction}, source, source_id"
