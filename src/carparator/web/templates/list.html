@@ -1,0 +1,94 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>carparator</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 1rem; font-size: 14px; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { padding: 2px 8px; text-align: left; border-bottom: 1px solid #ddd;
+           white-space: nowrap; }
+  th a { color: inherit; }
+  .banner { background: #fff6d5; padding: .5rem; margin-bottom: .5rem; }
+  .filters { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
+  .filters label { display: block; font-size: 12px; color: #555; }
+  .unknown { font-size: 11px; color: #666; }
+  input[type=number], input[type=text] { width: 7rem; }
+  select { min-width: 8rem; }
+</style>
+
+{% for banner in banners %}<p class="banner">{{ banner }}</p>{% endfor %}
+{% if coverage.cars_with_no_run %}
+  <p class="banner">{{ coverage.cars_with_no_run }} car(s) predate run tracking and
+    are always listed.</p>
+{% endif %}
+
+<form method="get" class="filters">
+  <input type="hidden" name="submitted" value="1">
+  <input type="hidden" name="sort" value="{{ spec.sort }}">
+  <input type="hidden" name="dir" value="{{ spec.direction }}">
+  {% for control in controls %}
+    {% set field = control.field %}
+    <div>
+      <label>{{ field.label }}</label>
+      {% if field.kind == 'choice' %}
+        <select name="{{ field.param }}" multiple size="4">
+          {% for key, display in control.options %}
+            <option value="{{ key }}"
+              {% if key in control.selected %}selected{% endif %}>{{ display }}</option>
+          {% endfor %}
+        </select>
+      {% elif field.kind == 'range' %}
+        <input type="number" step="any" name="{{ field.param }}_min" placeholder="min"
+               value="{{ control.range[0] | bound(field) }}">
+        <input type="number" step="any" name="{{ field.param }}_max" placeholder="max"
+               value="{{ control.range[1] | bound(field) }}">
+      {% else %}
+        <input type="text" name="{{ field.param }}" value="{{ control.text }}">
+      {% endif %}
+      {% if control.unknown %}
+        <label class="unknown">
+          <input type="checkbox" name="unknown_{{ field.name }}"
+                 {% if control.includes_unknown %}checked{% endif %}>
+          include {{ control.unknown }} unknown
+        </label>
+      {% endif %}
+    </div>
+  {% endfor %}
+  <div><label>&nbsp;</label><button type="submit">Filter</button>
+    <a href="/">reset</a></div>
+</form>
+
+<p>{{ cars | length }} cars</p>
+
+<table>
+  <tr>
+    {% for column, (label, _) in sorts.items() %}
+      {% if column != 'last_seen' or show_last_seen %}
+        <th><a href="?{{ spec | sorted_by(column) }}">{{ label }}</a>
+          {%- if spec.sort == column %} {{ '▲' if spec.direction == 'asc' else '▼' }}
+          {%- endif %}</th>
+      {% endif %}
+    {% endfor %}
+    <th>Source</th>
+  </tr>
+  {% for car in cars %}
+    <tr>
+      <td>{{ car.price }}</td>
+      <td>{{ car.year }}</td>
+      <td>{{ '{:,}'.format(car.mileage_miles) }}</td>
+      <td>{{ car.battery_kwh or '—' }}</td>
+      <td>{{ car.range_miles or '—' }}</td>
+      <td>{{ car.power_kw or '—' }}</td>
+      <td>{{ car.brand }}</td>
+      <td>{{ car.model }}</td>
+      <td>{{ car.drivetrain or '—' }}</td>
+      <td>{{ car.seats or '—' }}</td>
+      <td>{{ car.body_style or '—' }}</td>
+      <td>{{ car.dealer_name }}</td>
+      {% if show_last_seen %}
+        <td>{% if car.days_ago is not none %}{{ car.days_ago }} days ago
+            {%- else %}unknown{% endif %}</td>
+      {% endif %}
+      <td>{{ car.source }}</td>
+    </tr>
+  {% endfor %}
+</table>

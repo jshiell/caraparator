@@ -9,9 +9,14 @@ every other column can, and must say so on screen.
 from __future__ import annotations
 
 from dataclasses import dataclass, field as dataclass_field
-from typing import Any, Mapping
+from typing import Any, Callable, Mapping
 
-from carparator.web.normalise import DRIVETRAIN_KEY_SQL, MODEL_KEY_SQL
+from carparator.web.normalise import (
+    DRIVETRAIN_KEY_SQL,
+    MODEL_KEY_SQL,
+    drivetrain_key,
+    model_key,
+)
 
 LIKE_ESCAPE = "\\"
 
@@ -33,10 +38,17 @@ class Field:
     numeric: type = int
     scale: int = 1
     key_sql: str | None = None
+    key: Callable[[Any], Any] | None = None
 
     def __post_init__(self) -> None:
         if not self.columns:
             object.__setattr__(self, "columns", (self.name,))
+
+    def fold(self, value: Any) -> str | None:
+        """The value's filter key — what the query string carries for it."""
+        if value is None:
+            return None
+        return self.key(value) if self.key else str(value).strip()
 
 
 # The NOT NULL columns are exactly source, source_id, brand, model,
@@ -47,7 +59,15 @@ class Field:
 FIELDS: tuple[Field, ...] = (
     Field("source", "source", CHOICE, "Source", nullable=False),
     Field("brand", "brand", CHOICE, "Brand", nullable=False),
-    Field("model", "model", CHOICE, "Model", nullable=False, key_sql=MODEL_KEY_SQL),
+    Field(
+        "model",
+        "model",
+        CHOICE,
+        "Model",
+        nullable=False,
+        key_sql=MODEL_KEY_SQL,
+        key=model_key,
+    ),
     Field("year", "year", RANGE, "Year", nullable=False),
     Field("mileage_miles", "mileage", RANGE, "Mileage", nullable=False),
     Field("price_pence", "price", RANGE, "Price (£)", nullable=False, scale=100),
@@ -63,6 +83,7 @@ FIELDS: tuple[Field, ...] = (
         "Drivetrain",
         nullable=True,
         key_sql=DRIVETRAIN_KEY_SQL,
+        key=drivetrain_key,
     ),
     Field("body_style", "body", CHOICE, "Body style", nullable=True),
     Field("trim", "trim", TEXT, "Trim", nullable=True),

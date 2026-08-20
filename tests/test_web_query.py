@@ -540,3 +540,13 @@ def test_a_literal_underscore_still_matches_where_it_genuinely_occurs(tmp_path):
     )
 
     assert found(reader, {"dealer": ["A_B"]}) == ["odd"]
+
+
+def test_a_seat_count_typed_as_text_still_matches_the_integer_column(tmp_path):
+    """The query string is text; `seats` is INTEGER. Affinity has to bridge it."""
+    reader = stocked(
+        tmp_path / "c.db",
+        [car(source_id="five", seats=5), car(source_id="seven", seats=7)],
+    )
+
+    assert found(reader, {"submitted": ["1"], "seats": ["5"]}) == ["five"]
