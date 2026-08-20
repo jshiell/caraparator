@@ -519,3 +519,24 @@ def test_a_normalised_column_sorts_on_the_value_that_is_displayed(tmp_path):
     )
 
     assert ordered(reader, {"sort": ["model"]}) == ["lower", "mixed", "upper"]
+
+
+@pytest.mark.parametrize("fragment", ["CH_", "CH%", "CH\\1"])
+def test_wildcards_typed_into_a_text_search_are_taken_literally(tmp_path, fragment):
+    """Postcodes and dealer names are searched with LIKE; an unescaped `_` in
+    `SW1_ 2AA` would quietly match every neighbouring district."""
+    reader = stocked(
+        tmp_path / "c.db",
+        [car(source_id="a", dealer_postcode="CH1 4QJ"), car(source_id="b")],
+    )
+
+    assert found(reader, {"submitted": ["1"], "location": [fragment]}) == []
+
+
+def test_a_literal_underscore_still_matches_where_it_genuinely_occurs(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [car(source_id="odd", dealer_name="A_B Motors"), car(source_id="axb", dealer_name="AxB Motors")],
+    )
+
+    assert found(reader, {"dealer": ["A_B"]}) == ["odd"]

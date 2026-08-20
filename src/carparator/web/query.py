@@ -13,6 +13,8 @@ from typing import Any, Mapping
 
 from carparator.web.normalise import DRIVETRAIN_KEY_SQL, MODEL_KEY_SQL
 
+LIKE_ESCAPE = "\\"
+
 CHOICE = "choice"
 RANGE = "range"
 TEXT = "text"
@@ -229,8 +231,10 @@ def build_where(spec: FilterSpec) -> tuple[str, list]:
         _add(conditions, parameters, spec, each, clause, [bound for bound, _ in bounds])
     for name, text in spec.texts.items():
         each = BY_NAME[name]
-        clause = " OR ".join(f"{column} LIKE ?" for column in each.columns)
-        _add(conditions, parameters, spec, each, clause, [f"%{text}%"] * len(each.columns))
+        clause = " OR ".join(
+            f"{column} LIKE ? ESCAPE '{LIKE_ESCAPE}'" for column in each.columns
+        )
+        _add(conditions, parameters, spec, each, clause, [contains(text)] * len(each.columns))
     return " AND ".join(conditions) if conditions else "1", parameters
 
 
@@ -264,3 +268,15 @@ def order_by(spec: FilterSpec) -> str:
     _, expression = SORTS.get(spec.sort, SORTS[DEFAULT_SORT])
     direction = DIRECTIONS.get(spec.direction, DIRECTIONS[DEFAULT_DIRECTION])
     return f"{expression} IS NULL, {expression} {direction}, source, source_id"
+
+
+def contains(text: str) -> str:
+    """A LIKE pattern matching `text` literally anywhere in a value.
+
+    Without escaping, a user searching for the postcode stem `SW1_` would
+    silently match every district around it, and `%` would match everything.
+    """
+    escaped = text
+    for special in (LIKE_ESCAPE, "%", "_"):
+        escaped = escaped.replace(special, LIKE_ESCAPE + special)
+    return f"%{escaped}%"
