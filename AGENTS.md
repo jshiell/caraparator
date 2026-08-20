@@ -17,6 +17,15 @@ file covers what is easy to get wrong. Read both.
   sqlite3 /tmp/cp.db "SELECT COUNT(*) FROM cars WHERE fuel_type != 'electric';"  -- expect 0
   ```
   Expect both sources `complete` with `listings_seen == expected_total`.
+- Manual web checks — when the web module changed. The test client is single-threaded
+  and cannot catch a connection shared across threads, so open the real thing:
+  ```sh
+  uv sync --extra web && uv run carparator serve --db /tmp/cp.db
+  ```
+  Then: a full scrape followed by `--limit` on one source, confirming the limited run's
+  cars still appear; a filter on `range` showing an unknown count that does not move
+  when the box is unticked; and a scrape running against the same file while the page
+  is served.
 
 ### Known failures (baseline)
 
@@ -51,6 +60,30 @@ fixed after the fact. Breaking one is silent — no test elsewhere will notice.
   look sold overnight.
 - **`SqliteStore.transaction()` is not re-entrant** and raises `TransactionError` rather
   than silently nesting into a single flat commit.
+- **Current stock is `>=` the latest complete run, per source, never `=`.**
+  `carparator scrape --source cupra --limit 20` is `partial` by construction, so its
+  cars carry a *later* run id than the last complete run. Matching `=` would hide
+  precisely the cars most recently confirmed to exist. Absence during a complete run
+  implies sold; presence in any later run, complete or not, is positive evidence and
+  wins. The predicate is written as an exclusion so the default is to include.
+- **`last_seen_run_id IS NULL` is never dropped.** The column is nullable and
+  `NULL >= 5` is NULL, so a bare comparison discards those rows silently — the
+  project's signature defect, reintroduced by the fix for it. The web reader counts
+  them separately and always lists them.
+- **The unknown-count definition is fixed, and its invariance is a test.** For field F:
+  rows where F IS NULL, within current-stock scope, matching every other active filter,
+  **ignoring F's own predicate and F's own toggle**. Anything else is self-referential
+  and reads "include 0 unknown" the moment the box is unticked.
+- **The unknown toggle is inert unless that field's filter is active.** It discloses
+  what a filter would hide; with no filter set it must not delete rows.
+- **`normalise.drivetrain_key` mirrors `DRIVETRAIN_KEY_SQL` exactly**, algorithm for
+  algorithm, not "equivalently". Filtering runs in SQL and the option list is built in
+  Python; a value they folded differently would be unselectable — the user ticks an
+  option and gets nothing back. There is a test that runs both over the same values.
+- **Sort column and direction are whitelisted, never bound.** SQLite cannot
+  parameterise an ORDER BY, so the whitelist is the only defence. Absent values sort
+  last in *both* directions, or sorting by range ascending presents every car whose
+  range nobody stated as though it had the worst.
 - **Required fields must raise, not default.** Mappers previously wrote `or 0` / `or ""`
   for missing mileage, model and dealer name, which silently manufactured bad rows.
   Guard on `is None` so a genuine `0` mileage still maps.
@@ -106,6 +139,11 @@ a dealer with no phone, and a petrol car carrying `motor.capacity`.
 - Strict TDD: one failing test, one minimal implementation, one commit per increment.
 - `pydantic` needs `ConfigDict(protected_namespaces=())` on `Car` — `model_year`
   otherwise collides with pydantic's protected `model_` namespace.
-- Tests use `httpx.MockTransport`, not `respx`. Runtime dependencies are `httpx` and
-  `pydantic` only; dev is `pytest` only. Keep it that way — no HTML parser, no headless
+- Tests use `httpx.MockTransport`, not `respx`. **The scraper's** runtime dependencies
+  are `httpx` and `pydantic` only. Keep it that way — no HTML parser, no headless
   browser, no ORM, no scraping framework.
+- The web UI is an **optional extra**: `flask` lives in `[project.optional-dependencies]
+  web`, never in `[project] dependencies`. It is also in the `dev` group, because
+  `uv run pytest` installs dependency-groups but **not** extras — without it
+  `tests/test_web_app.py` fails at collection and the zero-known-failure baseline is
+  gone. So dev is `pytest` **and** `flask`, deliberately.

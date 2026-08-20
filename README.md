@@ -3,9 +3,6 @@
 Ingests used **electric** car listings from CUPRA UK and Volkswagen UK approved-used
 into one SQLite database, mapped onto a single generic `Car` model.
 
-This increment is the ingestion path only. There is no search UI — query the database
-with `sqlite3` directly.
-
 ## Usage
 
 ```sh
@@ -21,6 +18,41 @@ sqlite3 carparator.db \
   "SELECT brand, model, year, mileage_miles, battery_kwh, price_pence/100, dealer_name
    FROM cars ORDER BY price_pence LIMIT 10;"
 ```
+
+## Browsing the listings
+
+```sh
+uv sync --extra web
+uv run carparator serve --db carparator.db --port 8000
+```
+
+A dense sortable table with filters, at `http://127.0.0.1:8000/`. It binds the
+loopback address only and is **strictly read-only** — it opens the database with
+`mode=ro`, so it can be left running while a scrape writes to the same file.
+Scraping is never triggered from the browser.
+
+Filter state lives in the query string, so a view can be bookmarked and the back
+button works. Sources, brands, models and drivetrains are offered as facets;
+colour, trim, dealer and town/postcode are substring searches.
+
+**Every filter that could hide a car for want of data says so, with a count.**
+Sources disagree about which fields they populate — `range_miles` and `seats` are
+patchy, `body_style` and the charging rates are Volkswagen-only, `power_ps` and
+`registration` are CUPRA-only — so any filter on a nullable column offers an
+"include N unknown" box, ticked by default. The count is what that filter would
+hide, and it does not move when the box is ticked or unticked. Unticking a box for
+a field you have not filtered on does nothing: the box discloses what a filter
+hides, it is not a filter itself.
+
+Spelling differences between the sources are folded for display and filtering
+only — the database is never rewritten. CUPRA's `Rear-wheel drive` and
+Volkswagen's `Rear wheel drive` are one option, as are `ID.3` and `Id.3`.
+
+The listing scope follows the sold-listing rule below, per source. A source with
+no complete run cannot call anything sold, so **all** of its cars are shown, a
+banner says why, and a "last seen" column shows how cold each one is. There is no
+staleness cutoff — dropping old listings would assert "sold" on evidence that does
+not license it.
 
 ## Schema
 
