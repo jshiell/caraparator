@@ -60,6 +60,40 @@ raw payloads are retained, failures are isolated per source and per page, and
 Requests are sequential, spaced, and honestly identified as
 `carparator/0.1 (personal use)` — around 65 requests per full run.
 
+## When a page fails to parse
+
+Both sources are private APIs that can change shape without notice, so a page whose
+payload cannot be found is treated as a parse failure rather than as the end of the
+results — a single bad page must not silently truncate a run.
+
+When that happens the scrape keeps going, and the raw HTML of the offending page is
+written next to the database so it can be inspected:
+
+```
+carparator.db.failed-pages/volkswagen-page7.html
+```
+
+- The directory is created only when a page actually fails. A clean run leaves no trace.
+- At most three page bodies are kept per run — enough to see the new shape, not enough
+  to fill a disk. The **count** reported by the CLI is of every failed page, which may
+  be higher than the number of files.
+- `carparator scrape` appends `failed_pages N` to the source's line when N is non-zero.
+- Three *consecutive* failures end that source's run early, on the assumption the site
+  has changed rather than that one page is broken.
+- Only Volkswagen retains bodies; the CUPRA API returns JSON directly, so there is no
+  intermediate document worth keeping.
+
+A run truncated this way is recorded as `partial` **provided the expected total was
+read** — it comes from page 1, so in the ordinary case it is known before any failure.
+The sold-listing rule above then protects you: absences in a `partial` run prove
+nothing. If a site change is severe enough that the total cannot be read either, the
+run has no yardstick to be short of; check `listings_seen` on the run before trusting
+a `complete` status after any run that reported `failed_pages`.
+
+Nothing here is load-bearing. If the directory cannot be created or written — a
+read-only volume, a full disk — the failure is logged and the scrape continues. Losing
+the diagnostics must never cost more than the diagnostics were worth.
+
 ## Tests
 
 ```sh
