@@ -4,7 +4,7 @@ import pytest
 
 from carparator.model import Car, FuelType
 from carparator.store import SqliteStore
-from carparator.web.reader import Reader
+from carparator.web.reader import DatabaseNotFound, Reader
 
 
 def car(source="cupra", source_id="a", **overrides):
@@ -55,3 +55,13 @@ def test_reader_exposes_every_car_column(tmp_path):
     assert only["battery_kwh"] == 77.0
     assert only["colour"] == "Aurora Blue"
     assert only["last_seen"] == "2026-08-01T00:00:00Z"
+
+
+def test_a_missing_database_names_the_path_it_looked_for(tmp_path):
+    reader = Reader(tmp_path / "absent.db")
+
+    with pytest.raises(DatabaseNotFound) as raised:
+        reader.cars()
+
+    assert "absent.db" in str(raised.value)
+    assert "carparator scrape" in str(raised.value)
