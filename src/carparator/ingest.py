@@ -123,11 +123,18 @@ def _retain_failed_pages(
         return
 
     directory = Path(f"{store.path}.failed-pages")
-    directory.mkdir(parents=True, exist_ok=True)
-    for page, body in zip(pages, bodies):
-        path = directory / f"{source.name}-page{page}.html"
-        path.write_text(body)
-        logger.warning("%s: wrote failed page %d to %s", source.name, page, path)
+    try:
+        directory.mkdir(parents=True, exist_ok=True)
+        for page, body in zip(pages, bodies):
+            path = directory / f"{source.name}-page{page}.html"
+            path.write_text(body)
+            logger.warning(
+                "%s: wrote failed page %d to %s", source.name, page, path
+            )
+    except OSError:
+        logger.warning(
+            "%s: could not retain failed page bodies", source.name, exc_info=True
+        )
 
 
 def _is_complete(result: IngestResult, limit: int | None) -> bool:

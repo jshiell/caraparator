@@ -317,3 +317,26 @@ def test_a_clean_run_creates_no_failed_pages_directory(store, tmp_path):
     ingest([FakeSourceWithFailedPages("volkswagen", ["a"])], store)
 
     assert not (tmp_path / "test.db.failed-pages").exists()
+
+
+def test_a_failed_page_retention_error_does_not_abort_the_run_or_the_next_source(
+    store, tmp_path
+):
+    # Occupy the .failed-pages path with a file, so mkdir() inside retention
+    # raises instead of creating a directory.
+    (tmp_path / "test.db.failed-pages").write_text("occupied")
+
+    source = FakeSourceWithFailedPages(
+        "volkswagen", ["a"], failed_pages=[3], failed_page_bodies=["<html>3</html>"]
+    )
+
+    results = ingest([source, FakeSource("cupra", ["x"])], store)
+
+    assert [result.source for result in results] == ["volkswagen", "cupra"]
+    assert results[0].status != "failed"
+    assert results[0].failed_pages == 1
+    assert car_count(store, "cupra") == 1
+    assert {run["source"]: run["status"] for run in runs(store)} == {
+        "volkswagen": "complete",
+        "cupra": "complete",
+    }
