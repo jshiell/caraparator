@@ -1,4 +1,5 @@
 import sqlite3
+import threading
 
 import pytest
 
@@ -84,3 +85,27 @@ def test_the_current_schema_version_is_accepted(tmp_path):
     db = build(tmp_path / "cars.db", [car()])
 
     assert len(Reader(db).cars()) == 1
+
+
+def test_the_database_cannot_be_written_through_a_reader(tmp_path):
+    db = build(tmp_path / "cars.db", [car()])
+    reader = Reader(db)
+
+    with pytest.raises(sqlite3.OperationalError):
+        reader._query("DELETE FROM cars")
+
+    assert len(Reader(db).cars()) == 1
+
+
+def test_a_query_from_another_thread_succeeds(tmp_path):
+    """Flask's dev server is threaded; one shared connection would raise."""
+    db = build(tmp_path / "cars.db", [car()])
+    reader = Reader(db)
+    reader.cars()
+    outcome = []
+
+    thread = threading.Thread(target=lambda: outcome.append(reader.cars()))
+    thread.start()
+    thread.join()
+
+    assert [len(each) for each in outcome] == [1]
