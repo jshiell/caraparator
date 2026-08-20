@@ -1,3 +1,5 @@
+import re
+
 import pytest
 
 from carparator.ingest import COMPLETE, PARTIAL
@@ -224,3 +226,40 @@ def test_the_list_links_to_each_car(tmp_path):
     web = client(tmp_path, [car(source_id="a/b")])
 
     assert "/car/cupra/a/b" in body(web.get("/"))
+
+
+def tel_href(page: str) -> str | None:
+    """The dialable target of the phone link, or None if there isn't one."""
+    match = re.search(r'href="tel:([^"]*)"', page)
+    return match.group(1) if match else None
+
+
+@pytest.mark.parametrize(
+    "raw",
+    [
+        '<script>alert(1)</script>01244555555',
+        '" onmouseover="alert(1)01244555555',
+        "javascript:alert(1)//+441244555555",
+    ],
+)
+def test_a_phone_number_carrying_markup_or_a_scheme_does_not_reach_the_tel_href(
+    tmp_path, raw
+):
+    """dealer_phone is third-party free text rendered into a tel: href. Only
+    digits and `+` may reach it, so markup or a non-dial scheme must not
+    survive into the link target."""
+    web = client(tmp_path, [car(dealer_phone=raw)])
+
+    href = tel_href(body(detail(web)))
+
+    assert href is not None
+    assert re.fullmatch(r"[\d+]*", href)
+    assert "script" not in href
+    assert "javascript" not in href
+    assert '"' not in href
+
+
+def test_an_ordinary_phone_number_still_produces_a_working_tel_link(tmp_path):
+    web = client(tmp_path, [car(dealer_phone="01244 555 555")])
+
+    assert tel_href(body(detail(web))) == "01244555555"
