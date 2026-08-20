@@ -82,9 +82,10 @@ def test_only_nullable_fields_have_an_unknown_bucket():
     assert "price_pence" not in nullable
     assert {"battery_kwh", "power_kw", "trim"} <= nullable
 
-    location = next(field for field in FIELDS if field.name == "location")
-    assert location.nullable
-    assert location.columns == ("dealer_city", "dealer_postcode")
+    town = next(field for field in FIELDS if field.name == "dealer_city")
+    postcode = next(field for field in FIELDS if field.name == "dealer_postcode")
+    assert town.nullable
+    assert postcode.nullable
 
 
 def test_fields_the_sources_cannot_discriminate_on_are_not_offered():
@@ -294,20 +295,31 @@ def test_a_drivetrain_choice_ignores_hyphenation(tmp_path):
     ]
 
 
-def test_a_location_search_matches_either_the_town_or_the_postcode(tmp_path):
+def test_a_town_search_matches_the_town(tmp_path):
     reader = stocked(
         tmp_path / "c.db",
         [
-            car(source_id="by-town", dealer_city="Chester", dealer_postcode="CH1 4QJ"),
+            car(source_id="chester", dealer_city="Chester"),
+            car(source_id="leeds", dealer_city="Leeds"),
+        ],
+    )
+
+    assert found(reader, {"town": ["Chest"]}) == ["chester"]
+
+
+def test_a_postcode_search_matches_the_postcode_and_not_the_town(tmp_path):
+    reader = stocked(
+        tmp_path / "c.db",
+        [
             car(source_id="by-postcode", dealer_city="Leeds", dealer_postcode="CH1 9AA"),
             car(source_id="elsewhere", dealer_city="Leeds", dealer_postcode="LS1 1AA"),
         ],
     )
 
-    assert found(reader, {"location": ["CH1"]}) == ["by-postcode", "by-town"]
+    assert found(reader, {"postcode": ["CH1"]}) == ["by-postcode"]
 
 
-def test_a_car_with_no_location_at_all_counts_as_unknown(tmp_path):
+def test_a_car_with_no_town_at_all_counts_as_unknown(tmp_path):
     reader = stocked(
         tmp_path / "c.db",
         [
@@ -316,8 +328,25 @@ def test_a_car_with_no_location_at_all_counts_as_unknown(tmp_path):
         ],
     )
 
-    assert found(reader, {"location": ["Chester"]}) == ["located", "unstated"]
-    assert found(reader, {"submitted": ["1"], "location": ["Chester"]}) == ["located"]
+    assert found(reader, {"town": ["Chester"]}) == ["located", "unstated"]
+    assert found(reader, {"submitted": ["1"], "town": ["Chester"]}) == ["located"]
+
+
+def test_a_car_missing_only_the_postcode_is_not_dropped_uncounted(tmp_path):
+    """dealer_city and dealer_postcode are independently optional in the
+    mappers. The combined `location` field required BOTH to be null before
+    treating a car as unknown, so a car with a town but no postcode was
+    silently excluded from a postcode search without being counted in the
+    postcode unknown bucket."""
+    reader = stocked(
+        tmp_path / "c.db",
+        [car(source_id="city-only", dealer_city="Chester", dealer_postcode=None)],
+    )
+
+    query = {"submitted": ["1"], "postcode": ["CH1"]}
+
+    assert found(reader, query) == []
+    assert reader.unknown_counts(parse_filters(query))["dealer_postcode"] == 1
 
 
 def ranged(reader, query):
@@ -530,7 +559,7 @@ def test_wildcards_typed_into_a_text_search_are_taken_literally(tmp_path, fragme
         [car(source_id="a", dealer_postcode="CH1 4QJ"), car(source_id="b")],
     )
 
-    assert found(reader, {"submitted": ["1"], "location": [fragment]}) == []
+    assert found(reader, {"submitted": ["1"], "postcode": [fragment]}) == []
 
 
 def test_a_literal_underscore_still_matches_where_it_genuinely_occurs(tmp_path):

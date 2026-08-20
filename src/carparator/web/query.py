@@ -34,15 +34,10 @@ class Field:
     kind: str
     label: str
     nullable: bool
-    columns: tuple[str, ...] = ()
     numeric: type = int
     scale: int = 1
     key_sql: str | None = None
     key: Callable[[Any], Any] | None = None
-
-    def __post_init__(self) -> None:
-        if not self.columns:
-            object.__setattr__(self, "columns", (self.name,))
 
     def fold(self, value: Any) -> str | None:
         """The value's filter key — what the query string carries for it."""
@@ -88,14 +83,8 @@ FIELDS: tuple[Field, ...] = (
     Field("body_style", "body", CHOICE, "Body style", nullable=True),
     Field("trim", "trim", TEXT, "Trim", nullable=True),
     Field("colour", "colour", TEXT, "Colour", nullable=True),
-    Field(
-        "location",
-        "location",
-        TEXT,
-        "Town or postcode",
-        nullable=True,
-        columns=("dealer_city", "dealer_postcode"),
-    ),
+    Field("dealer_city", "town", TEXT, "Dealer town", nullable=True),
+    Field("dealer_postcode", "postcode", TEXT, "Dealer postcode", nullable=True),
 )
 
 BY_NAME = {each.name: each for each in FIELDS}
@@ -242,20 +231,18 @@ def build_where(spec: FilterSpec) -> tuple[str, list]:
     conditions, parameters = [], []
     for name, values in spec.choices.items():
         each = BY_NAME[name]
-        expression = each.key_sql or each.columns[0]
+        expression = each.key_sql or each.name
         clause = f"{expression} IN ({', '.join('?' * len(values))})"
         _add(conditions, parameters, spec, each, clause, list(values))
     for name, (low, high) in spec.ranges.items():
         each = BY_NAME[name]
         bounds = [(bound, sign) for bound, sign in ((low, ">="), (high, "<=")) if bound is not None]
-        clause = " AND ".join(f"{each.columns[0]} {sign} ?" for _, sign in bounds)
+        clause = " AND ".join(f"{each.name} {sign} ?" for _, sign in bounds)
         _add(conditions, parameters, spec, each, clause, [bound for bound, _ in bounds])
     for name, text in spec.texts.items():
         each = BY_NAME[name]
-        clause = " OR ".join(
-            f"{column} LIKE ? ESCAPE '{LIKE_ESCAPE}'" for column in each.columns
-        )
-        _add(conditions, parameters, spec, each, clause, [contains(text)] * len(each.columns))
+        clause = f"{each.name} LIKE ? ESCAPE '{LIKE_ESCAPE}'"
+        _add(conditions, parameters, spec, each, clause, [contains(text)])
     return " AND ".join(conditions) if conditions else "1", parameters
 
 
@@ -267,15 +254,14 @@ def _add(conditions, parameters, spec: FilterSpec, each: Field, clause, values) 
     with no filter set there is nothing for it to hide.
     """
     if each.nullable and spec.includes_unknown(each.name):
-        absent = " AND ".join(f"{column} IS NULL" for column in each.columns)
-        clause = f"({clause}) OR ({absent})"
+        clause = f"({clause}) OR ({each.name} IS NULL)"
     conditions.append(f"({clause})")
     parameters.extend(values)
 
 
 def unknown_clause(each: Field) -> str:
     """True for the rows this field cannot speak for."""
-    return " AND ".join(f"{column} IS NULL" for column in each.columns)
+    return f"{each.name} IS NULL"
 
 
 def order_by(spec: FilterSpec) -> str:

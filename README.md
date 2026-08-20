@@ -33,7 +33,7 @@ Scraping is never triggered from the browser.
 
 Filter state lives in the query string, so a view can be bookmarked and the back
 button works. Sources, brands, models and drivetrains are offered as facets;
-colour, trim, dealer and town/postcode are substring searches.
+colour, trim, dealer, dealer town and dealer postcode are substring searches.
 
 **Every filter that could hide a car for want of data says so, with a count.**
 Sources disagree about which fields they populate — `range_miles` and `seats` are

@@ -158,9 +158,7 @@ def _utc_now() -> str:
 def _display_forms(stock: list[dict]) -> dict[str, dict[str, str]]:
     """For each faceted field, the spelling to show for each folded key."""
     return {
-        each.name: canonical_forms(
-            [row[each.columns[0]] for row in stock], each.fold
-        )
+        each.name: canonical_forms([row[each.name] for row in stock], each.fold)
         for each in CHOICE_FIELDS
     }
 
@@ -194,8 +192,8 @@ def _present(row: dict, forms, coverage, now: str) -> dict:
     """One table row, with folded spellings and formatted money."""
     shown = dict(row)
     for each in CHOICE_FIELDS:
-        folded = each.fold(row[each.columns[0]])
-        shown[each.name] = forms[each.name].get(folded, row[each.columns[0]])
+        folded = each.fold(row[each.name])
+        shown[each.name] = forms[each.name].get(folded, row[each.name])
     shown["price"] = _pounds(row["price_pence"])
     shown["days_ago"] = _days_between(row["last_seen"], now)
     return shown
