@@ -592,13 +592,34 @@ def test_the_feature_pass_is_abandoned_after_a_run_of_consecutive_failures(store
     assert car_count(store, "cupra") == 5
 
 
-def test_features_that_keep_coming_back_empty_also_trip_the_breaker(store):
-    """Three real listings in a row with no standard equipment means drift."""
-    source = FakeSourceWithFeatures("cupra", FIVE)
+def test_listings_that_will_not_parse_do_not_abandon_the_pass(store):
+    """A page that fetched cleanly but would not parse is evidence about that
+    listing, not about the endpoint. Only a transport failure trips the breaker,
+    because only a transport failure carries get_with_retry's backoff."""
+    source = FakeSourceWithFeatures("cupra", FIVE, features={"e": some_features("X")})
 
-    ingest([source], store)
+    (result,) = ingest([source], store)
 
-    assert source.feature_requests == ["a", "b", "c"]
+    assert source.feature_requests == FIVE
+    assert result.feature_errors == 4
+    assert features_of(store, "standard", source_id="e") == ["X"]
+
+
+def test_listings_that_always_fail_do_not_starve_the_new_ones(store):
+    """The reason the distinction matters. From the second run on, the retry set
+    is made *of* the listings that failed before — so if those tripped the
+    breaker, new stock behind them would never have its equipment fetched, on
+    every run, while the run still reported itself complete."""
+    doomed = ["a", "b", "c"]
+    ingest([FakeSourceWithFeatures("cupra", doomed)], store)
+
+    later = FakeSourceWithFeatures(
+        "cupra", [*doomed, "new"], features={"new": some_features("Glass roof")}
+    )
+    ingest([later], store)
+
+    assert later.feature_requests == [*doomed, "new"]
+    assert features_of(store, "standard", source_id="new") == ["Glass roof"]
 
 
 def test_a_listing_that_succeeds_between_failures_resets_the_run(store):

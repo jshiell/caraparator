@@ -112,8 +112,11 @@ of that run. A listing whose equipment cannot be read is counted in
 `feature_errors` and left unmarked, so the next run retries it; it never changes the
 run's status, because the listings themselves are already durable. A 404 on a detail
 page means the car sold between the search and the fetch and is not counted. After
-three consecutive failures the pass gives up for that source, on the assumption the
-endpoint rather than the listing is what is wrong.
+three consecutive *transport* failures the pass gives up for that source, on the
+assumption the endpoint rather than the listing is what is wrong; a page that arrived
+intact but would not parse is counted without counting towards that, since otherwise
+the listings that failed last time — which are exactly the ones a later run retries —
+would trip the breaker every run and starve the new stock behind them.
 
 The web UI does not yet show or filter on equipment.
 
@@ -188,6 +191,10 @@ uv run pytest -m live   # opt-in; hits the real endpoints
   not stored. CUPRA exposes only an API href, not a browsable page.
 - `vin` and `previous_owners` are Volkswagen-only; `dealer_lat` / `dealer_lon` are
   CUPRA-only. Sources legitimately differ.
+- About nine Volkswagen listings per full run publish no usable standard equipment:
+  five render it as one truncated comma-separated blob rather than a list, and four
+  serve no equipment section at all. They are counted in `feature_errors`, left
+  unmarked, and retried on every run. CUPRA has no such cases.
 - `engine_size` is nullable and empty for EVs by nature. Volkswagen's sentinel
   value of `1` is discarded.
 - Volkswagen reports power in bhp; the normalised kW figure is stored so

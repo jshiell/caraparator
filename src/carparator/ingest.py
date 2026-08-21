@@ -17,7 +17,8 @@ from carparator.store import SqliteStore
 logger = logging.getLogger(__name__)
 
 # Mirrors MAX_CONSECUTIVE_FAILED_PAGES in the Volkswagen source: past this many
-# failures in a row the endpoint, not the listing, is what's wrong.
+# *transport* failures in a row the endpoint, not the listing, is what's wrong.
+# Counts only transport failures on purpose — see _fetch_features.
 MAX_CONSECUTIVE_FEATURE_FAILURES = 3
 
 COMPLETE = "complete"
@@ -159,9 +160,18 @@ def _fetch_features(
 
     A per-listing failure is isolated and counted, never fatal, and never
     changes the run's status: the listings are already durable, so losing a
-    listing's features costs nothing that a later run cannot recover. Past
-    MAX_CONSECUTIVE_FEATURE_FAILURES in a row the pass gives up rather than
-    spending hours of backoff on an endpoint that is plainly not answering.
+    listing's features costs nothing that a later run cannot recover.
+
+    Past MAX_CONSECUTIVE_FEATURE_FAILURES *transport* failures in a row the pass
+    gives up, rather than spending hours of get_with_retry's backoff on an
+    endpoint that is plainly not answering. A page that arrived intact but would
+    not parse is deliberately not counted towards that: it carries no backoff,
+    and it is evidence about one listing rather than about the endpoint. The
+    distinction is load-bearing, not pedantry — from the second run on, the
+    listings that still lack features are precisely the ones that failed to
+    parse before, so counting them would trip the breaker on every run and
+    starve the genuinely new listings queued behind them, silently, while the
+    run still reported itself complete.
 
     Not every source can report features, and the ListingSource protocol does
     not require it, so the method is read defensively.
@@ -174,7 +184,8 @@ def _fetch_features(
     for source_id in source_ids:
         if consecutive_failures >= MAX_CONSECUTIVE_FEATURE_FAILURES:
             logger.warning(
-                "%s: abandoning the feature pass after %d failures in a row",
+                "%s: abandoning the feature pass after %d transport failures"
+                " in a row",
                 source.name,
                 consecutive_failures,
             )
@@ -192,7 +203,6 @@ def _fetch_features(
                     "%s: %s reported no standard equipment", source.name, source_id
                 )
                 result.feature_errors += 1
-                consecutive_failures += 1
                 continue
             store.store_features(
                 source.name, source_id, features, fetched_at=fetched_at

@@ -94,12 +94,21 @@ fixed after the fact. Breaking one is silent — no test elsewhere will notice.
   range nobody stated as though it had the worst.
 - **Empty equipment is never success.** `extract_vw_features` and
   `extract_cupra_features` return `None` rather than an empty `ListingFeatures`
-  when the standard list is empty. Every real listing on both sources has one
-  (verified 20/20 Volkswagen pages, 30/30 CUPRA listings), so an empty one means
-  the markup moved. Returning empty instead would store zero features, set
-  `features_fetched_at`, retire those listings from every future run, leave
-  `feature_errors` at 0 and report the run `complete` — this project's signature
-  class of silent failure.
+  when the standard list is empty. Returning empty instead would store zero
+  features, set `features_fetched_at`, retire those listings from every future
+  run, leave `feature_errors` at 0 and report the run `complete` — this
+  project's signature class of silent failure. Measured over a full run:
+  252/252 CUPRA listings parse, and 994/1003 Volkswagen ones; the nine that do
+  not are two known page shapes, both listed under the endpoint traps.
+- **The circuit breaker counts transport failures only, never parse failures.**
+  A page that arrived intact but would not parse is evidence about one listing;
+  a 5xx or a timeout is evidence about the endpoint, and only the latter carries
+  `get_with_retry`'s 1+2+4s backoff. The distinction is load-bearing: from the
+  second run on, the listings still lacking features are *precisely* the ones
+  that failed to parse before, so counting them would trip the breaker on every
+  run and starve the genuinely new listings queued behind them — silently, with
+  the run still reporting `complete`. This was observed on a real second run
+  before it was fixed, not reasoned about in the abstract.
 - **`features_fetched_at` is a marker, never "has rows in `car_features`".** A
   listing with genuinely no optional extras has no rows to count and would
   otherwise be re-fetched on every run for ever.
@@ -180,6 +189,20 @@ data, and several contradict what the documentation-free obvious guess would be.
 - Across 1588 real labels, **zero contain `<` and zero contain `&`**. There is no
   tag-stripping and no `html.unescape`, because neither is reachable and so
   neither could be driven by a failing test.
+- **There is a second standard-equipment markup, and it is truncated.** About
+  0.5% of listings (5 of 1003 on a full run: `FKEEF69`, `K5EDNRA`, `P1EDQL7`,
+  `P1EDRGM`, `K5EDHZC`) render the standard list not as `<li><span class="label">`
+  items but as one bare `<span>` holding a comma-separated blob — and the blob is
+  cut off by a length cap, all five landing between 906 and 1017 characters with
+  roughly 30 items against the usual 65–132. **Do not parse it.** Splitting it on
+  commas would store a truncated list indistinguishable from a complete one,
+  which is the very failure the empty-is-never-success guard exists to prevent.
+  These listings are correctly counted in `feature_errors` and retried each run.
+- **Some detail pages carry no equipment region at all** and still answer 200
+  (4 of 1003: `NXEED8W`, `NXEED8Z`, `S3EED8X`, `Q4D7B9L`). There is no data to be
+  had; `extract_vw_features` returns `None` and the listing is counted.
+- Together those two shapes put a **floor of around 9 on Volkswagen's
+  `feature_errors`**. Treat that as the baseline; a jump well above it is drift.
 
 ## Fixtures
 
