@@ -30,6 +30,7 @@ def test_power_in_kilowatts_is_never_mistaken_for_battery_capacity():
     assert parse_cupra_title("CUPRA Tavascan 250kW VZ2 AWD 5dr Auto").battery_kwh is None
 
 
+import base64
 import json
 from pathlib import Path
 
@@ -164,11 +165,27 @@ def test_image_url_is_the_first_dealer_photo(source):
 import httpx
 
 
-def paged_transport(pages, recorder):
-    """Serve one canned page per X-Page, recording the requests made."""
+def entry_key(carid):
+    """The entry key is base64 of the car id — deliberately not the id itself."""
+    return base64.b64encode(carid.encode()).decode()
+
+
+def entry_href(carid):
+    return f"https://vtpapi.seat.com/restapi/v1/cuukgwb/datastore/cars/{entry_key(carid)}"
+
+
+def paged_transport(pages, recorder, details=None):
+    """Serve one canned page per X-Page, recording the requests made.
+
+    Detail responses are served by exact href, as the source only ever asks for
+    one the search response named.
+    """
+    details = details or {}
 
     def handler(request):
         recorder.append(request)
+        if str(request.url) in details:
+            return httpx.Response(200, json=details[str(request.url)])
         page = int(request.headers["X-Page"])
         cars = pages[page - 1] if page <= len(pages) else []
         return httpx.Response(
@@ -185,7 +202,18 @@ def paged_transport(pages, recorder):
                         ]
                     }
                 },
-                "results": {"result": {"cars": [{"car": car} for car in cars]}},
+                "results": {
+                    "result": {
+                        "cars": [
+                            {
+                                "car": car,
+                                "key": entry_key(car["carid"]),
+                                "href": entry_href(car["carid"]),
+                            }
+                            for car in cars
+                        ]
+                    }
+                },
             },
         )
 
@@ -318,3 +346,74 @@ def test_a_response_with_no_standard_equipment_is_a_failure_not_an_empty_car():
     assert extract_cupra_features({"equip": [{"values": [{"value": "Tow bar"}]}]}) is None
     assert extract_cupra_features({"serie_equip": []}) is None
     assert extract_cupra_features({}) is None
+
+
+EQUIPPED_DETAIL = {
+    "serie_equip": [{"key": "serieequip.engine", "values": [{"value": "Heat pump"}]}],
+    "equip": [{"key": "equip.exterior", "values": [{"value": "Glass roof"}]}],
+}
+
+
+def features_source_over(cars, requests):
+    client = httpx.Client(
+        transport=paged_transport(
+            [cars], requests, {entry_href(cars[0]["carid"]): EQUIPPED_DETAIL}
+        )
+    )
+    source = CupraSource(client=client, request_delay=0)
+    list(source.fetch_raw())
+    return source
+
+
+def test_fetch_features_reads_the_detail_href_recorded_during_the_search():
+    cars = fixture_cars()[:1]
+    requests = []
+    source = features_source_over(cars, requests)
+
+    features = source.fetch_features(cars[0]["carid"])
+
+    assert features.standard == ("Heat pump",)
+    assert features.optional == ("Glass roof",)
+    assert str(requests[-1].url) == entry_href(cars[0]["carid"])
+
+
+def test_the_detail_request_carries_the_headers_the_endpoint_demands():
+    """Without X-Pattern the detail endpoint answers 401."""
+    cars = fixture_cars()[:1]
+    requests = []
+
+    features_source_over(cars, requests).fetch_features(cars[0]["carid"])
+
+    assert requests[-1].headers["X-Pattern"] == "cuprawebfe"
+    assert requests[-1].headers["Accept-Language"] == "en-GB"
+
+
+def test_the_detail_href_is_keyed_on_the_car_id_not_the_entry_key():
+    cars = fixture_cars()[:1]
+    requests = []
+    source = features_source_over(cars, requests)
+    already_made = len(requests)
+
+    assert source.fetch_features(entry_key(cars[0]["carid"])) is None
+    assert len(requests) == already_made
+
+
+def test_an_entry_with_no_detail_href_still_yields_its_listing():
+    """Losing the href must cost that car's features, never the car."""
+
+    def handler(request):
+        if request.headers["X-Page"] == "1":
+            return httpx.Response(
+                200,
+                json={"results": {"result": {"cars": [{"car": fixture_cars()[0]}]}}},
+            )
+        return httpx.Response(200, json={"results": {"result": {}}})
+
+    source = CupraSource(
+        client=httpx.Client(transport=httpx.MockTransport(handler)), request_delay=0
+    )
+
+    listings = list(source.fetch_raw())
+
+    assert [listing.source_id for listing in listings] == ["GBR551693296921"]
+    assert source.fetch_features("GBR551693296921") is None

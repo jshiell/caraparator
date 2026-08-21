@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import re
 import time
 from dataclasses import dataclass
@@ -16,6 +17,8 @@ from carparator.sources import REQUEST_DELAY_SECONDS, build_client, get_with_ret
 # ignored and returns unfiltered results.
 SEARCH_URL = "https://vtpapi.seat.com/restapi/v1/cuukgwb/search/car;t_petr=E"
 PAGE_SIZE = 100
+
+logger = logging.getLogger(__name__)
 
 _FUEL_TYPES = {
     "electric": FuelType.ELECTRIC,
@@ -152,6 +155,7 @@ class CupraSource:
         self._client = client or build_client()
         self._request_delay = request_delay
         self.expected_total: int | None = None
+        self._detail_urls: dict[str, str] = {}
 
     def fetch_raw(self) -> Iterator[RawListing]:
         """Walk X-Page until a page comes back empty.
@@ -181,8 +185,35 @@ class CupraSource:
                 return
             for entry in cars:
                 car = entry["car"]
+                # The href hangs off the entry, not the car, and its last path
+                # segment is the entry's base64 "key" — never the car id. Read
+                # defensively: losing a detail href must cost this listing's
+                # features, never the listing itself.
+                if entry.get("href"):
+                    self._detail_urls[car["carid"]] = entry["href"]
                 yield RawListing(source=self.name, source_id=car["carid"], payload=car)
             page += 1
+
+    def fetch_features(self, source_id: str) -> ListingFeatures | None:
+        """Fetch one listing's equipment from the detail href the search named.
+
+        Takes a car id rather than a RawListing because that is all it needs. A
+        listing this source never saw has no href to fetch, so it costs no
+        request.
+        """
+        url = self._detail_urls.get(source_id)
+        if url is None:
+            logger.warning("cupra: no detail href recorded for %s", source_id)
+            return None
+        if self._request_delay:
+            time.sleep(self._request_delay)
+        detail = get_with_retry(
+            self._client,
+            url,
+            # Without X-Pattern the detail endpoint answers 401.
+            headers={"X-Pattern": "cuprawebfe", "Accept-Language": "en-GB"},
+        ).json()
+        return extract_cupra_features(detail)
 
     def to_car(self, raw: RawListing) -> Car | None:
         car = self.map_car(raw.payload)
