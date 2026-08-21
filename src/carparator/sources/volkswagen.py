@@ -39,6 +39,20 @@ _ENGINE_CC_SENTINEL = 1
 # The whole vehicle array arrives as one JSON literal inside an inline script.
 _ANCHOR = "let vehicles = JSON.parse('"
 
+# Each vehicle's detail page is named in the SRP's JSON-LD, whose "sku" is the
+# same ID the vehicle payload carries. Reading it here costs no extra request.
+_JSON_STRING = r'(?:[^"\\]|\\.)*'
+_DETAIL_URL = re.compile(
+    rf'"sku"\s*:\s*"({_JSON_STRING})"\s*,'
+    rf'\s*"description"\s*:\s*"{_JSON_STRING}"\s*,'
+    rf'\s*"url"\s*:\s*"({_JSON_STRING})"'
+)
+
+
+def extract_vw_detail_urls(html: str) -> dict[str, str]:
+    """Map each vehicle ID on a search-results page to its detail page URL."""
+    return {sku: url.replace(r"\/", "/") for sku, url in _DETAIL_URL.findall(html)}
+
 
 def extract_vw_vehicles(html: str) -> list[dict[str, Any]]:
     """Pull the embedded vehicle documents out of a search-results page.

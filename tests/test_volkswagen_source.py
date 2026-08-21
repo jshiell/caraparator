@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from carparator.sources.volkswagen import extract_vw_vehicles
+from carparator.sources.volkswagen import extract_vw_detail_urls, extract_vw_vehicles
 
 FIXTURE = Path(__file__).parent / "fixtures" / "vw_srp_page1.html"
 
@@ -18,6 +18,21 @@ def test_extracts_every_vehicle_on_a_real_search_results_page(page):
 
     assert len(vehicles) == 20
     assert all("ID" in vehicle for vehicle in vehicles)
+
+
+def test_every_vehicle_on_the_page_carries_a_detail_url(page):
+    """The SRP's JSON-LD keys on the same ID the vehicle payload does."""
+    urls = extract_vw_detail_urls(page)
+
+    assert set(urls) == {str(vehicle["ID"]) for vehicle in extract_vw_vehicles(page)}
+
+
+def test_a_detail_url_has_its_escaped_slashes_restored(page):
+    assert extract_vw_detail_urls(page)["R7EC4DX"] == (
+        "https://usedcars.volkswagen.co.uk/en/vehicle_search/volkswagen/golf"
+        "/golf-99kw-e-golf-35kwh-5dr-auto-r7ec4dx"
+        "?view=list&FUEL_TYPE_LST=ELECTRIC"
+    )
 
 
 def test_vehicles_are_deduplicated_on_id(page):
