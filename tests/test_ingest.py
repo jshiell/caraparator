@@ -6,10 +6,11 @@ import sys
 import textwrap
 from contextlib import contextmanager
 
+import httpx
 import pytest
 
 from carparator.model import Car, FuelType, ListingFeatures, RawListing
-from carparator.ingest import ingest
+from carparator.ingest import COMPLETE, ingest
 from carparator.store import SqliteStore
 
 
@@ -70,13 +71,16 @@ class FakeSourceWithFeatures(FakeSource):
     without it still works.
     """
 
-    def __init__(self, *args, features=None, **kwargs):
+    def __init__(self, *args, features=None, raises=None, **kwargs):
         super().__init__(*args, **kwargs)
         self._features = features or {}
+        self._raises = raises or {}
         self.feature_requests = []
 
     def fetch_features(self, source_id):
         self.feature_requests.append(source_id)
+        if source_id in self._raises:
+            raise self._raises[source_id]
         return self._features.get(source_id)
 
 
@@ -511,3 +515,60 @@ def test_refetch_features_asks_again_for_every_listing(store):
 
     assert second.feature_requests == ["a"]
     assert features_of(store, "standard") == ["Z"]
+
+
+def http_error(status):
+    request = httpx.Request("GET", "https://example.test/detail")
+    return httpx.HTTPStatusError(
+        f"status {status}",
+        request=request,
+        response=httpx.Response(status, request=request),
+    )
+
+
+def test_a_feature_fetch_that_raises_costs_only_that_listings_features(store):
+    source = FakeSourceWithFeatures(
+        "cupra",
+        ["a", "b"],
+        features={"b": some_features("Glass roof")},
+        raises={"a": RuntimeError("the detail page went away")},
+    )
+
+    (result,) = ingest([source], store)
+
+    assert result.feature_errors == 1
+    assert result.status == COMPLETE
+    assert features_of(store, "standard", source_id="b") == ["Glass roof"]
+    assert features_of(store, "standard", source_id="a") == []
+    assert store.has_features("cupra", "a") is False
+
+
+def test_features_that_come_back_empty_count_as_an_error_not_as_a_bare_car(store):
+    """Storing nothing and marking it fetched would never be retried, and the
+    run would report itself complete with no errors."""
+    source = FakeSourceWithFeatures("cupra", ["a"])
+
+    (result,) = ingest([source], store)
+
+    assert result.feature_errors == 1
+    assert result.status == COMPLETE
+    assert store.has_features("cupra", "a") is False
+
+
+def test_a_listing_that_sold_before_its_detail_fetch_is_not_an_error(store):
+    """A 404 between the search and the detail fetch is ordinary churn, so that
+    'feature_errors near zero' stays a usable signal for real drift."""
+    source = FakeSourceWithFeatures("cupra", ["a"], raises={"a": http_error(404)})
+
+    (result,) = ingest([source], store)
+
+    assert result.feature_errors == 0
+    assert result.status == COMPLETE
+
+
+def test_a_server_error_on_a_detail_page_is_counted(store):
+    source = FakeSourceWithFeatures("cupra", ["a"], raises={"a": http_error(500)})
+
+    (result,) = ingest([source], store)
+
+    assert result.feature_errors == 1

@@ -9,6 +9,8 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Iterable
 
+import httpx
+
 from carparator.sources import ListingSource
 from carparator.store import SqliteStore
 
@@ -28,6 +30,7 @@ class IngestResult:
     listings_stored: int = 0
     skipped_non_electric: int = 0
     mapping_errors: int = 0
+    feature_errors: int = 0
     failed_pages: int = 0
     status: str = COMPLETE
     error: str | None = None
@@ -99,7 +102,7 @@ def _ingest_one(
         result.status = COMPLETE if _is_complete(result, limit) else PARTIAL
 
     _fetch_features(
-        source, store, stored_ids, fetched_at=now, refetch=refetch_features
+        source, store, result, stored_ids, fetched_at=now, refetch=refetch_features
     )
 
     try:
@@ -127,6 +130,7 @@ def _ingest_one(
 def _fetch_features(
     source: ListingSource,
     store: SqliteStore,
+    result: IngestResult,
     source_ids: list[str],
     *,
     fetched_at: str,
@@ -146,6 +150,10 @@ def _fetch_features(
     decision is made here rather than in the source, because a source is
     network-only and store-agnostic by design.
 
+    A per-listing failure is isolated and counted, never fatal, and never
+    changes the run's status: the listings are already durable, so losing a
+    listing's features costs nothing that a later run cannot recover.
+
     Not every source can report features, and the ListingSource protocol does
     not require it, so the method is read defensively.
     """
@@ -156,8 +164,43 @@ def _fetch_features(
     for source_id in source_ids:
         if not refetch and store.has_features(source.name, source_id):
             continue
-        features = fetch(source_id)
+        try:
+            features = fetch(source_id)
+        except Exception as error:
+            if _sold_since_the_search(error):
+                logger.info(
+                    "%s: %s sold before its features could be read",
+                    source.name,
+                    source_id,
+                )
+                continue
+            logger.exception(
+                "%s: could not read features for %s", source.name, source_id
+            )
+            result.feature_errors += 1
+            continue
+        if features is None:
+            # Empty is never success. If a source's markup moves, storing zero
+            # features and marking the listing fetched would retire it from
+            # every future run while the run still reported itself complete.
+            logger.warning(
+                "%s: %s reported no standard equipment", source.name, source_id
+            )
+            result.feature_errors += 1
+            continue
         store.store_features(source.name, source_id, features, fetched_at=fetched_at)
+
+
+def _sold_since_the_search(error: Exception) -> bool:
+    """A 404 on a detail page means the listing sold, not that the site changed.
+
+    Counting it would put a floor under feature_errors that moves with the
+    market, and "feature_errors near zero" is the signal for real drift.
+    """
+    return (
+        isinstance(error, httpx.HTTPStatusError)
+        and error.response.status_code == 404
+    )
 
 
 def _retain_failed_pages(
