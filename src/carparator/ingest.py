@@ -34,6 +34,7 @@ class IngestResult:
     listings_stored: int = 0
     skipped_non_electric: int = 0
     mapping_errors: int = 0
+    features_fetched: int = 0
     feature_errors: int = 0
     failed_pages: int = 0
     status: str = COMPLETE
@@ -118,6 +119,8 @@ def _ingest_one(
             listings_stored=result.listings_stored,
             skipped_non_electric=result.skipped_non_electric,
             mapping_errors=result.mapping_errors,
+            features_fetched=result.features_fetched,
+            feature_errors=result.feature_errors,
             status=result.status,
             error=result.error,
         )
@@ -205,6 +208,7 @@ def _fetch_features(
             consecutive_failures += 1
             continue
         store.store_features(source.name, source_id, features, fetched_at=fetched_at)
+        result.features_fetched += 1
         consecutive_failures = 0
 
 

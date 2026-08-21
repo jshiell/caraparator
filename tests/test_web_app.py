@@ -40,6 +40,8 @@ def client(tmp_path, cars=(), *, runs=(), now="2026-08-11T00:00:00Z"):
                 listings_stored=1,
                 skipped_non_electric=0,
                 mapping_errors=0,
+                features_fetched=0,
+                feature_errors=0,
                 status=status,
             )
         for each in cars:

@@ -67,6 +67,8 @@ def scrape_command(args: argparse.Namespace) -> int:
             f" stored {result.listings_stored}"
             f" skipped {result.skipped_non_electric}"
             f" errors {result.mapping_errors}"
+            f" features {result.features_fetched}"
+            f" feature_errors {result.feature_errors}"
         )
         if result.failed_pages:
             line += f" failed_pages {result.failed_pages}"

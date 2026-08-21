@@ -84,6 +84,36 @@ def test_report_line_omits_failed_pages_when_none_were_dropped(
     assert "failed_pages" not in report
 
 
+def test_report_line_states_what_the_feature_pass_did(
+    tmp_path, capsys, monkeypatch
+):
+    from carparator import cli
+    from carparator.ingest import IngestResult
+
+    monkeypatch.setattr(cli, "build_sources", lambda name: [_StubSource()])
+    monkeypatch.setattr(
+        cli,
+        "ingest",
+        lambda sources, store, **kwargs: [
+            IngestResult(
+                source="volkswagen",
+                run_id=1,
+                expected_total=1,
+                listings_seen=1,
+                listings_stored=1,
+                features_fetched=1,
+                feature_errors=3,
+            )
+        ],
+    )
+
+    main(["scrape", "--db", str(tmp_path / "cars.db")])
+
+    report = capsys.readouterr().out
+    assert "features 1" in report
+    assert "feature_errors 3" in report
+
+
 class _StubSource:
     name = "stub"
     expected_total = 1

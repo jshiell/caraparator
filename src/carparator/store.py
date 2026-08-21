@@ -104,6 +104,8 @@ CREATE TABLE IF NOT EXISTS scrape_runs (
     listings_stored      INTEGER NOT NULL DEFAULT 0,
     skipped_non_electric INTEGER NOT NULL DEFAULT 0,
     mapping_errors       INTEGER NOT NULL DEFAULT 0,
+    features_fetched     INTEGER NOT NULL DEFAULT 0,
+    feature_errors       INTEGER NOT NULL DEFAULT 0,
     status               TEXT NOT NULL,
     error                TEXT
 );
@@ -282,6 +284,8 @@ class SqliteStore:
         listings_stored: int,
         skipped_non_electric: int,
         mapping_errors: int,
+        features_fetched: int,
+        feature_errors: int,
         status: str,
         error: str | None = None,
     ) -> None:
@@ -289,7 +293,8 @@ class SqliteStore:
             self.connection.execute(
                 "UPDATE scrape_runs SET finished_at = ?, expected_total = ?,"
                 " listings_seen = ?, listings_stored = ?, skipped_non_electric = ?,"
-                " mapping_errors = ?, status = ?, error = ? WHERE id = ?",
+                " mapping_errors = ?, features_fetched = ?, feature_errors = ?,"
+                " status = ?, error = ? WHERE id = ?",
                 (
                     finished_at,
                     expected_total,
@@ -297,6 +302,8 @@ class SqliteStore:
                     listings_stored,
                     skipped_non_electric,
                     mapping_errors,
+                    features_fetched,
+                    feature_errors,
                     status,
                     error,
                     run_id,

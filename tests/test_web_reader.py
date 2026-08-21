@@ -135,6 +135,8 @@ def add_run(store, source, status, at=WHEN):
         listings_stored=1,
         skipped_non_electric=0,
         mapping_errors=0,
+        features_fetched=0,
+        feature_errors=0,
         status=status,
     )
     return run_id

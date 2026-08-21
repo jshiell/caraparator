@@ -224,6 +224,8 @@ def test_filters_never_reach_outside_the_current_stock(tmp_path):
             listings_stored=1,
             skipped_non_electric=0,
             mapping_errors=0,
+            features_fetched=0,
+            feature_errors=0,
             status=COMPLETE,
         )
         current = store.start_run("cupra", started_at=WHEN)
@@ -235,6 +237,8 @@ def test_filters_never_reach_outside_the_current_stock(tmp_path):
             listings_stored=1,
             skipped_non_electric=0,
             mapping_errors=0,
+            features_fetched=0,
+            feature_errors=0,
             status=COMPLETE,
         )
         store.upsert_car(car(source_id="sold"), observed_at=WHEN, run_id=old)
@@ -401,6 +405,8 @@ def test_the_unknown_count_stays_inside_the_current_stock(tmp_path):
                 listings_stored=1,
                 skipped_non_electric=0,
                 mapping_errors=0,
+                features_fetched=0,
+                feature_errors=0,
                 status=COMPLETE,
             )
             runs.append(run_id)

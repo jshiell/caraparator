@@ -632,3 +632,25 @@ def test_a_sold_listing_between_failures_does_not_reset_the_breaker(store):
     ingest([source], store)
 
     assert source.feature_requests == ["a", "b", "c", "d"]
+
+
+def test_the_run_records_what_the_feature_pass_did(store):
+    source = FakeSourceWithFeatures(
+        "cupra", ["a", "b"], features={"a": some_features("Heat pump")}
+    )
+
+    (result,) = ingest([source], store)
+
+    assert result.features_fetched == 1
+    assert result.feature_errors == 1
+    (row,) = runs(store)
+    assert row["features_fetched"] == 1
+    assert row["feature_errors"] == 1
+
+
+def test_a_run_that_fetched_no_features_records_zero_rather_than_null(store):
+    ingest([FakeSource("cupra", ["a"])], store)
+
+    (row,) = runs(store)
+    assert row["features_fetched"] == 0
+    assert row["feature_errors"] == 0
