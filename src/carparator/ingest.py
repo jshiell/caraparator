@@ -179,10 +179,24 @@ def _fetch_features(
                 consecutive_failures,
             )
             return
-        if not refetch and store.has_features(source.name, source_id):
-            continue
         try:
+            if not refetch and store.has_features(source.name, source_id):
+                continue
             features = fetch(source_id)
+            if features is None:
+                # Empty is never success. If a source's markup moves, storing
+                # zero features and marking the listing fetched would retire it
+                # from every future run while the run still reported itself
+                # complete.
+                logger.warning(
+                    "%s: %s reported no standard equipment", source.name, source_id
+                )
+                result.feature_errors += 1
+                consecutive_failures += 1
+                continue
+            store.store_features(
+                source.name, source_id, features, fetched_at=fetched_at
+            )
         except Exception as error:
             if _sold_since_the_search(error):
                 logger.info(
@@ -191,23 +205,15 @@ def _fetch_features(
                     source_id,
                 )
                 continue
+            # The store is inside this guard as well as the fetch: an
+            # unwritable database must cost this source its features, never the
+            # sources queued behind it.
             logger.exception(
                 "%s: could not read features for %s", source.name, source_id
             )
             result.feature_errors += 1
             consecutive_failures += 1
             continue
-        if features is None:
-            # Empty is never success. If a source's markup moves, storing zero
-            # features and marking the listing fetched would retire it from
-            # every future run while the run still reported itself complete.
-            logger.warning(
-                "%s: %s reported no standard equipment", source.name, source_id
-            )
-            result.feature_errors += 1
-            consecutive_failures += 1
-            continue
-        store.store_features(source.name, source_id, features, fetched_at=fetched_at)
         result.features_fetched += 1
         consecutive_failures = 0
 

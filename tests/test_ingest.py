@@ -654,3 +654,23 @@ def test_a_run_that_fetched_no_features_records_zero_rather_than_null(store):
     (row,) = runs(store)
     assert row["features_fetched"] == 0
     assert row["feature_errors"] == 0
+
+
+def test_a_store_failure_in_the_feature_pass_does_not_abort_the_next_source(
+    store, monkeypatch
+):
+    """The feature pass is not exempt from source isolation."""
+
+    def broken(*args, **kwargs):
+        raise sqlite3.OperationalError("disk I/O error")
+
+    monkeypatch.setattr(store, "store_features", broken)
+    equipped = FakeSourceWithFeatures(
+        "cupra", ["a"], features={"a": some_features("Heat pump")}
+    )
+
+    results = ingest([equipped, FakeSource("volkswagen", ["b"])], store)
+
+    assert results[0].feature_errors == 1
+    assert results[0].status == COMPLETE
+    assert car_count(store, "volkswagen") == 1

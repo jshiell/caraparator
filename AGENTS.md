@@ -47,6 +47,9 @@ fixed after the fact. Breaking one is silent — no test elsewhere will notice.
 - **A failure in one source must not affect another.** `ingest()` isolates each source,
   and that includes `finish_run` — if finalising the run row is left outside the guard,
   a store failure strands the row at `status='running'` and aborts every later source.
+  The feature pass is not exempt: its `has_features` and `store_features` calls sit
+  inside the per-listing guard alongside the fetch, so an unwritable database costs
+  that source its equipment and nothing more.
 - **Diagnostics must never cost more than the diagnostics.** `_retain_failed_pages`
   writes the HTML of pages that failed to parse. Its I/O is guarded, because an
   unwritable directory previously turned "lost 20 cars" into "whole scrape aborted".
