@@ -46,3 +46,17 @@ def test_a_sampled_live_record_still_maps_cleanly(build_source):
         assert car.price_pence > 0
         assert 1990 < car.year <= 2100
         assert car.dealer_name
+
+
+@pytest.mark.parametrize("build_source", [CupraSource, VolkswagenSource])
+def test_a_live_listing_still_publishes_its_standard_equipment(build_source):
+    """The real canary for markup drift. feature_errors only reports it after a
+    run has already spent its requests finding out."""
+    source = build_source()
+
+    (listing,) = first_page(source, 1)
+    features = source.fetch_features(listing.source_id)
+
+    assert features is not None, "the equipment lists moved"
+    assert features.standard, "standard equipment came back empty"
+    assert all(feature.strip() for feature in features.standard)
