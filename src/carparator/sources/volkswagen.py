@@ -10,7 +10,7 @@ from typing import Any, Iterator
 
 import httpx
 
-from carparator.model import Car, FuelType, RawListing
+from carparator.model import Car, FuelType, ListingFeatures, RawListing
 from carparator.sources import REQUEST_DELAY_SECONDS, build_client, get_with_retry
 
 SEARCH_URL = "https://usedcars.volkswagen.co.uk/en/vehicle_search/all-brands/all-models"
@@ -52,6 +52,54 @@ _DETAIL_URL = re.compile(
 def extract_vw_detail_urls(html: str) -> dict[str, str]:
     """Map each vehicle ID on a search-results page to its detail page URL."""
     return {sku: url.replace(r"\/", "/") for sku, url in _DETAIL_URL.findall(html)}
+
+
+# The detail page's equipment tab. Its two <h4>s are the only ones inside it —
+# the finance one lives past the specification tab, which bounds the slice.
+_EQUIPMENT_REGION = '<div class="technical__equipment"'
+_SPECIFICATION_REGION = '<div class="technical__specification"'
+_STANDARD_HEADING = "Fitted as standard"
+_OPTIONAL_HEADING = "Fitted optional extras"
+_HEADING = re.compile(r"<h4>(.*?)</h4>", re.DOTALL)
+# The glossary popup is a sibling of the label span, not a child, so a
+# non-greedy match cannot swallow it.
+_LABEL = re.compile(r'<span class="label">(.*?)</span>', re.DOTALL)
+
+
+def extract_vw_features(html: str) -> ListingFeatures | None:
+    """Read the equipment lists off a vehicle detail page.
+
+    Returns None when the equipment region is missing, and also when it yields no
+    standard equipment at all. Every real page carries a standard list, so an
+    empty one means the markup moved: reporting that as an error beats storing
+    nothing and marking the listing as fetched, which would never be retried.
+
+    Labels are taken verbatim. Measured over 1588 real ones, none contains a tag
+    or an entity, so there is nothing here to strip or unescape.
+    """
+    start = html.find(_EQUIPMENT_REGION)
+    if start == -1:
+        return None
+    end = html.find(_SPECIFICATION_REGION, start)
+    region = html[start:] if end == -1 else html[start:end]
+
+    sections = _HEADING.split(region)
+    labels = {
+        heading.strip(): _labels(body)
+        for heading, body in zip(sections[1::2], sections[2::2])
+    }
+    standard = labels.get(_STANDARD_HEADING, ())
+    if not standard:
+        return None
+    # A listing with no optional extras is ordinary, not a failure.
+    return ListingFeatures(
+        standard=standard, optional=labels.get(_OPTIONAL_HEADING, ())
+    )
+
+
+def _labels(body: str) -> tuple[str, ...]:
+    found = (label.strip() for label in _LABEL.findall(body))
+    return tuple(label for label in found if label)
 
 
 def extract_vw_vehicles(html: str) -> list[dict[str, Any]]:

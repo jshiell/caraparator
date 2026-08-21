@@ -3,7 +3,11 @@ from pathlib import Path
 
 import pytest
 
-from carparator.sources.volkswagen import extract_vw_detail_urls, extract_vw_vehicles
+from carparator.sources.volkswagen import (
+    extract_vw_detail_urls,
+    extract_vw_features,
+    extract_vw_vehicles,
+)
 
 FIXTURE = Path(__file__).parent / "fixtures" / "vw_srp_page1.html"
 
@@ -11,6 +15,14 @@ FIXTURE = Path(__file__).parent / "fixtures" / "vw_srp_page1.html"
 @pytest.fixture(scope="module")
 def page():
     return FIXTURE.read_text(encoding="utf-8")
+
+
+VDP_FIXTURE = Path(__file__).parent / "fixtures" / "vw_vdp.html"
+
+
+@pytest.fixture(scope="module")
+def detail_page():
+    return VDP_FIXTURE.read_text(encoding="utf-8")
 
 
 def test_extracts_every_vehicle_on_a_real_search_results_page(page):
@@ -33,6 +45,30 @@ def test_a_detail_url_has_its_escaped_slashes_restored(page):
         "/golf-99kw-e-golf-35kwh-5dr-auto-r7ec4dx"
         "?view=list&FUEL_TYPE_LST=ELECTRIC"
     )
+
+
+def test_reads_both_equipment_lists_off_a_real_detail_page(detail_page):
+    features = extract_vw_features(detail_page)
+
+    assert len(features.standard) == 132
+    assert len(features.optional) == 5
+
+
+def test_a_feature_is_captured_exactly_as_the_page_fragments_it(detail_page):
+    """VW splits one comma-separated feature across several <li>. Don't reassemble."""
+    features = extract_vw_features(detail_page)
+
+    assert features.standard[:4] == (
+        "'Lights On' Reminder warning buzzer",
+        "ACC - Adaptive cruise control with front assist",
+        "forward collision warning",
+        "distance monitoring",
+    )
+
+
+def test_a_glossary_popup_does_not_leak_into_the_feature_it_annotates(detail_page):
+    """The glossary div is a sibling of the label span, and repeats its text."""
+    assert extract_vw_features(detail_page).optional[2] == "Adaptive Cruise Control"
 
 
 def test_vehicles_are_deduplicated_on_id(page):
