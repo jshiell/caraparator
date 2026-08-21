@@ -10,7 +10,7 @@ import httpx
 import pytest
 
 from carparator.model import Car, FuelType, ListingFeatures, RawListing
-from carparator.ingest import COMPLETE, ingest
+from carparator.ingest import COMPLETE, MAX_CONSECUTIVE_FEATURE_FAILURES, ingest
 from carparator.store import SqliteStore
 
 
@@ -572,3 +572,63 @@ def test_a_server_error_on_a_detail_page_is_counted(store):
     (result,) = ingest([source], store)
 
     assert result.feature_errors == 1
+
+
+FIVE = ["a", "b", "c", "d", "e"]
+
+
+def test_the_feature_pass_is_abandoned_after_a_run_of_consecutive_failures(store):
+    """get_with_retry backs off 1+2+4s per listing, so grinding through a
+    thousand detail fetches against a broken endpoint would take hours."""
+    source = FakeSourceWithFeatures(
+        "cupra", FIVE, raises={each: RuntimeError("endpoint down") for each in FIVE}
+    )
+
+    (result,) = ingest([source], store)
+
+    assert source.feature_requests == ["a", "b", "c"]
+    assert result.feature_errors == MAX_CONSECUTIVE_FEATURE_FAILURES
+    assert result.status == COMPLETE
+    assert car_count(store, "cupra") == 5
+
+
+def test_features_that_keep_coming_back_empty_also_trip_the_breaker(store):
+    """Three real listings in a row with no standard equipment means drift."""
+    source = FakeSourceWithFeatures("cupra", FIVE)
+
+    ingest([source], store)
+
+    assert source.feature_requests == ["a", "b", "c"]
+
+
+def test_a_listing_that_succeeds_between_failures_resets_the_run(store):
+    source = FakeSourceWithFeatures(
+        "cupra",
+        FIVE,
+        features={"c": some_features("Heat pump")},
+        raises={each: RuntimeError("down") for each in ("a", "b", "d", "e")},
+    )
+
+    (result,) = ingest([source], store)
+
+    assert source.feature_requests == FIVE
+    assert result.feature_errors == 4
+
+
+def test_a_sold_listing_between_failures_does_not_reset_the_breaker(store):
+    """A 404 is not a failure, but neither is it evidence the endpoint is well."""
+    source = FakeSourceWithFeatures(
+        "cupra",
+        FIVE,
+        raises={
+            "a": RuntimeError("down"),
+            "b": http_error(404),
+            "c": RuntimeError("down"),
+            "d": RuntimeError("down"),
+            "e": RuntimeError("down"),
+        },
+    )
+
+    ingest([source], store)
+
+    assert source.feature_requests == ["a", "b", "c", "d"]

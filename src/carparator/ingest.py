@@ -16,6 +16,10 @@ from carparator.store import SqliteStore
 
 logger = logging.getLogger(__name__)
 
+# Mirrors MAX_CONSECUTIVE_FAILED_PAGES in the Volkswagen source: past this many
+# failures in a row the endpoint, not the listing, is what's wrong.
+MAX_CONSECUTIVE_FEATURE_FAILURES = 3
+
 COMPLETE = "complete"
 PARTIAL = "partial"
 FAILED = "failed"
@@ -152,7 +156,9 @@ def _fetch_features(
 
     A per-listing failure is isolated and counted, never fatal, and never
     changes the run's status: the listings are already durable, so losing a
-    listing's features costs nothing that a later run cannot recover.
+    listing's features costs nothing that a later run cannot recover. Past
+    MAX_CONSECUTIVE_FEATURE_FAILURES in a row the pass gives up rather than
+    spending hours of backoff on an endpoint that is plainly not answering.
 
     Not every source can report features, and the ListingSource protocol does
     not require it, so the method is read defensively.
@@ -161,7 +167,15 @@ def _fetch_features(
     if fetch is None:
         return
 
+    consecutive_failures = 0
     for source_id in source_ids:
+        if consecutive_failures >= MAX_CONSECUTIVE_FEATURE_FAILURES:
+            logger.warning(
+                "%s: abandoning the feature pass after %d failures in a row",
+                source.name,
+                consecutive_failures,
+            )
+            return
         if not refetch and store.has_features(source.name, source_id):
             continue
         try:
@@ -178,6 +192,7 @@ def _fetch_features(
                 "%s: could not read features for %s", source.name, source_id
             )
             result.feature_errors += 1
+            consecutive_failures += 1
             continue
         if features is None:
             # Empty is never success. If a source's markup moves, storing zero
@@ -187,8 +202,10 @@ def _fetch_features(
                 "%s: %s reported no standard equipment", source.name, source_id
             )
             result.feature_errors += 1
+            consecutive_failures += 1
             continue
         store.store_features(source.name, source_id, features, fetched_at=fetched_at)
+        consecutive_failures = 0
 
 
 def _sold_since_the_search(error: Exception) -> bool:
