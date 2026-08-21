@@ -7,7 +7,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Iterator
 
-from carparator.model import Car
+from carparator.model import Car, ListingFeatures
 
 SCHEMA_VERSION = 2
 
@@ -194,6 +194,55 @@ class SqliteStore:
                 "INSERT OR REPLACE INTO raw_listings"
                 " (source, source_id, fetched_at, payload) VALUES (?, ?, ?, ?)",
                 (source, source_id, fetched_at, payload),
+            )
+
+        self._write(_do)
+
+    def has_features(self, source: str, source_id: str) -> bool:
+        """Whether this listing's features have ever been fetched.
+
+        Reads the marker rather than counting car_features rows: a listing that
+        genuinely has no optional extras has no rows to count, and would
+        otherwise be re-fetched on every run for ever.
+        """
+        row = self.connection.execute(
+            "SELECT features_fetched_at FROM cars WHERE source = ? AND source_id = ?",
+            (source, source_id),
+        ).fetchone()
+        return row is not None and row[0] is not None
+
+    def store_features(
+        self,
+        source: str,
+        source_id: str,
+        features: ListingFeatures,
+        *,
+        fetched_at: str,
+    ) -> None:
+        """Replace this listing's equipment lists and mark it as fetched."""
+        rows = [
+            (source, source_id, kind, position, feature)
+            for kind, items in (
+                ("standard", features.standard),
+                ("optional", features.optional),
+            )
+            for position, feature in enumerate(items)
+        ]
+
+        def _do() -> None:
+            self.connection.execute(
+                "DELETE FROM car_features WHERE source = ? AND source_id = ?",
+                (source, source_id),
+            )
+            self.connection.executemany(
+                "INSERT INTO car_features"
+                " (source, source_id, kind, position, feature) VALUES (?, ?, ?, ?, ?)",
+                rows,
+            )
+            self.connection.execute(
+                "UPDATE cars SET features_fetched_at = ?"
+                " WHERE source = ? AND source_id = ?",
+                (fetched_at, source, source_id),
             )
 
         self._write(_do)

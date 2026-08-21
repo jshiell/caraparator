@@ -2,7 +2,7 @@ import sqlite3
 
 import pytest
 
-from carparator.model import Car, FuelType
+from carparator.model import Car, FuelType, ListingFeatures
 from carparator.store import SCHEMA_VERSION, SqliteStore, TransactionError
 
 
@@ -233,3 +233,101 @@ def test_nested_transaction_raises_instead_of_silently_degrading(store):
         with pytest.raises(TransactionError):
             with store.transaction():
                 pass
+
+
+def features_of(store, kind, source="cupra", source_id="GBR1"):
+    return [
+        row[0]
+        for row in store.connection.execute(
+            "SELECT feature FROM car_features"
+            " WHERE source = ? AND source_id = ? AND kind = ?"
+            " ORDER BY position",
+            (source, source_id, kind),
+        )
+    ]
+
+
+def a_stocked_car(store, **overrides):
+    car = a_car(**overrides)
+    store.upsert_car(car, observed_at="2026-08-21T00:00:00Z", run_id=1)
+    return car
+
+
+def test_features_are_stored_in_the_order_the_source_published_them(store):
+    a_stocked_car(store)
+
+    store.store_features(
+        "cupra",
+        "GBR1",
+        ListingFeatures(
+            standard=("Four-wheel drive", "Glass roof"), optional=("Tow bar",)
+        ),
+        fetched_at="2026-08-21T00:00:00Z",
+    )
+
+    assert features_of(store, "standard") == ["Four-wheel drive", "Glass roof"]
+    assert features_of(store, "optional") == ["Tow bar"]
+
+
+def test_a_feature_string_repeated_within_one_list_is_kept_twice(store):
+    """Volkswagen fragments comma-separated features, so a short one can recur."""
+    a_stocked_car(store)
+
+    store.store_features(
+        "cupra",
+        "GBR1",
+        ListingFeatures(standard=("distance monitoring", "ACC", "distance monitoring")),
+        fetched_at="2026-08-21T00:00:00Z",
+    )
+
+    assert features_of(store, "standard") == [
+        "distance monitoring",
+        "ACC",
+        "distance monitoring",
+    ]
+
+
+def test_re_storing_features_replaces_them_rather_than_accumulating(store):
+    a_stocked_car(store)
+    store.store_features(
+        "cupra",
+        "GBR1",
+        ListingFeatures(standard=("a", "b", "c"), optional=("d",)),
+        fetched_at="2026-08-21T00:00:00Z",
+    )
+
+    store.store_features(
+        "cupra",
+        "GBR1",
+        ListingFeatures(standard=("e",)),
+        fetched_at="2026-08-22T00:00:00Z",
+    )
+
+    assert features_of(store, "standard") == ["e"]
+    assert features_of(store, "optional") == []
+
+
+def test_has_features_turns_true_once_features_have_been_stored(store):
+    a_stocked_car(store)
+
+    assert store.has_features("cupra", "GBR1") is False
+
+    store.store_features(
+        "cupra",
+        "GBR1",
+        ListingFeatures(standard=("Glass roof",)),
+        fetched_at="2026-08-21T00:00:00Z",
+    )
+
+    assert store.has_features("cupra", "GBR1") is True
+
+
+def test_a_car_with_no_features_at_all_still_counts_as_fetched(store):
+    """Otherwise an empty list would be re-fetched on every run, forever."""
+    a_stocked_car(store)
+
+    store.store_features(
+        "cupra", "GBR1", ListingFeatures(), fetched_at="2026-08-21T00:00:00Z"
+    )
+
+    assert store.has_features("cupra", "GBR1") is True

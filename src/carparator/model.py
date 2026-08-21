@@ -66,3 +66,17 @@ class RawListing(BaseModel):
     source: str
     source_id: str
     payload: Any
+
+
+class ListingFeatures(BaseModel):
+    """The two equipment lists a source publishes for one listing.
+
+    Both sources group their equipment; the grouping is dropped and each kind is
+    flattened to one ordered list, because the groupings do not correspond
+    between sources.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    standard: tuple[str, ...] = ()
+    optional: tuple[str, ...] = ()
