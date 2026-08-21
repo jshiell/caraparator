@@ -180,6 +180,7 @@ class VolkswagenSource:
         self.expected_total: int | None = None
         self.failed_pages: list[int] = []
         self.failed_page_bodies: list[str] = []
+        self._detail_urls: dict[str, str] = {}
 
     def fetch_raw(self) -> Iterator[RawListing]:
         """Walk /pageN until a page legitimately holds no vehicles.
@@ -215,6 +216,7 @@ class VolkswagenSource:
                 continue
 
             consecutive_failures = 0
+            self._detail_urls.update(extract_vw_detail_urls(html))
             vehicles = extract_vw_vehicles(html)
             if not vehicles:
                 return
@@ -222,6 +224,21 @@ class VolkswagenSource:
                 yield RawListing(
                     source=self.name, source_id=str(vehicle["ID"]), payload=vehicle
                 )
+
+    def fetch_features(self, source_id: str) -> ListingFeatures | None:
+        """Fetch one listing's equipment from the detail page the SRP named.
+
+        Takes an ID rather than a RawListing because that is all it needs. A
+        listing this source never saw has no URL to fetch, so it costs no
+        request.
+        """
+        url = self._detail_urls.get(source_id)
+        if url is None:
+            logger.warning("volkswagen: no detail URL recorded for %s", source_id)
+            return None
+        if self._request_delay:
+            time.sleep(self._request_delay)
+        return extract_vw_features(get_with_retry(self._client, url).text)
 
     def to_car(self, raw: RawListing) -> Car | None:
         car = self.map_car(raw.payload)

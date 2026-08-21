@@ -296,11 +296,19 @@ def test_every_vehicle_on_the_page_maps_without_error(source, vehicles):
 import httpx
 
 
-def vw_transport(pages, recorder):
-    """Serve one canned page per /pageN path segment, recording the requests."""
+def vw_transport(pages, recorder, details=None):
+    """Serve one canned page per /pageN path segment, recording the requests.
+
+    Detail pages are served by exact URL, as the source only ever asks for one
+    the search page named.
+    """
+    details = details or {}
 
     def handler(request):
         recorder.append(request)
+        url = str(request.url)
+        if url in details:
+            return httpx.Response(200, text=details[url])
         number = int(request.url.path.rsplit("page", 1)[1])
         body = pages[number - 1] if number <= len(pages) else EMPTY_PAGE
         return httpx.Response(200, text=body)
@@ -308,12 +316,32 @@ def vw_transport(pages, recorder):
     return httpx.MockTransport(handler)
 
 
+def detail_url(source_id):
+    return f"https://usedcars.volkswagen.co.uk/en/vehicle_search/vw/m/car-{source_id}"
+
+
 def page_of(vehicles, total=1019):
     blob = json.dumps(vehicles)
+    # The real page names each detail URL in JSON-LD, with its slashes escaped.
+    linked = "".join(
+        '{"sku":"%s","description":"a car","url":"%s"}'
+        % (vehicle["ID"], detail_url(vehicle["ID"]).replace("/", "\\/"))
+        for vehicle in vehicles
+    )
     return (
-        f"<html><body><script>'numberOfResults': '{total}'\n"
+        f'<html><body><script type="application/ld+json">{linked}</script>'
+        f"<script>'numberOfResults': '{total}'\n"
         f"let vehicles = JSON.parse('{blob}')\n</script></body></html>"
     )
+
+
+EQUIPPED_PAGE = (
+    '<div class="technical__equipment"><h4>Fitted as standard</h4>'
+    '<ul><li><span class="label">Heat pump</span></li></ul>'
+    "<h4>Fitted optional extras</h4>"
+    '<ul><li><span class="label">Glass roof</span></li></ul></div>'
+    '<div class="technical__specification"></div>'
+)
 
 
 EMPTY_PAGE = page_of([])
@@ -415,3 +443,33 @@ def test_retained_failed_page_bodies_are_capped_regardless_of_total_failures(veh
         "<html>bad2</html>",
         "<html>bad3</html>",
     ]
+
+
+def test_fetch_features_reads_the_detail_page_the_search_page_named(vehicles):
+    vehicle = vehicles[0]
+    requests = []
+    client = httpx.Client(
+        transport=vw_transport(
+            [page_of([vehicle])],
+            requests,
+            {detail_url(vehicle["ID"]): EQUIPPED_PAGE},
+        )
+    )
+    source = VolkswagenSource(client=client, request_delay=0)
+    list(source.fetch_raw())
+
+    features = source.fetch_features(vehicle["ID"])
+
+    assert features.standard == ("Heat pump",)
+    assert features.optional == ("Glass roof",)
+    assert str(requests[-1].url) == detail_url(vehicle["ID"])
+
+
+def test_fetch_features_for_a_listing_it_never_saw_costs_no_request(vehicles):
+    requests = []
+    source, _ = source_over([page_of(vehicles[:1])], requests)
+    list(source.fetch_raw())
+    already_made = len(requests)
+
+    assert source.fetch_features("NOSUCHID") is None
+    assert len(requests) == already_made
