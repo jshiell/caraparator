@@ -39,6 +39,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         default=None,
         help="cap listings per source; forces the run to be recorded as partial",
     )
+    scrape.add_argument(
+        "--refetch-features",
+        action="store_true",
+        help="re-read every listing's equipment, not only listings that lack it",
+    )
     scrape.add_argument("-v", "--verbose", action="store_true")
 
     serve = subcommands.add_parser("serve", help="browse the database in a browser")
@@ -58,7 +63,12 @@ def scrape_command(args: argparse.Namespace) -> int:
     """Fetch listings into the database."""
     with SqliteStore(args.db) as store:
         store.init_schema()
-        results = ingest(build_sources(args.source), store, limit=args.limit)
+        results = ingest(
+            build_sources(args.source),
+            store,
+            limit=args.limit,
+            refetch_features=args.refetch_features,
+        )
 
     for result in results:
         line = (

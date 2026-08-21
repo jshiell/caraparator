@@ -53,7 +53,7 @@ def test_report_line_mentions_failed_pages_when_a_source_dropped_any(
     monkeypatch.setattr(
         cli,
         "ingest",
-        lambda sources, store, limit=None: [
+        lambda sources, store, **kwargs: [
             IngestResult(
                 source="volkswagen",
                 run_id=1,
@@ -112,6 +112,33 @@ def test_report_line_states_what_the_feature_pass_did(
     report = capsys.readouterr().out
     assert "features 1" in report
     assert "feature_errors 3" in report
+
+
+def ingest_kwargs(tmp_path, monkeypatch, argv):
+    from carparator import cli
+
+    seen = {}
+    monkeypatch.setattr(cli, "build_sources", lambda name: [_StubSource()])
+
+    def spy(sources, store, **kwargs):
+        seen.update(kwargs)
+        return []
+
+    monkeypatch.setattr(cli, "ingest", spy)
+    main(["scrape", "--db", str(tmp_path / "cars.db"), *argv])
+    return seen
+
+
+def test_refetch_features_is_off_by_default(tmp_path, monkeypatch):
+    assert ingest_kwargs(tmp_path, monkeypatch, [])["refetch_features"] is False
+
+
+def test_refetch_features_is_passed_through(tmp_path, monkeypatch):
+    """Detail responses are not retained, so this is the only way back from an
+    extraction bug short of a full re-scrape."""
+    seen = ingest_kwargs(tmp_path, monkeypatch, ["--refetch-features"])
+
+    assert seen["refetch_features"] is True
 
 
 class _StubSource:
