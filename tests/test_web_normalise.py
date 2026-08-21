@@ -2,21 +2,7 @@ import sqlite3
 
 import pytest
 
-from carparator.web.normalise import (
-    DRIVETRAIN_KEY_SQL,
-    MODEL_KEY_SQL,
-    canonical_forms,
-    drivetrain_key,
-    model_key,
-)
-
-
-def test_hyphenated_and_spaced_drivetrains_fold_together():
-    assert drivetrain_key("Rear-wheel drive") == drivetrain_key("Rear wheel drive")
-
-
-def test_genuinely_different_drivetrains_stay_apart():
-    assert drivetrain_key("Rear-wheel drive") != drivetrain_key("Four-wheel drive")
+from carparator.web.normalise import MODEL_KEY_SQL, canonical_forms, model_key
 
 
 def test_model_case_variants_fold_together():
@@ -52,21 +38,7 @@ def test_absent_values_are_not_offered_as_an_option():
 
 @pytest.mark.parametrize(
     "column, expression, key, values",
-    [
-        ("model", MODEL_KEY_SQL, model_key, ["ID.3", "Id.3", " ID.4 ", "e-up!"]),
-        (
-            "drivetrain",
-            DRIVETRAIN_KEY_SQL,
-            drivetrain_key,
-            [
-                "Rear-wheel drive",
-                "Rear wheel drive",
-                "Four-wheel drive",
-                " FRONT ",
-                "Four  -  wheel  drive",
-            ],
-        ),
-    ],
+    [("model", MODEL_KEY_SQL, model_key, ["ID.3", "Id.3", " ID.4 ", "e-up!"])],
 )
 def test_the_sql_key_matches_the_python_key(column, expression, key, values):
     """Filtering happens in SQL and display in Python; they must agree."""

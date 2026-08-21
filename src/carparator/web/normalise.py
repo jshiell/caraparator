@@ -1,10 +1,9 @@
 """View-layer canonicalisation. The database is never rewritten.
 
-The two sources disagree about spelling — CUPRA writes `Rear-wheel drive` where
-Volkswagen writes `Rear wheel drive`, and Volkswagen carries both `ID.3` and
-`Id.3` — so the same car would otherwise appear as two filter options. Folding
-happens at filter, sort and render time, in one place, so the SQL and the
-displayed text can be checked against each other.
+Sources disagree about spelling — Volkswagen carries both `ID.3` and `Id.3` — so
+the same car would otherwise appear as two filter options. Folding happens at
+filter, sort and render time, in one place, so the SQL and the displayed text can
+be checked against each other.
 """
 
 from __future__ import annotations
@@ -14,28 +13,17 @@ from typing import Callable, Iterable
 
 # `lower()`, not `casefold()`, so these agree exactly with SQLite's LOWER().
 MODEL_KEY_SQL = "LOWER(TRIM(model))"
-# Collapsing arbitrary whitespace runs is not expressible in SQLite, so neither
-# side does it: both settle for what the sources actually emit, single
-# separators, and stay identical on everything else.
-DRIVETRAIN_KEY_SQL = "REPLACE(LOWER(TRIM(drivetrain)), '-', ' ')"
 
 
 def model_key(value: str | None) -> str | None:
-    """Fold `ID.3` and `Id.3` onto one option."""
-    return None if value is None else value.strip(" ").lower()
+    """Fold `ID.3` and `Id.3` onto one option.
 
-
-def drivetrain_key(value: str | None) -> str | None:
-    """Fold on case and on hyphen-versus-space.
-
-    Deliberately the same algorithm as DRIVETRAIN_KEY_SQL rather than a tidier
-    one: filtering happens in SQL and the option list is built in Python, so a
-    value the two folded differently would be unselectable — the user would
-    tick an option and get nothing back.
+    Deliberately the same algorithm as MODEL_KEY_SQL rather than a tidier one:
+    filtering happens in SQL and the option list is built in Python, so a value
+    the two folded differently would be unselectable — the user would tick an
+    option and get nothing back.
     """
-    if value is None:
-        return None
-    return value.strip(" ").lower().replace("-", " ")
+    return None if value is None else value.strip(" ").lower()
 
 
 def canonical_forms(

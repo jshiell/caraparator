@@ -34,8 +34,10 @@ loopback address only and is **strictly read-only** — it opens the database wi
 Scraping is never triggered from the browser.
 
 Filter state lives in the query string, so a view can be bookmarked and the back
-button works. Sources, brands, models and drivetrains are offered as facets;
-colour, trim, dealer, dealer town and dealer postcode are substring searches.
+button works. Sources, brands, models, seats and body styles are offered as
+facets; colour, trim, dealer, dealer town and dealer postcode are substring
+searches. Drivetrain is shown on a car's own page, but is neither a column nor a
+filter.
 
 **Every filter that could hide a car for want of data says so, with a count.**
 Sources disagree about which fields they populate — `range_miles` and `seats` are
@@ -47,8 +49,8 @@ a field you have not filtered on does nothing: the box discloses what a filter
 hides, it is not a filter itself.
 
 Spelling differences between the sources are folded for display and filtering
-only — the database is never rewritten. CUPRA's `Rear-wheel drive` and
-Volkswagen's `Rear wheel drive` are one option, as are `ID.3` and `Id.3`.
+only — the database is never rewritten. Volkswagen's `ID.3` and `Id.3` are one
+option, and the spelling offered is always one a source actually used.
 
 The listing scope follows the sold-listing rule below, per source. A source with
 no complete run cannot call anything sold, so **all** of its cars are shown, a

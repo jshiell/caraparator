@@ -84,10 +84,12 @@ fixed after the fact. Breaking one is silent — no test elsewhere will notice.
   and reads "include 0 unknown" the moment the box is unticked.
 - **The unknown toggle is inert unless that field's filter is active.** It discloses
   what a filter would hide; with no filter set it must not delete rows.
-- **`normalise.drivetrain_key` mirrors `DRIVETRAIN_KEY_SQL` exactly**, algorithm for
-  algorithm, not "equivalently". Filtering runs in SQL and the option list is built in
-  Python; a value they folded differently would be unselectable — the user ticks an
-  option and gets nothing back. There is a test that runs both over the same values.
+- **Every folding key mirrors its SQL expression exactly**, algorithm for algorithm,
+  not "equivalently" — currently `normalise.model_key` and `MODEL_KEY_SQL`. Filtering
+  runs in SQL and the option list is built in Python; a value they folded differently
+  would be unselectable — the user ticks an option and gets nothing back. There is a
+  table-driven test that runs both sides over the same values; add a row to it, rather
+  than a new test, when a field gains a folding key.
 - **Sort column and direction are whitelisted, never bound.** SQLite cannot
   parameterise an ORDER BY, so the whitelist is the only defence. Absent values sort
   last in *both* directions, or sorting by range ascending presents every car whose
