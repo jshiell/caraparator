@@ -71,6 +71,36 @@ def test_a_glossary_popup_does_not_leak_into_the_feature_it_annotates(detail_pag
     assert extract_vw_features(detail_page).optional[2] == "Adaptive Cruise Control"
 
 
+def test_a_listing_with_no_optional_extras_is_not_an_error():
+    """The optional heading is legitimately absent on some real listings."""
+    features = extract_vw_features(
+        '<div class="technical__equipment"><h4>Fitted as standard</h4>'
+        '<ul><li><span class="label">Heat pump</span></li></ul></div>'
+        '<div class="technical__specification"></div>'
+    )
+
+    assert features.standard == ("Heat pump",)
+    assert features.optional == ()
+
+
+def test_a_page_without_an_equipment_region_yields_nothing():
+    assert extract_vw_features("<html><body>This listing has sold</body></html>") is None
+
+
+def test_an_empty_standard_list_is_a_failure_rather_than_a_car_with_no_features():
+    """If the label markup moves, storing zero features would never be retried."""
+    assert (
+        extract_vw_features(
+            '<div class="technical__equipment"><h4>Fitted as standard</h4>'
+            "<ul><li><em>Heat pump</em></li></ul>"
+            "<h4>Fitted optional extras</h4>"
+            '<ul><li><span class="label">Tow bar</span></li></ul></div>'
+            '<div class="technical__specification"></div>'
+        )
+        is None
+    )
+
+
 def test_vehicles_are_deduplicated_on_id(page):
     vehicles = extract_vw_vehicles(page)
 
