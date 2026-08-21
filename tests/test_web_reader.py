@@ -6,7 +6,7 @@ import pytest
 
 from carparator.ingest import COMPLETE, PARTIAL
 from carparator.model import Car, FuelType
-from carparator.store import SqliteStore
+from carparator.store import SCHEMA_VERSION, SqliteStore
 from carparator.web.reader import DatabaseNotFound, Reader, SchemaMismatch
 
 
@@ -70,7 +70,9 @@ def test_a_missing_database_names_the_path_it_looked_for(tmp_path):
     assert "carparator scrape" in str(raised.value)
 
 
-@pytest.mark.parametrize("version", [0, 2])
+# Relative to the current version, so a schema bump can never quietly turn one
+# of these into the version that is actually accepted.
+@pytest.mark.parametrize("version", [0, SCHEMA_VERSION + 1])
 def test_a_foreign_schema_version_is_refused(tmp_path, version):
     db = build(tmp_path / "cars.db", [car()])
     with sqlite3.connect(db) as connection:

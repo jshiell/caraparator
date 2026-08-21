@@ -56,6 +56,33 @@ def test_init_schema_records_the_schema_version(store):
     assert version == SCHEMA_VERSION
 
 
+def test_the_schema_version_is_two_now_that_features_are_stored(store):
+    """car_features and cars.features_fetched_at make a v1 database unreadable."""
+    assert SCHEMA_VERSION == 2
+
+
+def test_init_schema_creates_the_car_features_table(store):
+    assert columns(store, "car_features") == {
+        "source",
+        "source_id",
+        "kind",
+        "position",
+        "feature",
+    }
+
+
+def test_car_features_admits_only_the_two_kinds_a_source_publishes(store):
+    with pytest.raises(sqlite3.IntegrityError):
+        store.connection.execute(
+            "INSERT INTO car_features (source, source_id, kind, position, feature)"
+            " VALUES ('cupra', 'x', 'desirable', 0, 'Glass roof')"
+        )
+
+
+def test_cars_records_whether_features_have_been_fetched(store):
+    assert "features_fetched_at" in columns(store, "cars")
+
+
 def test_database_uses_write_ahead_logging(store):
     (mode,) = store.connection.execute("PRAGMA journal_mode").fetchone()
 

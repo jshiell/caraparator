@@ -9,7 +9,7 @@ from typing import Iterator
 
 from carparator.model import Car
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 
 class TransactionError(RuntimeError):
@@ -59,7 +59,23 @@ CREATE TABLE IF NOT EXISTS cars (
     first_seen        TEXT    NOT NULL,
     last_seen         TEXT    NOT NULL,
     last_seen_run_id  INTEGER,
+    -- A marker, not "has rows in car_features": a listing with genuinely no
+    -- optional extras would otherwise be re-fetched on every run forever.
+    features_fetched_at TEXT,
     PRIMARY KEY (source, source_id)
+);
+
+CREATE TABLE IF NOT EXISTS car_features (
+    source     TEXT    NOT NULL,
+    source_id  TEXT    NOT NULL,
+    kind       TEXT    NOT NULL CHECK (kind IN ('standard', 'optional')),
+    -- In the key on purpose: it preserves the source's own order, and
+    -- (source, source_id, kind, feature) is not unique -- Volkswagen splits one
+    -- comma-separated feature across several <li>, so a short fragment can
+    -- legitimately appear twice in one list.
+    position   INTEGER NOT NULL,
+    feature    TEXT    NOT NULL,
+    PRIMARY KEY (source, source_id, kind, position)
 );
 
 CREATE TABLE IF NOT EXISTS price_history (
@@ -96,6 +112,7 @@ CREATE INDEX IF NOT EXISTS cars_price      ON cars (price_pence);
 CREATE INDEX IF NOT EXISTS cars_make_model ON cars (brand, model);
 CREATE INDEX IF NOT EXISTS cars_battery    ON cars (battery_kwh);
 CREATE INDEX IF NOT EXISTS cars_last_seen  ON cars (last_seen);
+CREATE INDEX IF NOT EXISTS car_features_feature ON car_features (feature);
 """
 
 
