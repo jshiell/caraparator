@@ -15,8 +15,13 @@ file covers what is easy to get wrong. Read both.
   uv run carparator scrape --db /tmp/cp.db
   sqlite3 /tmp/cp.db "SELECT source, status, expected_total, listings_seen FROM scrape_runs;"
   sqlite3 /tmp/cp.db "SELECT COUNT(*) FROM cars WHERE fuel_type != 'electric';"  -- expect 0
+  sqlite3 /tmp/cp.db "SELECT COUNT(*) FROM cars WHERE features_fetched_at IS NULL;" -- expect 0
   ```
-  Expect both sources `complete` with `listings_seen == expected_total`.
+  Expect both sources `complete` with `listings_seen == expected_total`, and
+  `feature_errors` at or near zero. A first run against an empty database fetches
+  a detail page per listing and takes roughly 13 minutes; re-running the same
+  command must report `features_fetched 0` and finish in seconds, which is the
+  check that the new-listings-only rule still holds.
 - Manual web checks — when the web module changed. The test client is single-threaded
   and cannot catch a connection shared across threads, so open the real thing:
   ```sh
@@ -84,6 +89,24 @@ fixed after the fact. Breaking one is silent — no test elsewhere will notice.
   parameterise an ORDER BY, so the whitelist is the only defence. Absent values sort
   last in *both* directions, or sorting by range ascending presents every car whose
   range nobody stated as though it had the worst.
+- **Empty equipment is never success.** `extract_vw_features` and
+  `extract_cupra_features` return `None` rather than an empty `ListingFeatures`
+  when the standard list is empty. Every real listing on both sources has one
+  (verified 20/20 Volkswagen pages, 30/30 CUPRA listings), so an empty one means
+  the markup moved. Returning empty instead would store zero features, set
+  `features_fetched_at`, retire those listings from every future run, leave
+  `feature_errors` at 0 and report the run `complete` — this project's signature
+  class of silent failure.
+- **`features_fetched_at` is a marker, never "has rows in `car_features`".** A
+  listing with genuinely no optional extras has no rows to count and would
+  otherwise be re-fetched on every run for ever.
+- **The feature pass runs after the listing transaction commits.** Folding
+  ~1250 detail fetches into it would stretch one commit from seconds to minutes,
+  so a kill mid-run would cost every listing rather than none, and would widen
+  the concurrent-scrape lock window by the same factor. The pass must also never
+  change the run's `status`, and never touch `listings_seen`, `listings_stored`
+  or `expected_total` — `_is_complete` and the sold-listing inference depend on
+  them.
 - **Required fields must raise, not default.** Mappers previously wrote `or 0` / `or ""`
   for missing mileage, model and dealer name, which silently manufactured bad rows.
   Guard on `is None` so a genuine `0` mileage still maps.
@@ -106,6 +129,14 @@ data, and several contradict what the documentation-free obvious guess would be.
 - Read `raw_value` for mileage and price — the display values are `"2,222"` and
   `"49,985.00"`.
 - Assert `mileage.unit == "MI"` rather than assuming it.
+- Equipment needs a **second, per-listing request**: the search response carries no
+  equipment keys at all. The `href` for it hangs off the search **entry**, not
+  `entry["car"]`, and its last path segment is the entry's base64 `key` — so the
+  map from `source_id` to href has to be built as the search is walked.
+- The detail endpoint answers **401** without `X-Pattern: cuprawebfe`.
+- `serie_equip` is standard equipment and `equip` is optional. **`special_equip` is
+  not equipment** — it holds insurance type classes, and its entries are shaped
+  differently (a `text` envelope, with `value` always `""`).
 
 **Volkswagen** (`usedcars.volkswagen.co.uk`)
 
@@ -124,6 +155,28 @@ data, and several contradict what the documentation-free obvious guess would be.
   PS label.
 - `year` is the registration year from `INITIAL_REGISTRATION_DTE`, **not**
   `YEAR_OF_MODEL_INT`, which is the model year and routinely differs by one.
+- Equipment needs a **second, per-listing request**: the 189 keys in the search
+  payload include none of it. The detail URL is already on the SRP, in a JSON-LD
+  blob whose `sku` equals the vehicle `ID` exactly, so reading it there costs no
+  extra request. The detail page in fact resolves on the trailing ID alone — the
+  slug and the make/model segments are ignored, and the ID is case-insensitive
+  (`.../cupra/nonsense/zzz-r7ec4dx` serves the same Golf) — but use the JSON-LD
+  URL anyway: it is canonical and costs nothing.
+- The equipment slice must be bounded by `<div class="technical__specification"`.
+  Read to the end of the document instead and the finance tab's
+  `<h4>Select a finance product</h4>` falls inside it.
+- **`<h4>Fitted optional extras</h4>` is legitimately absent** on some listings —
+  0 to 10 optional items per car, against 65 to 132 standard.
+- **Volkswagen fragments one comma-separated feature across several `<li>` by
+  design.** "ACC - Adaptive cruise control with front assist" / "forward collision
+  warning" / "distance monitoring" arrive as three items. Items are captured
+  verbatim; there is no heuristic reassembly, and so
+  `(source, source_id, kind, feature)` is **not** unique.
+- The glossary popup is a **sibling** of `<span class="label">`, not a child, and
+  repeats the label's text. A non-greedy match on the span cannot swallow it.
+- Across 1588 real labels, **zero contain `<` and zero contain `&`**. There is no
+  tag-stripping and no `html.unescape`, because neither is reachable and so
+  neither could be driven by a failing test.
 
 ## Fixtures
 
@@ -133,6 +186,27 @@ second embedding — exactly what the parser exists to handle. `cupra_search.jso
 trimmed to five real records chosen to cover each edge case: a plain `5dr` title with a
 `250kW` figure, first-class `doors`/`seat` items, the spaced `77 kWh` AFV title format,
 a dealer with no phone, and a petrol car carrying `motor.capacity`.
+
+`vw_vdp.html` and `cupra_detail.json` are the detail responses for the **first record
+of each source's search fixture** — vehicle `R7EC4DX` (132 standard / 5 optional) and
+carid `GBR551693296921` (56 standard / 29 optional) — so detail tests line up with the
+search tests already written against those records. `vw_vdp.html` is kept intact for
+the same reason `vw_srp_page1.html` is, and loaded with `scope="module"`.
+
+## Recovering from a bad feature extraction
+
+Detail responses are **not** retained — unlike search payloads, which go to
+`raw_listings`. So a bug in `extract_vw_features` or `extract_cupra_features` cannot be
+fixed by remapping; the features have to be fetched again. Two ways, both of which cost
+a detail request per listing:
+
+```sh
+uv run carparator scrape --refetch-features          # ignore the marker for this run
+sqlite3 carparator.db "UPDATE cars SET features_fetched_at = NULL;"   # or clear it
+```
+
+Clearing the marker is the one to reach for when only some listings are affected — add
+a `WHERE` clause — since the flag is all-or-nothing.
 
 ## Conventions
 

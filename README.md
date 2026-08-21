@@ -9,9 +9,11 @@ into one SQLite database, mapped onto a single generic `Car` model.
 uv sync
 uv run carparator scrape --db carparator.db
 uv run carparator scrape --source cupra --limit 20   # one source, capped
+uv run carparator scrape --refetch-features          # re-read every equipment list
 ```
 
 `--limit` caps listings per source and forces the run to be recorded as `partial`.
+`--refetch-features` is explained under [Equipment](#equipment).
 
 ```sh
 sqlite3 carparator.db \
@@ -61,6 +63,7 @@ not license it.
 | `cars` | the current listing, keyed `(source, source_id)`, with `first_seen` / `last_seen` |
 | `price_history` | one row per observed price change (integer pence) |
 | `raw_listings` | the untouched source payload, so the mapper can change without re-scraping |
+| `car_features` | one row per equipment item per listing, `kind` being `standard` or `optional` |
 | `scrape_runs` | one row per source per run: expected vs. seen counts, and status |
 
 **There are no migrations.** A schema change means deleting the database and
@@ -70,6 +73,49 @@ re-scraping. `PRAGMA user_version` records the schema version.
 refreshed, so infer "sold" from a cold `last_seen` — but **only across runs with
 `status = 'complete'`**. A `partial` run means the run was cut short (short of
 `expected_total`, or `--limit` was used) and its absences prove nothing.
+
+## Equipment
+
+Two cars of the same model, year and mileage are otherwise indistinguishable, so
+each listing's **standard** and **optional** equipment is captured into
+`car_features`. Both sources publish the two lists, and both require a **second
+request per listing** to get them — neither search response carries any equipment
+at all.
+
+The items are stored as a flat ordered list per kind. Source order is preserved by
+`position`, which is part of the primary key: `(source, source_id, kind, feature)`
+is deliberately **not** unique, because Volkswagen splits one comma-separated
+feature across several list items and so the same short string can legitimately
+appear twice. Items are stored exactly as published; nothing is reassembled,
+deduplicated or retitled, and CUPRA's category grouping is dropped because the two
+sources' groupings do not correspond.
+
+**Only listings that have no equipment yet are fetched.** The first run after a
+schema change therefore pays for the whole catalogue — around 1250 extra requests,
+roughly 13 minutes — and every run after it costs one request per genuinely new
+listing. `cars.features_fetched_at` is the marker; it exists rather than counting
+`car_features` rows because a car with no optional extras has no rows to count and
+would otherwise be re-fetched for ever.
+
+Detail responses are **not** retained, unlike search payloads. So an extraction bug
+cannot be fixed by remapping — `--refetch-features` ignores the marker for one run
+and reads every listing again. To redo only some, clear the marker directly:
+
+```sh
+sqlite3 carparator.db \
+  "UPDATE cars SET features_fetched_at = NULL WHERE source = 'volkswagen';"
+```
+
+Equipment is fetched in a **second pass, after the listing work has committed**, so
+that a kill mid-run costs at most one listing's equipment rather than every listing
+of that run. A listing whose equipment cannot be read is counted in
+`feature_errors` and left unmarked, so the next run retries it; it never changes the
+run's status, because the listings themselves are already durable. A 404 on a detail
+page means the car sold between the search and the fetch and is not counted. After
+three consecutive failures the pass gives up for that source, on the assumption the
+endpoint rather than the listing is what is wrong.
+
+The web UI does not yet show or filter on equipment.
 
 ## Sources
 
@@ -90,7 +136,10 @@ raw payloads are retained, failures are isolated per source and per page, and
 `pytest -m live` acts as a canary.
 
 Requests are sequential, spaced, and honestly identified as
-`carparator/0.1 (personal use)` — around 65 requests per full run.
+`carparator/0.1 (personal use)`. A full run is around 65 search requests, plus one
+detail request per listing whose equipment is not already known — so roughly 1300
+on a first run against an empty database, and back to about 65 plus new stock
+thereafter.
 
 ## When a page fails to parse
 
@@ -134,7 +183,9 @@ uv run pytest -m live   # opt-in; hits the real endpoints
 
 ## Known gaps
 
-- `listing_url` is not captured — neither source exposes one in its JSON.
+- `listing_url` is not captured. Volkswagen does publish one, in the search page's
+  JSON-LD, and it is read at scrape time to reach the detail page — it is simply
+  not stored. CUPRA exposes only an API href, not a browsable page.
 - `vin` and `previous_owners` are Volkswagen-only; `dealer_lat` / `dealer_lon` are
   CUPRA-only. Sources legitimately differ.
 - `engine_size` is nullable and empty for EVs by nature. Volkswagen's sentinel
