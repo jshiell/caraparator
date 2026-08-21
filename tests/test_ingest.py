@@ -8,7 +8,7 @@ from contextlib import contextmanager
 
 import pytest
 
-from carparator.model import Car, FuelType, RawListing
+from carparator.model import Car, FuelType, ListingFeatures, RawListing
 from carparator.ingest import ingest
 from carparator.store import SqliteStore
 
@@ -60,6 +60,40 @@ class FakeSource:
         if raw.source_id in self._non_electric:
             return None
         return a_car(self.name, raw.source_id)
+
+
+class FakeSourceWithFeatures(FakeSource):
+    """A source that can also report a listing's equipment.
+
+    Deliberately a subclass rather than a change to FakeSource: ingest() reads
+    fetch_features defensively, and the plain FakeSource is what proves a source
+    without it still works.
+    """
+
+    def __init__(self, *args, features=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._features = features or {}
+        self.feature_requests = []
+
+    def fetch_features(self, source_id):
+        self.feature_requests.append(source_id)
+        return self._features.get(source_id)
+
+
+def features_of(store, kind, source="cupra", source_id="a"):
+    return [
+        row[0]
+        for row in store.connection.execute(
+            "SELECT feature FROM car_features"
+            " WHERE source = ? AND source_id = ? AND kind = ?"
+            " ORDER BY position",
+            (source, source_id, kind),
+        )
+    ]
+
+
+def some_features(*standard, optional=()):
+    return ListingFeatures(standard=standard, optional=optional)
 
 
 class FakeSourceWithFailedPages(FakeSource):
@@ -403,3 +437,52 @@ def test_a_run_that_cannot_know_its_total_is_never_complete(store):
     ingest([FakeSourceWithoutTotal("volkswagen", ["a", "b"])], store)
 
     assert [run["status"] for run in runs(store)] == ["partial"]
+
+
+def test_a_stored_listings_features_are_fetched_and_kept(store):
+    source = FakeSourceWithFeatures(
+        "cupra",
+        ["a"],
+        features={"a": some_features("Heat pump", optional=("Tow bar",))},
+    )
+
+    ingest([source], store)
+
+    assert features_of(store, "standard") == ["Heat pump"]
+    assert features_of(store, "optional") == ["Tow bar"]
+
+
+def test_a_source_that_cannot_report_features_still_ingests(store):
+    ingest([FakeSource("cupra", ["a", "b"])], store)
+
+    assert car_count(store, "cupra") == 2
+
+
+class FeatureSourceWatchingDurability(FakeSourceWithFeatures):
+    """Reports, from a second connection, what was durable when it was asked."""
+
+    def __init__(self, *args, db_path, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._db_path = db_path
+        self.cars_durable_when_asked = []
+
+    def fetch_features(self, source_id):
+        with sqlite3.connect(self._db_path) as elsewhere:
+            (count,) = elsewhere.execute("SELECT COUNT(*) FROM cars").fetchone()
+        self.cars_durable_when_asked.append(count)
+        return super().fetch_features(source_id)
+
+
+def test_features_are_fetched_only_once_the_listing_work_is_committed(store, tmp_path):
+    """Folding a 13-minute detail pass into the listing transaction would put
+    every listing at risk of a mid-run kill, rather than none of them."""
+    source = FeatureSourceWatchingDurability(
+        "cupra",
+        ["a", "b"],
+        db_path=tmp_path / "test.db",
+        features={"a": some_features("Heat pump"), "b": some_features("Glass roof")},
+    )
+
+    ingest([source], store)
+
+    assert source.cars_durable_when_asked == [2, 2]

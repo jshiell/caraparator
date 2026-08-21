@@ -50,6 +50,7 @@ def _ingest_one(
     run_id = store.start_run(source.name, started_at=now)
     result = IngestResult(source=source.name, run_id=run_id, expected_total=None)
 
+    stored_ids: list[str] = []
     try:
         with store.transaction():
             for raw in source.fetch_raw():
@@ -75,6 +76,10 @@ def _ingest_one(
                     continue
                 store.upsert_car(car, observed_at=now, run_id=run_id)
                 result.listings_stored += 1
+                # Held as IDs rather than payloads: the feature pass needs
+                # nothing else, and ~1000 vehicle dicts would otherwise stay
+                # resident for the length of the run.
+                stored_ids.append(raw.source_id)
     except Exception as error:
         logger.exception("%s: run failed", source.name)
         result.status = FAILED
@@ -84,6 +89,8 @@ def _ingest_one(
     _retain_failed_pages(source, store, result)
     if result.status != FAILED:
         result.status = COMPLETE if _is_complete(result, limit) else PARTIAL
+
+    _fetch_features(source, store, stored_ids, fetched_at=now)
 
     try:
         store.finish_run(
@@ -105,6 +112,34 @@ def _ingest_one(
         result.status = FAILED
         result.error = _describe_error(error, cause=result.error)
     return result
+
+
+def _fetch_features(
+    source: ListingSource,
+    store: SqliteStore,
+    source_ids: list[str],
+    *,
+    fetched_at: str,
+) -> None:
+    """Fetch each stored listing's equipment, once the listing work is durable.
+
+    A second pass on purpose. Folding a detail fetch per listing into the
+    listing transaction would stretch one commit from seconds to minutes, so a
+    kill mid-run would cost every listing rather than none, and would widen the
+    concurrent-scrape lock window by the same factor. Here each listing commits
+    on its own, and a kill costs at most one listing's features — which are
+    re-fetchable by definition.
+
+    Not every source can report features, and the ListingSource protocol does
+    not require it, so the method is read defensively.
+    """
+    fetch = getattr(source, "fetch_features", None)
+    if fetch is None:
+        return
+
+    for source_id in source_ids:
+        features = fetch(source_id)
+        store.store_features(source.name, source_id, features, fetched_at=fetched_at)
 
 
 def _retain_failed_pages(
