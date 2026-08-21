@@ -263,3 +263,14 @@ def test_an_ordinary_phone_number_still_produces_a_working_tel_link(tmp_path):
     web = client(tmp_path, [car(dealer_phone="01244 555 555")])
 
     assert tel_href(body(detail(web))) == "01244555555"
+
+
+def test_the_list_view_does_not_mention_drivetrain(tmp_path):
+    """It neither columns nor filters on drivetrain; the detail page still states it."""
+    web = client(tmp_path, [car(drivetrain="Rear-wheel drive")])
+
+    page = body(web.get("/"))
+
+    assert "Rear-wheel drive" not in page
+    assert "Drivetrain" not in page
+    assert "Rear-wheel drive" in body(detail(web))

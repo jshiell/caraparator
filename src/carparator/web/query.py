@@ -11,12 +11,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field as dataclass_field
 from typing import Any, Callable, Mapping
 
-from carparator.web.normalise import (
-    DRIVETRAIN_KEY_SQL,
-    MODEL_KEY_SQL,
-    drivetrain_key,
-    model_key,
-)
+from carparator.web.normalise import MODEL_KEY_SQL, model_key
 
 LIKE_ESCAPE = "\\"
 
@@ -71,15 +66,6 @@ FIELDS: tuple[Field, ...] = (
     Field("power_kw", "power", RANGE, "Power (kW)", nullable=True),
     Field("range_miles", "range", RANGE, "Range (miles)", nullable=True, numeric=float),
     Field("seats", "seats", CHOICE, "Seats", nullable=True),
-    Field(
-        "drivetrain",
-        "drivetrain",
-        CHOICE,
-        "Drivetrain",
-        nullable=True,
-        key_sql=DRIVETRAIN_KEY_SQL,
-        key=drivetrain_key,
-    ),
     Field("body_style", "body", CHOICE, "Body style", nullable=True),
     Field("trim", "trim", TEXT, "Trim", nullable=True),
     Field("colour", "colour", TEXT, "Colour", nullable=True),
@@ -100,7 +86,6 @@ SORTS: dict[str, tuple[str, str]] = {
     "power_kw": ("Power", "power_kw"),
     "brand": ("Brand", "brand"),
     "model": ("Model", MODEL_KEY_SQL),
-    "drivetrain": ("Drivetrain", DRIVETRAIN_KEY_SQL),
     "seats": ("Seats", "seats"),
     "body_style": ("Body style", "body_style"),
     "dealer_name": ("Dealer", "dealer_name"),

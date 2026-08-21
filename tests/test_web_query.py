@@ -279,22 +279,6 @@ def test_unticking_a_box_for_a_field_nobody_filtered_on_removes_nothing(tmp_path
     ]
 
 
-def test_a_drivetrain_choice_ignores_hyphenation(tmp_path):
-    reader = stocked(
-        tmp_path / "c.db",
-        [
-            car(source_id="cupra-spelling", drivetrain="Rear-wheel drive"),
-            car(source_id="vw-spelling", drivetrain="Rear wheel drive"),
-            car(source_id="other", drivetrain="Four-wheel drive"),
-        ],
-    )
-
-    assert found(reader, {"drivetrain": ["rear wheel drive"]}) == [
-        "cupra-spelling",
-        "vw-spelling",
-    ]
-
-
 def test_a_town_search_matches_the_town(tmp_path):
     reader = stocked(
         tmp_path / "c.db",
