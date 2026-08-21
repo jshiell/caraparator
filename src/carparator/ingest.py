@@ -38,13 +38,21 @@ def ingest(
     store: SqliteStore,
     *,
     limit: int | None = None,
+    refetch_features: bool = False,
 ) -> list[IngestResult]:
     """Run every source, isolating each so one failure cannot abort the rest."""
-    return [_ingest_one(source, store, limit=limit) for source in sources]
+    return [
+        _ingest_one(source, store, limit=limit, refetch_features=refetch_features)
+        for source in sources
+    ]
 
 
 def _ingest_one(
-    source: ListingSource, store: SqliteStore, *, limit: int | None
+    source: ListingSource,
+    store: SqliteStore,
+    *,
+    limit: int | None,
+    refetch_features: bool,
 ) -> IngestResult:
     now = _timestamp()
     run_id = store.start_run(source.name, started_at=now)
@@ -90,7 +98,9 @@ def _ingest_one(
     if result.status != FAILED:
         result.status = COMPLETE if _is_complete(result, limit) else PARTIAL
 
-    _fetch_features(source, store, stored_ids, fetched_at=now)
+    _fetch_features(
+        source, store, stored_ids, fetched_at=now, refetch=refetch_features
+    )
 
     try:
         store.finish_run(
@@ -120,6 +130,7 @@ def _fetch_features(
     source_ids: list[str],
     *,
     fetched_at: str,
+    refetch: bool,
 ) -> None:
     """Fetch each stored listing's equipment, once the listing work is durable.
 
@@ -130,6 +141,11 @@ def _fetch_features(
     on its own, and a kill costs at most one listing's features — which are
     re-fetchable by definition.
 
+    Only listings that have no features yet are fetched, which is what keeps a
+    daily run cheap once the first one has paid for the whole catalogue. The
+    decision is made here rather than in the source, because a source is
+    network-only and store-agnostic by design.
+
     Not every source can report features, and the ListingSource protocol does
     not require it, so the method is read defensively.
     """
@@ -138,6 +154,8 @@ def _fetch_features(
         return
 
     for source_id in source_ids:
+        if not refetch and store.has_features(source.name, source_id):
+            continue
         features = fetch(source_id)
         store.store_features(source.name, source_id, features, fetched_at=fetched_at)
 

@@ -486,3 +486,28 @@ def test_features_are_fetched_only_once_the_listing_work_is_committed(store, tmp
     ingest([source], store)
 
     assert source.cars_durable_when_asked == [2, 2]
+
+
+def test_a_listing_whose_features_are_already_known_is_not_fetched_again(store):
+    """The rule that keeps a daily run cheap: only new listings cost a request."""
+    first = FakeSourceWithFeatures("cupra", ["a"], features={"a": some_features("X")})
+    ingest([first], store)
+
+    second = FakeSourceWithFeatures(
+        "cupra", ["a", "b"], features={"a": some_features("X"), "b": some_features("Y")}
+    )
+    ingest([second], store)
+
+    assert second.feature_requests == ["b"]
+
+
+def test_refetch_features_asks_again_for_every_listing(store):
+    """Detail responses are not retained, so an extraction bug needs this."""
+    first = FakeSourceWithFeatures("cupra", ["a"], features={"a": some_features("X")})
+    ingest([first], store)
+
+    second = FakeSourceWithFeatures("cupra", ["a"], features={"a": some_features("Z")})
+    ingest([second], store, refetch_features=True)
+
+    assert second.feature_requests == ["a"]
+    assert features_of(store, "standard") == ["Z"]
