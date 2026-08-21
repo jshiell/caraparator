@@ -34,7 +34,7 @@ import json
 from pathlib import Path
 
 from carparator.model import FuelType, RawListing
-from carparator.sources.cupra import CupraSource
+from carparator.sources.cupra import CupraSource, extract_cupra_features
 
 FIXTURE = Path(__file__).parent / "fixtures" / "cupra_search.json"
 
@@ -263,3 +263,58 @@ def test_a_page_past_the_end_omits_the_cars_key_entirely():
     listings = list(paging.fetch_raw())
 
     assert [listing.source_id for listing in listings] == ["GBR551693296921"]
+
+
+DETAIL_FIXTURE = Path(__file__).parent / "fixtures" / "cupra_detail.json"
+
+
+@pytest.fixture
+def detail():
+    return json.loads(DETAIL_FIXTURE.read_text(encoding="utf-8"))
+
+
+def test_reads_both_equipment_lists_off_a_real_detail_response(detail):
+    features = extract_cupra_features(detail)
+
+    assert len(features.standard) == 56
+    assert len(features.optional) == 29
+
+
+def test_equipment_groups_are_flattened_in_the_order_they_arrive(detail):
+    features = extract_cupra_features(detail)
+
+    assert features.standard[0] == "Four-wheel drive"
+    assert features.standard[-1] == "Tire pressure monitoring system"
+    assert features.optional[0] == (
+        "Exterior mirrors with memory feature,"
+        " power-folding/adjustable, separately heated"
+    )
+    assert features.optional[1] == "Glass roof"
+    assert features.optional[-1] == "Tires 225/50 R17 94Y ULET"
+
+
+def test_insurance_type_classes_are_not_mistaken_for_equipment():
+    """special_equip holds insurance data, and its entries are shaped differently."""
+    features = extract_cupra_features(
+        {
+            "serie_equip": [{"key": "e", "values": [{"value": "Heat pump"}]}],
+            "special_equip": [
+                {
+                    "key": "special.additional.insurance",
+                    "values": [
+                        {"key": "full", "value": "Fully comprehensive cover"}
+                    ],
+                }
+            ],
+        }
+    )
+
+    assert features.standard == ("Heat pump",)
+    assert features.optional == ()
+
+
+def test_a_response_with_no_standard_equipment_is_a_failure_not_an_empty_car():
+    """Every real listing has a standard list, so an empty one means drift."""
+    assert extract_cupra_features({"equip": [{"values": [{"value": "Tow bar"}]}]}) is None
+    assert extract_cupra_features({"serie_equip": []}) is None
+    assert extract_cupra_features({}) is None

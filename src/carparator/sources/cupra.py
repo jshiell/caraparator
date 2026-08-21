@@ -9,7 +9,7 @@ from typing import Any, Iterator
 
 import httpx
 
-from carparator.model import Car, FuelType, RawListing
+from carparator.model import Car, FuelType, ListingFeatures, RawListing
 from carparator.sources import REQUEST_DELAY_SECONDS, build_client, get_with_retry
 
 # ";t_petr=E" is a matrix path parameter — the "?t_petr=E" query form is silently
@@ -47,6 +47,34 @@ def parse_cupra_title(title: str) -> ParsedTitle:
     return ParsedTitle(
         battery_kwh=float(battery.group(1)) if battery else None,
         doors=int(doors.group(1)) if doors else None,
+    )
+
+
+def extract_cupra_features(detail: dict[str, Any]) -> ListingFeatures | None:
+    """Read the equipment lists off a car's detail response.
+
+    Both lists arrive grouped ("equip.exterior", "serieequip.engine"); the
+    grouping is dropped and each is flattened in arrival order. "special_equip"
+    is ignored: it holds insurance type classes, not equipment, and its entries
+    are shaped differently.
+
+    Returns None when there is no standard equipment. Every real listing has
+    some, so an empty list means the response moved — better reported as an
+    error than stored as a car that happens to have no features, which would
+    never be re-fetched.
+    """
+    standard = _equipment(detail.get("serie_equip"))
+    if not standard:
+        return None
+    return ListingFeatures(standard=standard, optional=_equipment(detail.get("equip")))
+
+
+def _equipment(groups: list[dict[str, Any]] | None) -> tuple[str, ...]:
+    return tuple(
+        value["value"]
+        for group in groups or []
+        for value in group.get("values") or []
+        if value.get("value")
     )
 
 
