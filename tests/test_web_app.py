@@ -3,7 +3,7 @@ import re
 import pytest
 
 from carparator.ingest import COMPLETE, PARTIAL
-from carparator.model import Car, FuelType
+from carparator.model import Car, FuelType, ListingFeatures
 from carparator.store import SqliteStore
 from carparator.web.app import create_app
 from carparator.web.reader import Reader
@@ -197,6 +197,19 @@ def test_the_detail_page_shows_the_car(tmp_path):
 
     assert "Aurora Blue" in page
     assert "ABC123" in page
+
+
+def test_the_detail_page_lists_the_optional_features(tmp_path):
+    web = client(
+        tmp_path,
+        [car()],
+        features=[("a", ListingFeatures(standard=("Alloy wheels",), optional=("Winter pack",)))],
+    )
+
+    page = body(detail(web))
+
+    assert "Optional features" in page
+    assert "<li>Winter pack</li>" in page
 
 
 def test_an_unknown_car_is_a_404(tmp_path):

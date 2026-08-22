@@ -55,6 +55,7 @@ def create_app(reader: Reader, *, now: Callable[[], str] | None = None) -> Flask
             image=_safe_url(row["image_url"]),
             phone=_telephone(row["dealer_phone"]),
             history=_history(reader.price_history(source, source_id)),
+            features=reader.features(source, source_id),
             stated=[(label, row[name]) for label, name in DETAIL_FIELDS if row[name] is not None],
             absent=[label for label, name in DETAIL_FIELDS if row[name] is None],
         )
