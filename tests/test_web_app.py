@@ -103,6 +103,13 @@ def test_the_list_shows_each_car_trim(tmp_path):
     assert "V2" in body(page)
 
 
+def test_a_car_with_no_trim_shows_the_em_dash(tmp_path):
+    page = body(client(tmp_path, [car(trim=None)]).get("/"))
+
+    assert "\u2014" in page
+    assert "None" not in page
+
+
 def test_the_banner_says_when_a_source_last_completed_a_run(tmp_path):
     web = client(tmp_path, [car()], runs=[("cupra", COMPLETE)])
 
