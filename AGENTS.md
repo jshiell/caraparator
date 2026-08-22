@@ -113,7 +113,11 @@ fixed after the fact. Breaking one is silent — no test elsewhere will notice.
   before it was fixed, not reasoned about in the abstract.
 - **`features_fetched_at` is a marker, never "has rows in `car_features`".** A
   listing with genuinely no optional extras has no rows to count and would
-  otherwise be re-fetched on every run for ever.
+  otherwise be re-fetched on every run for ever. The detail page reads the same
+  marker for the same reason, and must word the two states differently: "not
+  fetched yet" is an admission, "no optional extras fitted" is a fact about the
+  car. Rendering an unfetched listing as an empty list would present a parse
+  failure as a fact.
 - **The feature pass runs after the listing transaction commits.** Folding
   ~1250 detail fetches into it would stretch one commit from seconds to minutes,
   so a kill mid-run would cost every listing rather than none, and would widen

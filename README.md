@@ -35,9 +35,9 @@ Scraping is never triggered from the browser.
 
 Filter state lives in the query string, so a view can be bookmarked and the back
 button works. Sources, brands, models, seats and body styles are offered as
-facets; colour, trim, dealer, dealer town and dealer postcode are substring
-searches. Drivetrain is shown on a car's own page, but is neither a column nor a
-filter.
+facets; colour, dealer, dealer town and dealer postcode are substring searches.
+Trim is both — a sortable column and a substring search. Drivetrain is shown on a
+car's own page, but is neither a column nor a filter.
 
 **Every filter that could hide a car for want of data says so, with a count.**
 Sources disagree about which fields they populate — `range_miles` and `seats` are
@@ -108,6 +108,10 @@ sqlite3 carparator.db \
   "UPDATE cars SET features_fetched_at = NULL WHERE source = 'volkswagen';"
 ```
 
+Clearing the marker leaves the old `car_features` rows in place; the car page
+follows the marker, so those cars read "Equipment has not been read for this
+listing yet." until the next scrape rewrites them.
+
 Equipment is fetched in a **second pass, after the listing work has committed**, so
 that a kill mid-run costs at most one listing's equipment rather than every listing
 of that run. A listing whose equipment cannot be read is counted in
@@ -120,7 +124,10 @@ intact but would not parse is counted without counting towards that, since other
 the listings that failed last time — which are exactly the ones a later run retries —
 would trip the breaker every run and starve the new stock behind them.
 
-The web UI does not yet show or filter on equipment.
+A car's own page shows its equipment: optional extras first, since that is the
+discriminating list, and standard equipment collapsed behind its count because it
+runs to over a hundred items. There is still no equipment filter, and none in the
+table — it is far too voluminous for a row.
 
 ## Sources
 
