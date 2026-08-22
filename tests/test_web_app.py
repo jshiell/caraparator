@@ -234,6 +234,19 @@ def test_the_detail_page_says_when_the_equipment_has_not_been_read(tmp_path):
     assert "Standard features" not in page
 
 
+def test_the_detail_page_says_when_a_read_listing_has_no_optional_extras(tmp_path):
+    """A car with genuinely no extras must not read like one nobody fetched, so
+    this asserts the other wording is absent as well as its own being present."""
+    web = client(
+        tmp_path, [car()], features=[("a", ListingFeatures(standard=("Alloy wheels",)))]
+    )
+
+    page = body(detail(web))
+
+    assert "No optional extras fitted." in page
+    assert "Equipment has not been read for this listing yet." not in page
+
+
 def test_an_unknown_car_is_a_404(tmp_path):
     web = client(tmp_path, [car("cupra", "a")])
 
