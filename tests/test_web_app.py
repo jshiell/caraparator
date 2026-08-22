@@ -123,6 +123,17 @@ def test_every_body_row_has_a_cell_for_every_column_header(tmp_path, runs):
         assert row.count("<td>") == header.count("<th>")
 
 
+@pytest.mark.parametrize("direction", ["asc", "desc"])
+def test_sorting_by_trim_puts_the_cars_with_none_last(tmp_path, direction):
+    """Ascending is the case that bites: SQLite orders NULLs first, which would
+    present every car whose trim nobody stated as though it sorted before V1."""
+    web = client(tmp_path, [car(source_id="a", trim=None), car(source_id="b", trim="V2")])
+
+    page = body(web.get(f"/?sort=trim&dir={direction}"))
+
+    assert page.index("/car/cupra/b") < page.index("/car/cupra/a")
+
+
 def test_the_banner_says_when_a_source_last_completed_a_run(tmp_path):
     web = client(tmp_path, [car()], runs=[("cupra", COMPLETE)])
 
