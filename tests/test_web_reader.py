@@ -5,7 +5,7 @@ from contextlib import contextmanager
 import pytest
 
 from carparator.ingest import COMPLETE, PARTIAL
-from carparator.model import Car, FuelType
+from carparator.model import Car, FuelType, ListingFeatures
 from carparator.store import SCHEMA_VERSION, SqliteStore
 from carparator.web.reader import DatabaseNotFound, Reader, SchemaMismatch
 
@@ -40,6 +40,26 @@ def test_reader_returns_the_stored_cars(tmp_path):
     listed = Reader(db).cars()
 
     assert sorted(each["source_id"] for each in listed) == ["a", "b"]
+
+
+def test_reader_returns_each_kind_of_feature_in_the_stored_order(tmp_path):
+    """Ordered by position, never by the text: Volkswagen splits one
+    comma-separated feature across several list items, so only the source's own
+    order reads correctly, and the same fragment can legitimately repeat."""
+    db = build(tmp_path / "cars.db", [car()])
+    fragmented = ("Adaptive cruise control", "with Front Assist", "with Front Assist")
+    with SqliteStore(db) as store:
+        store.store_features(
+            "cupra",
+            "a",
+            ListingFeatures(standard=fragmented, optional=("Winter pack", "Alloy wheels")),
+            fetched_at="2026-08-01T00:00:00Z",
+        )
+
+    features = Reader(db).features("cupra", "a")
+
+    assert features["optional"] == ["Winter pack", "Alloy wheels"]
+    assert features["standard"] == list(fragmented)
 
 
 def test_reader_opens_a_database_whose_wal_sidecars_are_absent(tmp_path):

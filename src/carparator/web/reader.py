@@ -145,6 +145,25 @@ class Reader:
             (source, source_id),
         )
 
+    def features(self, source: str, source_id: str) -> dict[str, list[str]]:
+        """This listing's equipment, each kind in the source's own order.
+
+        Ordered by `position` rather than by the text: the column is in the
+        primary key precisely because Volkswagen splits one comma-separated
+        feature across several list items, so the source's order is the only
+        thing that makes the fragments read correctly, and the same fragment can
+        legitimately repeat.
+        """
+        grouped: dict[str, list[str]] = {"standard": [], "optional": []}
+        rows = self._query(
+            "SELECT kind, feature FROM car_features"
+            " WHERE source = ? AND source_id = ? ORDER BY kind, position",
+            (source, source_id),
+        )
+        for row in rows:
+            grouped[row["kind"]].append(row["feature"])
+        return grouped
+
     def coverage(self) -> Coverage:
         """What each source can honestly claim about its own stock."""
         floors = self.complete_run_floors()
