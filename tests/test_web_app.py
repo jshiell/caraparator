@@ -110,6 +110,19 @@ def test_a_car_with_no_trim_shows_the_em_dash(tmp_path):
     assert "None" not in page
 
 
+@pytest.mark.parametrize("runs", [(), (("cupra", COMPLETE),)])
+def test_every_body_row_has_a_cell_for_every_column_header(tmp_path, runs):
+    """The header loops over SORTS but the cells are written out by hand, so a
+    column added to one and not the other would silently shift every value."""
+    page = body(client(tmp_path, [car()], runs=runs).get("/"))
+
+    table = re.search(r"<table>.*</table>", page, re.S).group()
+    header, *body_rows = re.split(r"<tr>", table)[1:]
+    assert body_rows
+    for row in body_rows:
+        assert row.count("<td>") == header.count("<th>")
+
+
 def test_the_banner_says_when_a_source_last_completed_a_run(tmp_path):
     web = client(tmp_path, [car()], runs=[("cupra", COMPLETE)])
 
