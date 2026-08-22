@@ -9,9 +9,10 @@ from carparator.web.app import create_app
 from carparator.web.reader import Reader
 
 WHEN = "2026-08-01T00:00:00Z"
+SOURCE = "cupra"
 
 
-def car(source="cupra", source_id="a", **overrides):
+def car(source=SOURCE, source_id="a", **overrides):
     fields = dict(
         source=source,
         source_id=source_id,
@@ -26,7 +27,7 @@ def car(source="cupra", source_id="a", **overrides):
     return Car(**{**fields, **overrides})
 
 
-def client(tmp_path, cars=(), *, runs=(), now="2026-08-11T00:00:00Z"):
+def client(tmp_path, cars=(), *, runs=(), features=(), now="2026-08-11T00:00:00Z"):
     db = tmp_path / "c.db"
     with SqliteStore(db) as store:
         store.init_schema()
@@ -46,6 +47,8 @@ def client(tmp_path, cars=(), *, runs=(), now="2026-08-11T00:00:00Z"):
             )
         for each in cars:
             store.upsert_car(each, observed_at=WHEN, run_id=None)
+        for source_id, listing_features in features:
+            store.store_features(SOURCE, source_id, listing_features, fetched_at=WHEN)
     app = create_app(Reader(db), now=lambda: now)
     app.config["TESTING"] = True
     return app.test_client()
