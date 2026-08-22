@@ -86,6 +86,7 @@ SORTS: dict[str, tuple[str, str]] = {
     "power_kw": ("Power", "power_kw"),
     "brand": ("Brand", "brand"),
     "model": ("Model", MODEL_KEY_SQL),
+    "trim": ("Trim", "trim"),
     "seats": ("Seats", "seats"),
     "body_style": ("Body style", "body_style"),
     "dealer_name": ("Dealer", "dealer_name"),

@@ -97,6 +97,12 @@ def test_the_result_count_is_shown(tmp_path):
     assert "2 cars" in body(web.get("/"))
 
 
+def test_the_list_shows_each_car_trim(tmp_path):
+    page = client(tmp_path, [car(trim="V2")]).get("/")
+
+    assert "V2" in body(page)
+
+
 def test_the_banner_says_when_a_source_last_completed_a_run(tmp_path):
     web = client(tmp_path, [car()], runs=[("cupra", COMPLETE)])
 
