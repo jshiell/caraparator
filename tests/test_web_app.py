@@ -212,6 +212,18 @@ def test_the_detail_page_lists_the_optional_features(tmp_path):
     assert "<li>Winter pack</li>" in page
 
 
+def test_the_detail_page_collapses_the_standard_features_behind_their_count(tmp_path):
+    """Standard equipment runs to over a hundred items on a real listing, and
+    would bury the dealer and price history if it were open."""
+    standard = ("Alloy wheels", "Heated seats", "Rear camera")
+    web = client(tmp_path, [car()], features=[("a", ListingFeatures(standard=standard))])
+
+    page = body(detail(web))
+
+    assert "<summary>Show all 3</summary>" in page
+    assert "<li>Heated seats</li>" in page
+
+
 def test_an_unknown_car_is_a_404(tmp_path):
     web = client(tmp_path, [car("cupra", "a")])
 

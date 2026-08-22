@@ -30,6 +30,12 @@
 <h3>Optional features ({{ features.optional | length }})</h3>
 <ul>{% for each in features.optional %}<li>{{ each }}</li>{% endfor %}</ul>
 
+<h3>Standard features</h3>
+<details>
+  <summary>Show all {{ features.standard | length }}</summary>
+  <ul>{% for each in features.standard %}<li>{{ each }}</li>{% endfor %}</ul>
+</details>
+
 <h2>Dealer</h2>
 <table>
   <tr><th>Name</th><td>{{ car.dealer_name }}</td></tr>
