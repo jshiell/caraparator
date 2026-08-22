@@ -224,6 +224,16 @@ def test_the_detail_page_collapses_the_standard_features_behind_their_count(tmp_
     assert "<li>Heated seats</li>" in page
 
 
+def test_the_detail_page_says_when_the_equipment_has_not_been_read(tmp_path):
+    """The marker, never a row count: a listing nobody has fetched must not be
+    presented as one with no equipment."""
+    page = body(detail(client(tmp_path, [car()])))
+
+    assert "Equipment has not been read for this listing yet." in page
+    assert "Optional features" not in page
+    assert "Standard features" not in page
+
+
 def test_an_unknown_car_is_a_404(tmp_path):
     web = client(tmp_path, [car("cupra", "a")])
 

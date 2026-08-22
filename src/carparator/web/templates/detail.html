@@ -27,14 +27,20 @@
   {% endfor %}
 </table>
 
-<h3>Optional features ({{ features.optional | length }})</h3>
-<ul>{% for each in features.optional %}<li>{{ each }}</li>{% endfor %}</ul>
+{% if not features_fetched %}
+  <p class="absent">Equipment has not been read for this listing yet.</p>
+{% else %}
+  <h3>Optional features ({{ features.optional | length }})</h3>
+  <ul>{% for each in features.optional %}<li>{{ each }}</li>{% endfor %}</ul>
 
-<h3>Standard features</h3>
-<details>
-  <summary>Show all {{ features.standard | length }}</summary>
-  <ul>{% for each in features.standard %}<li>{{ each }}</li>{% endfor %}</ul>
-</details>
+  {# No empty-standard branch on purpose: the extractors return None rather than
+     an empty ListingFeatures, so a marked listing always has a standard list. #}
+  <h3>Standard features</h3>
+  <details>
+    <summary>Show all {{ features.standard | length }}</summary>
+    <ul>{% for each in features.standard %}<li>{{ each }}</li>{% endfor %}</ul>
+  </details>
+{% endif %}
 
 <h2>Dealer</h2>
 <table>
